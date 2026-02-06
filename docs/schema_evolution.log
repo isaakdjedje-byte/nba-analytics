@@ -1,0 +1,120 @@
+# Historique des évolutions de schéma - NBA Analytics Platform
+# Fichier généré automatiquement par SchemaEvolutionLogger
+# Dernière mise à jour: 2026-02-06
+
+schema_versions:
+  - version: 1
+    date: "2026-02-06T10:30:00"
+    description: "Schéma initial NBA-12 - Pipeline batch avec 20 transformations"
+    columns:
+      - game_id
+      - team_id
+      - season
+      - season_type
+      - game_date
+      - game_year
+      - game_month
+      - points
+      - fgm
+      - fga
+      - fg3m
+      - fg3a
+      - ftm
+      - fta
+      - oreb
+      - dreb
+      - reb
+      - ast
+      - stl
+      - blk
+      - tov
+      - pf
+      - avg_points_last_5
+      - avg_reb_last_5
+      - avg_ast_last_5
+      - trend_vs_season
+      - days_rest
+      - is_back_to_back
+      - wins_last_10
+      - ts_pct
+      - efg_pct
+      - game_score
+      - fatigue_efficiency
+      - per_estimate
+      - usage_rate_estimate
+      - pace_estimate
+      - win_pct
+      - is_home
+      - location
+      - point_diff
+      - match_importance
+      - ingestion_timestamp
+    nb_records: 8600
+    author: NBA-12
+    changes: null
+
+  - version: 2
+    date: "2026-02-06T11:15:00"
+    description: "NBA-14: Activation MergeSchema et test évolution"
+    columns:
+      - game_id
+      - team_id
+      - season
+      - season_type
+      - game_date
+      - game_year
+      - game_month
+      - points
+      - fgm
+      - fga
+      - fg3m
+      - fg3a
+      - ftm
+      - fta
+      - oreb
+      - dreb
+      - reb
+      - ast
+      - stl
+      - blk
+      - tov
+      - pf
+      - avg_points_last_5
+      - avg_reb_last_5
+      - avg_ast_last_5
+      - trend_vs_season
+      - days_rest
+      - is_back_to_back
+      - wins_last_10
+      - ts_pct
+      - efg_pct
+      - game_score
+      - fatigue_efficiency
+      - per_estimate
+      - usage_rate_estimate
+      - pace_estimate
+      - win_pct
+      - is_home
+      - location
+      - point_diff
+      - match_importance
+      - ingestion_timestamp
+    nb_records: 8602
+    author: NBA-14
+    changes:
+      added: []
+      removed: []
+      modified:
+        - mergeSchema activé sur écritures Delta
+      notes: "Activation du versioning des schémas, pas de changement structurel"
+
+metadata:
+  project: NBA Analytics Platform
+  delta_path: data/processed/games_enriched
+  partition_columns:
+    - season
+    - game_year
+  retention_policy:
+    log_retention_hours: 168
+    deleted_file_retention_hours: 168
+  last_backup: null

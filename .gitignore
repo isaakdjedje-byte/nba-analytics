@@ -1,2 +1,32 @@
 docs/agent.md
 docs/memoir.md
+# Données (trop volumineuses)
+data/raw/
+data/processed/
+data/exports/
+data/streaming/
+data/checkpoints/
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+# Environnement virtuel
+.env
+.venv
+venv/
+ENV/
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+# OS
+.DS_Store
+Thumbs.db
+# Jupyter
+.ipynb_checkpoints/
+# Delta Lake
+_delta_log/

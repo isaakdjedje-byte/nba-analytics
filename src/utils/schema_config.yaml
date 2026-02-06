@@ -1,0 +1,287 @@
+# Configuration des schémas NBA Analytics Platform
+# NBA-14: Définition des schémas attendus et évolutions
+
+project: NBA Analytics Platform
+version: "1.0.0"
+last_updated: "2026-02-06"
+
+# Schéma de base (v1) - NBA-12
+schema_v1:
+  name: "games_enriched_v1"
+  description: "Schéma initial après NBA-12 avec 20 transformations"
+  columns:
+    - name: game_id
+      type: string
+      description: "Identifiant unique du match"
+      nullable: false
+    
+    - name: team_id
+      type: integer
+      description: "Identifiant de l'équipe"
+      nullable: false
+    
+    - name: season
+      type: string
+      description: "Saison (ex: 2023-24)"
+      nullable: false
+    
+    - name: season_type
+      type: string
+      description: "Type: regular_season ou playoffs"
+      nullable: false
+    
+    - name: game_date
+      type: date
+      description: "Date du match"
+      nullable: false
+    
+    - name: game_year
+      type: integer
+      description: "Année du match"
+      nullable: false
+    
+    - name: game_month
+      type: integer
+      description: "Mois du match"
+      nullable: false
+    
+    # Statistiques de base
+    - name: points
+      type: integer
+      description: "Points marqués"
+      default: 0
+    
+    - name: fgm
+      type: integer
+      description: "Field Goals Made"
+      default: 0
+    
+    - name: fga
+      type: integer
+      description: "Field Goals Attempted"
+      default: 0
+    
+    - name: fg3m
+      type: integer
+      description: "3-Points Made"
+      default: 0
+    
+    - name: fg3a
+      type: integer
+      description: "3-Points Attempted"
+      default: 0
+    
+    - name: ftm
+      type: integer
+      description: "Free Throws Made"
+      default: 0
+    
+    - name: fta
+      type: integer
+      description: "Free Throws Attempted"
+      default: 0
+    
+    - name: oreb
+      type: integer
+      description: "Offensive Rebounds"
+      default: 0
+    
+    - name: dreb
+      type: integer
+      description: "Defensive Rebounds"
+      default: 0
+    
+    - name: reb
+      type: integer
+      description: "Total Rebounds"
+      default: 0
+    
+    - name: ast
+      type: integer
+      description: "Assists"
+      default: 0
+    
+    - name: stl
+      type: integer
+      description: "Steals"
+      default: 0
+    
+    - name: blk
+      type: integer
+      description: "Blocks"
+      default: 0
+    
+    - name: tov
+      type: integer
+      description: "Turnovers"
+      default: 0
+    
+    - name: pf
+      type: integer
+      description: "Personal Fouls"
+      default: 0
+    
+    # Features de forme
+    - name: avg_points_last_5
+      type: double
+      description: "Moyenne points sur 5 derniers matchs"
+    
+    - name: avg_reb_last_5
+      type: double
+      description: "Moyenne rebonds sur 5 derniers matchs"
+    
+    - name: avg_ast_last_5
+      type: double
+      description: "Moyenne assists sur 5 derniers matchs"
+    
+    - name: trend_vs_season
+      type: double
+      description: "Différence forme vs saison"
+    
+    - name: days_rest
+      type: integer
+      description: "Jours depuis le dernier match"
+    
+    - name: is_back_to_back
+      type: boolean
+      description: "True si match consécutif"
+    
+    - name: wins_last_10
+      type: integer
+      description: "Victoires sur 10 derniers matchs"
+    
+    # Stats avancées
+    - name: ts_pct
+      type: double
+      description: "True Shooting Percentage"
+    
+    - name: efg_pct
+      type: double
+      description: "Effective Field Goal Percentage"
+    
+    - name: game_score
+      type: double
+      description: "Game Score (performance globale)"
+    
+    - name: fatigue_efficiency
+      type: double
+      description: "Efficacité ajustée fatigue"
+    
+    - name: per_estimate
+      type: double
+      description: "Player Efficiency Rating (estimate)"
+      default: 15.0
+    
+    - name: usage_rate_estimate
+      type: double
+      description: "Usage Rate (estimate)"
+      default: 20.0
+    
+    - name: pace_estimate
+      type: double
+      description: "Pace estimate"
+    
+    # Contexte
+    - name: win_pct
+      type: double
+      description: "Pourcentage de victoires"
+    
+    - name: is_home
+      type: boolean
+      description: "True si match à domicile"
+    
+    - name: location
+      type: string
+      description: "Home ou Away"
+    
+    - name: point_diff
+      type: double
+      description: "Différence de points"
+    
+    - name: match_importance
+      type: string
+      description: "Importance: Critical/High/Medium/Low"
+    
+    - name: ingestion_timestamp
+      type: timestamp
+      description: "Timestamp d'ingestion"
+      nullable: false
+
+# Évolutions de schéma prévues
+schema_evolutions:
+  - version: 2
+    description: "Ajout métriques équipe complètes"
+    author: "NBA-18"
+    changes:
+      added:
+        - per_full
+        - usage_rate_full
+        - team_pace
+        - team_offensive_rating
+        - team_defensive_rating
+    status: "planned"
+    
+  - version: 3
+    description: "Features ML pour prédiction"
+    author: "NBA-21"
+    changes:
+      added:
+        - home_avg_pts
+        - away_avg_pts
+        - h2h_win_rate
+        - last_5_trend
+        - rest_advantage
+    status: "planned"
+    
+  - version: 4
+    description: "Données joueurs détaillées"
+    author: "NBA-17"
+    changes:
+      added:
+        - player_ids
+        - starter_count
+        - bench_points
+        - plus_minus_team
+    status: "planned"
+
+# Configuration Delta Lake
+delta_config:
+  partition_columns:
+    - season
+    - game_year
+  
+  merge_schema: true
+  auto_optimize: true
+  
+  # Retention configuration
+  retention:
+    log_retention_hours: 168  # 7 jours
+    deleted_file_retention_hours: 168
+
+# Validation
+validation:
+  required_columns:
+    - game_id
+    - team_id
+    - season
+    - game_date
+    - points
+  
+  column_types:
+    game_id: string
+    team_id: int
+    season: string
+    points: int
+  
+  ranges:
+    points:
+      min: 0
+      max: 200
+    
+    ts_pct:
+      min: 0
+      max: 100
+    
+    game_score:
+      min: -50
+      max: 100
