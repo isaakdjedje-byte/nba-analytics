@@ -28,10 +28,18 @@ class TestCheckpointManager:
     
     def test_checkpoint_initialization(self):
         """Test l'initialisation du checkpoint"""
-        cp = CheckpointManager(checkpoint_dir="data/checkpoints/test")
+        import shutil
+        test_dir = "data/checkpoints/test_init"
+        # Nettoyer avant le test
+        if os.path.exists(test_dir):
+            shutil.rmtree(test_dir)
+        cp = CheckpointManager(checkpoint_dir=test_dir)
         assert cp.data['ticket'] == "NBA-15"
         assert cp.data['status'] == "not_started"
         assert len(cp.data['completed_steps']) == 0
+        # Nettoyer après le test
+        if os.path.exists(test_dir):
+            shutil.rmtree(test_dir)
     
     def test_checkpoint_save_and_load(self):
         """Test la sauvegarde et le chargement"""

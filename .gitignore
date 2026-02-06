@@ -1,5 +1,3 @@
-docs/agent.md
-docs/memoir.md
 # Données (trop volumineuses)
 data/raw/
 data/processed/
@@ -30,3 +28,4 @@ Thumbs.db
 .ipynb_checkpoints/
 # Delta Lake
 _delta_log/
+

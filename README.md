@@ -74,6 +74,27 @@ nba-analytics/
 │   └── config/            # Configuration
 ├── tests/                 # Tests pytest
 ├── docs/                  # Documentation
+│   ├── API_INGESTION.md   # Documentation API (NBA-16)
+│   ├── INSTALLATION.md    # Guide installation (NBA-16)
+│   ├── EXAMPLES.md        # Exemples pratiques (NBA-16)
+│   ├── TESTING.md         # Guide tests
+│   ├── agent.md           # Architecture
+│   ├── memoir.md          # Journal projet
+│   └── stories/           # Stories JIRA detaillees
+├── data/                  # Donnees
+│   ├── raw/              # Donnees brutes
+│   └── processed/        # Donnees traitees
+├── scripts/              # Scripts utilitaires
+├── docker-compose.yml    # Configuration Docker
+└── Dockerfile            # Image Docker
+```
+nba-analytics/
+├── src/                    # Code source
+│   ├── ingestion/         # Scripts d'ingestion
+│   ├── utils/             # Utilitaires
+│   └── config/            # Configuration
+├── tests/                 # Tests pytest
+├── docs/                  # Documentation
 ├── data/                  # Données
 │   ├── raw/              # Données brutes
 │   └── processed/        # Données traitées
@@ -84,17 +105,45 @@ nba-analytics/
 
 ## 🏗️ Architecture
 
-- **Apache Spark 3.5** : Traitement distribué
+- **Apache Spark 3.5** : Traitement distribue
 - **Delta Lake 3.0** : Stockage ACID
+- **nba-api 1.1.11** : Wrapper Python pour l'API NBA officielle
 - **Docker** : Conteneurisation
 - **Pytest** : Tests unitaires
 - **Jupyter** : Exploration interactive
 
+```
+[nba-api] ←→ [NBA.com] ←→ [Donnees officielles]
+    ↓
+[Scripts Python] ←→ [PySpark]
+    ↓
+[data/raw/] ←→ [Delta Lake] ←→ [Analyses]
+```
+
 ## 📚 Documentation
 
+### Documentation technique
+
+- [Guide d'installation](docs/INSTALLATION.md) - Installation complète et dépannage
+- [Documentation API](docs/API_INGESTION.md) - Guide complet de l'API NBA (endpoints, rate limiting, exemples)
+- [Exemples pratiques](docs/EXAMPLES.md) - 6 exemples de code Python testes
 - [Guide de tests](docs/TESTING.md) - Comment lancer et écrire des tests
-- [Documentation agent](docs/agent.md) - Architecture et conventions
+
+### Architecture et projet
+
+- [Documentation agent](docs/agent.md) - Architecture, conventions, formules NBA
 - [Changelog](docs/memoir.md) - Journal du projet
+- [Index documentation](docs/INDEX.md) - Navigation rapide
+
+### Stack technique
+
+- **Python 3.11+** (Python 3.14 non supporte)
+- **PySpark 3.5** - Traitement distribue
+- **Delta Lake 3.0** - Stockage ACID
+- **nba-api 1.1.11** - API NBA officielle
+- **Docker** - Conteneurisation
+- **Pytest** - Tests unitaires
+- **Jupyter** - Exploration interactive
 
 ## 📝 Notes importantes
 

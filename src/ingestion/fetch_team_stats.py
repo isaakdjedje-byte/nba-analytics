@@ -103,11 +103,25 @@ def fetch_team_stats(season: str = SEASON, season_type: str = "Regular Season") 
         stats_data = stats.get_normalized_dict()
         teams_stats = stats_data.get('LeagueDashTeamStats', [])
         
+        # Charger la liste des 30 equipes NBA pour filtrer
+        teams_file = os.path.join(RAW_BASE, 'teams', f'teams_{season.replace("-", "_")}.json')
+        nba_team_ids = set()
+        if os.path.exists(teams_file):
+            with open(teams_file, 'r', encoding='utf-8') as f:
+                teams_data = json.load(f)
+                for team in teams_data.get('data', []):
+                    nba_team_ids.add(team['id'])
+        
         # Formater les stats
         formatted_stats = []
         for team in teams_stats:
+            team_id = team.get('TEAM_ID')
+            # Filtrer uniquement les 30 equipes NBA
+            if nba_team_ids and team_id not in nba_team_ids:
+                continue
+                
             formatted_stats.append({
-                'team_id': team.get('TEAM_ID'),
+                'team_id': team_id,
                 'team_name': team.get('TEAM_NAME'),
                 'team_abbreviation': team.get('TEAM_ABBREVIATION'),
                 'season': season,
