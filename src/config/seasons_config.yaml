@@ -1,0 +1,33 @@
+# Configuration des saisons NBA à récupérer
+saisons:
+  - "2018-19"
+  - "2019-20"
+  - "2020-21"
+  - "2021-22"
+  - "2022-23"
+  - "2023-24"
+  - "2024-25"
+types_saison:
+  regular_season: "Regular Season"
+  playoffs: "Playoffs"
+parametres_fetch:
+  players_per_page: 100
+  max_pages_players: 50
+  max_pages_games: 20
+  delay_seconds: 2
+  retry_attempts: 3
+nba_constants:
+  minutes_per_game: 48
+  minutes_per_overtime: 5
+  players_on_court: 5
+  ft_possession_factor: 0.44
+  league_avg_per: 15.0
+paths:
+  raw_base: "data/raw"
+  processed_base: "data/processed"
+  exports_base: "data/exports"
+  checkpoints: "data/checkpoints"
+spark:
+  app_name: "NBA-Batch-Ingestion-Multi-Season"
+  master: "local[*]"
+  partitions: 200
