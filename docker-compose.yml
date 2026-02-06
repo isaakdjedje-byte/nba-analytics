@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  spark-nba:
+    build: .
+    container_name: nba-analytics-spark
+    ports:
+      - "8888:8888"  # Jupyter Lab
+      - "4040:4040"  # Spark UI
+    volumes:
+      # Données brutes (lecture seule)
+      - ./data/raw:/app/data/raw:ro
+      # Données traitées (lecture/écriture)
+      - ./data/processed:/app/data/processed
+      # Exports
+      - ./data/exports:/app/data/exports
+      # Code source (pour développement)
+      - ./src:/app/src
+      # Config
+      - ./src/config:/app/src/config
+      # Tests
+      - ./tests:/app/tests
+    environment:
+      - SPARK_EXTRA_CLASSPATH=/usr/local/spark/jars/delta-spark_2.12-3.0.0.jar:/usr/local/spark/jars/delta-storage-3.0.0.jar
+      - PYSPARK_SUBMIT_ARGS=--packages io.delta:delta-spark_2.12:3.0.0 pyspark-shell
+      - JUPYTER_ENABLE_LAB=yes
+      - PYTHONPATH=/app/src
+    command: >
+      bash -c "
+        echo 'Waiting for Spark to initialize...' &&
+        sleep 5 &&
+        jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root
+      "
+
+  # Service dédié aux tests
+  test:
+    build: .
+    container_name: nba-analytics-test
+    volumes:
+      # Tests
+      - ./tests:/app/tests
+      # Code source
+      - ./src:/app/src
+      # Données
+      - ./data:/app/data
+      # Documentation
+      - ./docs:/app/docs
+    environment:
+      - SPARK_EXTRA_CLASSPATH=/usr/local/spark/jars/delta-spark_2.12-3.0.0.jar:/usr/local/spark/jars/delta-storage-3.0.0.jar
+      - PYSPARK_SUBMIT_ARGS=--packages io.delta:delta-spark_2.12:3.0.0 pyspark-shell
+      - PYTHONPATH=/app/src
+    working_dir: /app
+    command: pytest tests/ -v
+    depends_on:
+      - spark-nba
