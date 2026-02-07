@@ -35,7 +35,8 @@ class CompleteDiscoveryEngine:
     def __init__(self):
         config = RateLimitConfig(delay_seconds=2.0)
         self.rate_limiter = RateLimiter(config)
-        self.circuit_breaker = CircuitBreaker(failure_threshold=0.10)
+        # Augmenter seuil car echecs normaux (joueurs sans data API)
+        self.circuit_breaker = CircuitBreaker(failure_threshold=0.25)  # 25% au lieu de 10%
         self.checkpoint_mgr = CheckpointManager("logs/nba19_discovery/checkpoints")
         
         self.successful_mappings = []
@@ -193,12 +194,16 @@ class CompleteDiscoveryEngine:
     
     def _save_checkpoint(self, index: int, segment: str):
         """Sauvegarder checkpoint"""
+        # Sauvegarder les mappings reussis du segment en cours
+        segment_success = [m for m in self.successful_mappings if m.get('segment') == segment]
+        segment_failed = [p for p in self.failed_players if p.get('segment') == segment]
+        
         self.checkpoint_mgr.save_checkpoint(
             phase="phase2",
             segment=segment,
             player_index=index,
-            completed_teams=[],  # Pas utilisé ici
-            stats=self.stats
+            successful_mappings=segment_success,
+            failed_players=segment_failed
         )
     
     def run_all_segments(self):
