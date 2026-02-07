@@ -21,14 +21,17 @@ def spark_session():
     """
     spark = (SparkSession.builder
         .appName("NBA-Analytics-Tests")
-        .master("local[*]")
+        .master("local[1]")
         .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
         .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
-        .config("spark.sql.adaptive.enabled", "true")
-        .config("spark.sql.adaptive.coalescePartitions.enabled", "true")
+        .config("spark.sql.adaptive.enabled", "false")
+        .config("spark.sql.adaptive.coalescePartitions.enabled", "false")
+        .config("spark.serializer", "org.apache.spark.serializer.JavaSerializer")
+        .config("spark.sql.shuffle.partitions", "1")
+        .config("spark.default.parallelism", "1")
         .getOrCreate()
     )
-    spark.sparkContext.setLogLevel("WARN")
+    spark.sparkContext.setLogLevel("ERROR")
     
     yield spark
     

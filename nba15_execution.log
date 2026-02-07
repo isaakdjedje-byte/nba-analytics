@@ -1,0 +1,16 @@
+2026-02-06 16:38:59,100 - __main__ - INFO - ======================================================================
+2026-02-06 16:38:59,100 - __main__ - INFO - [NBA-15] ORCHESTRATEUR COMPLET
+2026-02-06 16:38:59,101 - __main__ - INFO - ======================================================================
+2026-02-06 16:38:59,101 - __main__ - INFO - [SEASON] Saison: 2023-24
+2026-02-06 16:38:59,101 - __main__ - INFO - [RESTART] Reprise: Oui
+2026-02-06 16:38:59,101 - __main__ - INFO - ======================================================================
+2026-02-06 16:38:59,101 - __main__ - INFO - [CHECKPOINT] Point de reprise: teams_rosters
+2026-02-06 16:38:59,101 - __main__ - INFO - 
+======================================================================
+2026-02-06 16:38:59,101 - __main__ - INFO - [STEP] ETAPE: TEAMS_ROSTERS
+2026-02-06 16:38:59,101 - __main__ - INFO - ======================================================================
+2026-02-06 16:38:59,102 - __main__ - ERROR - [ERROR] ERREUR FATALE: 'charmap' codec can't encode character '\U0001f4cb' in position 2: character maps to <undefined>
+2026-02-06 16:38:59,102 - __main__ - ERROR - Le checkpoint a ete sauvegarde. Relancez pour reprendre.
+[NBA-15] NBA-15
+
+[ERROR] Erreur: 'charmap' codec can't encode character '\U0001f4cb' in position 2: character maps to <undefined>

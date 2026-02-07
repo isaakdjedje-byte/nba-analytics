@@ -1,0 +1,71 @@
+# Configuration de stratification pour la couche Silver
+# Architecture Medallion: Bronze -> 3 Silver datasets -> Gold
+#
+# Usage:
+#   - all: Dataset complet historique (validation legere)
+#   - intermediate: Joueurs 2000-2016 avec donnees physiques (validation medium)
+#   - contemporary: Joueurs 2016+ pour ML (validation stricte)
+
+validation_levels:
+  all:
+    null_threshold: 0.25
+    required_fields:
+      - id
+      - full_name
+    description: "Dataset complet historique - 5103 joueurs (1947-2025)"
+    output_path: "data/silver/players_all/"
+    
+  intermediate:
+    null_threshold: 0.15
+    required_fields:
+      - id
+      - full_name
+      - height_cm
+      - weight_kg
+    description: "Joueurs 2000-2016 avec donnees physiques completes"
+    output_path: "data/silver/players_intermediate/"
+    id_ranges:
+      - min: 760000
+        max: 1620000
+    include_critical: true
+    
+  contemporary:
+    null_threshold: 0.20
+    required_fields:
+      - id
+      - full_name
+      - height_cm
+      - weight_kg
+      - position
+    description: "Joueurs modernes 2016+ pour ML avance"
+    output_path: "data/silver/players_contemporary/"
+    id_ranges:
+      - min: 1620000
+        max: null
+    include_critical: true
+
+# Legendes NBA a inclure dans tous les datasets detailles
+critical_player_ids:
+  - 23      # Michael Jordan
+  - 977     # Kobe Bryant
+  - 192     # Shaquille O'Neal
+  - 406     # Allen Iverson
+  - 504     # Tim Duncan
+  - 397     # Kevin Garnett
+  - 87      # Hakeem Olajuwon
+  - 56      # David Robinson
+  - 144     # Karl Malone
+  - 417     # Charles Barkley
+  - 937     # John Stockton
+  - 914     # Clyde Drexler
+  - 224     # Patrick Ewing
+  - 346     # Dominique Wilkins
+  - 299     # Reggie Miller
+  - 297     # Gary Payton
+  - 296     # Shawn Kemp
+  - 769     # Alonzo Mourning
+
+# Metadata
+version: "1.0"
+created_date: "2026-02-07"
+author: "NBA Analytics Team"

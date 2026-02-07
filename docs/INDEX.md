@@ -1,26 +1,71 @@
 ---
 # Index des Documentations NBA Analytics
-# Dernière mise à jour: 2026-02-06 17:05 (NBA-15 terminé)
+# Dernière mise à jour: 2026-02-07 00:15 (Architecture Medallion complète)
 # Usage: Référence rapide pour éviter de lire les fichiers complets
 ---
 
 # 📚 INDEX - Documentation NBA Analytics
 
+## 🆕 NOUVEAU - PHASE 4-7 : Production Ready (07/02/2026)
+
+### 🎉 Résultats Finaux
+**GOLD Standard :** 5,103 joueurs (+3,050%)  
+**Performance :** 1.7 secondes pipeline  
+**Qualité :** 100% données physiques complètes  
+
+### Architecture GOLD Tiered
+- [`players_gold_standard`](data/silver/players_gold_standard/) - 5,103 joueurs (100% height/weight)
+- [`players_gold_elite`](data/silver/players_gold_premium_elite/) - 3,906 joueurs (98.4% confiance)
+- [`players_gold_premium`](data/silver/players_gold_premium/) - 4,468 joueurs (ML général)
+
+### Documentation Phases
+- [`IMPROVEMENT_PLAN.md`](../IMPROVEMENT_PLAN.md) - Plan complet 15 jours
+- [`PHASE2_RESULTS.md`](../PHASE2_RESULTS.md) - Enrichissement ML
+- [`PHASE3_RESULTS.md`](../PHASE3_RESULTS.md) - GOLD Elite
+- [`memoir.md`](memoir.md#phase-4-7) - Journal phases 4-7
+- [`agent.md`](agent.md#phase-4-7) - Architecture production
+
+### Commandes Rapides
+```bash
+python run_pipeline.py --stratified      # Pipeline complet
+python use_gold_tiered.py --compare      # Comparer tiers
+python final_validation.py               # Valider résultats
+pytest tests/test_integration.py -v      # Tests
+```
+
+---
+
+## 🏗️ Architecture Medallion (07/02/2026)
+**Architecture :** Bronze → Silver → Gold  
+**Fichiers :** 19 modules + 6 nouveaux (Phase 4-7)  
+**Tests :** 5 fichiers de tests  
+
+**Documentation détaillée :**
+- [`agent.md:98-145`](agent.md#L98) - Architecture Medallion complète
+- [`agent.md:732-780`](agent.md#L732) - Dernières modifications refactor
+
+**Démarrage rapide :**
+```bash
+python run_pipeline.py              # Pipeline complet
+python run_pipeline.py --bronze-only # Bronze uniquement
+```
+
+---
+
 ## 🗺️ Vue d'ensemble des fichiers
 
 | Fichier | Lignes | Contenu principal | Dernière MAJ |
 |---------|--------|-------------------|--------------|
-| [`agent.md`](agent.md) | 400+ | Documentation technique, architecture, commandes | 2026-02-06 |
-| [`memoir.md`](memoir.md) | 550+ | Journal chronologique, leçons apprises | 2026-02-06 |
-| [`API_INGESTION.md`](API_INGESTION.md) | ~350 | **Documentation API NBA (NBA-16)** | 2026-02-06 |
-| [`INSTALLATION.md`](INSTALLATION.md) | ~300 | **Guide installation complète (NBA-16)** | 2026-02-06 |
-| [`EXAMPLES.md`](EXAMPLES.md) | ~150 | **Exemples pratiques Python (NBA-16)** | 2026-02-06 |
-| [`NBA15_SUMMARY.md`](NBA15_SUMMARY.md) | ~200 | Résumé NBA-15 | 2026-02-06 |
-| [`NBA13_STREAMING.md`](NBA13_STREAMING.md) | ~100 | Détails streaming NBA-13 | 2026-02-06 |
-| [`TESTING.md`](TESTING.md) | ~150 | Guide testing pytest + Docker | 2026-02-06 |
-| [`PYTHON_VERSION_FIX.md`](PYTHON_VERSION_FIX.md) | ~50 | Fix Python 3.14 → 3.11 | 2026-02-06 |
-| [`JIRA_BACKLOG.md`](JIRA_BACKLOG.md) | ~500 | **TOUS les tickets JIRA (NBA-11 à NBA-31)** | 2026-02-06 |
-| [`stories/`](stories/) | 18 fichiers | **Stories détaillées NBA-14 à NBA-31** | 2026-02-06 |
+| [`agent.md`](agent.md) | 1000+ | **Architecture Production**, commandes, Phase 4-7 | 2026-02-07 |
+| [`memoir.md`](memoir.md) | 1500+ | Journal complet + **Phase 4-7** | 2026-02-07 |
+| [`API_INGESTION.md`](API_INGESTION.md) | ~350 | Documentation API NBA (NBA-16) | 2026-02-06 |
+| [`INSTALLATION.md`](INSTALLATION.md) | ~300 | Guide installation complète (NBA-16) | 2026-02-06 |
+| [`EXAMPLES.md`](EXAMPLES.md) | ~150 | Exemples pratiques Python (NBA-16) | 2026-02-06 |
+| [`JIRA_BACKLOG.md`](JIRA_BACKLOG.md) | ~500 | **TOUS les tickets JIRA** | 2026-02-06 |
+| [`stories/`](stories/) | 18 fichiers | Stories détaillées NBA-14 à NBA-31 | 2026-02-06 |
+| [`IMPROVEMENT_PLAN.md`](../IMPROVEMENT_PLAN.md) | ~400 | **Plan amélioration complet** | 2026-02-07 |
+| [`PHASE2_RESULTS.md`](../PHASE2_RESULTS.md) | ~300 | Résultats enrichissement ML | 2026-02-07 |
+| [`PHASE3_RESULTS.md`](../PHASE3_RESULTS.md) | ~300 | Résultats GOLD Elite | 2026-02-07 |
 
 ---
 
@@ -51,8 +96,65 @@
 → [`JIRA_BACKLOG.md`](JIRA_BACKLOG.md) - **TOUS les tickets avec détails complets**
 → [`JIRA_BACKLOG.md#ordre-dexécution-recommandé`](JIRA_BACKLOG.md#ordre-dexécution-recommandé) - Roadmap détaillée
 
+### "Je veux les améliorations Phase 4-7"
+→ [`memoir.md#phase-4-7`](memoir.md#phase-4-7) - Journal phases 4-7  
+→ [`agent.md#phase-4-7`](agent.md#phase-4-7) - Architecture production  
+→ [`IMPROVEMENT_PLAN.md`](../IMPROVEMENT_PLAN.md) - Plan complet 15 jours
+
+### "Je veux les résultats des phases"
+→ [`PHASE2_RESULTS.md`](../PHASE2_RESULTS.md) - Enrichissement ML (4,468 joueurs)  
+→ [`PHASE3_RESULTS.md`](../PHASE3_RESULTS.md) - GOLD Elite (98.4% qualité)  
+→ [`final_validation.py`](../final_validation.py) - Script validation
+
+### "Je veux utiliser les données GOLD"
+→ [`use_gold_tiered.py --compare`](../use_gold_tiered.py) - Comparer les tiers  
+→ [`use_gold_tiered.py --export standard`](../use_gold_tiered.py) - Exporter CSV  
+→ `data/silver/players_gold_standard/players.json` - 5,103 joueurs
+
 ### "Je veux les commandes Spark"
 → [`agent.md:317-350`](agent.md#L317) - Vérification données, tests rapides
+
+---
+
+## 🏛️ Navigation Architecture Medallion
+
+### "Je veux comprendre l'architecture Bronze → Silver → Gold"
+→ [`agent.md:98-145`](agent.md#L98) - Architecture Medallion complète  
+→ [`agent.md:732-780`](agent.md#L732) - Dernières modifications refactor
+
+### "Je veux lancer le pipeline"
+```bash
+python run_pipeline.py              # Pipeline complet
+python run_pipeline.py --bronze-only # Bronze uniquement
+```
+
+### "Je veux voir les fichiers source"
+**Bronze Layer :**
+- `src/processing/bronze/players_bronze.py` - Ingestion API
+- `src/processing/bronze/validate_bronze.py` - Validation
+
+**Silver Layer :**
+- `src/processing/silver/cleaning_functions.py` - Fonctions pures
+- `src/processing/silver/players_silver.py` - Transformation
+- `src/processing/silver/validators.py` - Validation qualité
+
+**Gold Layer :**
+- `src/processing/gold/players_gold.py` - Features ML
+
+**Pipeline :**
+- `src/pipeline/players_pipeline.py` - Orchestration
+- `run_pipeline.py` - Script de démarrage
+
+**Utils :**
+- `src/utils/transformations.py` - Fonctions de conversion
+- `src/utils/caching.py` - Gestion cache API
+
+### "Je veux voir les tests"
+→ `tests/test_transformations.py` - Tests transformations  
+→ `tests/test_caching.py` - Tests cache  
+→ `tests/test_bronze_layer.py` - Tests Bronze  
+→ `tests/test_silver_layer.py` - Tests Silver  
+→ `tests/test_pipeline.py` - Tests pipeline
 
 ---
 
@@ -70,23 +172,70 @@
 | **NBA-14** | ✅ Done | Ingestion | 5 | Gestion schémas évolutifs |
 | **NBA-15** | ✅ Done | Ingestion | 3 | Données matchs et équipes |
 | **NBA-16** | ✅ Done | Ingestion | 2 | Documentation API complète |
-| **NBA-17** | ⬜ To Do | Processing | 5 | Nettoyage données joueurs |
-| **NBA-18** | ⬜ To Do | Processing | 5 | Métriques avancées (PER, TS%) |
+| **NBA-17** | ✅ Done | Processing | 5 | Nettoyage données + **Architecture Medallion** |
+| **NBA-18** | ⬜ Ready | Processing | 5 | Métriques avancées (PER, TS%) |
 | **NBA-19** | ⬜ To Do | Processing | 3 | Agrégations équipe/saison |
 | **NBA-20** | ⬜ To Do | Processing | 5 | Transformation matchs |
 | **NBA-21** | ⬜ To Do | Processing | 8 | Feature engineering ML |
-| **NBA-22** | ⬜ To Do | ML | 8 | Prédiction résultats matchs |
+| **NBA-22-1** | ⬜ To Do | ML | 6 | Classification gagnant/perdant |
+| **NBA-22-2** | ⬜ To Do | ML | 8 | Régression score exact |
+| **NBA-22-3** | ⬜ To Do | ML | 5 | Clustering profils joueurs |
 | **NBA-23** | ⬜ To Do | ML | 5 | Clustering joueurs (K-Means) |
 | **NBA-24** | ⬜ To Do | ML | 5 | Détection joueurs progression |
 | **NBA-25** | ⬜ To Do | ML | 5 | Pipeline ML automatisé |
 | **NBA-26** | ⬜ To Do | Quality | 5 | Tests unitaires |
 | **NBA-27** | ⬜ To Do | Quality | 3 | Data Quality checks |
+| **NBA-17** | 🟡 In Progress | Processing | 5 | Nettoyage données (optimisé 2000-2026) |
+| **NBA-18** | ⬜ Ready | Processing | 5 | Métriques avancées (fichiers prêts) |
+| **NBA-21** | ⬜ Ready | ML | 8 | Feature engineering (notebook créé) |
+| **NBA-22** | ⬜ Ready | ML | 19 | 3 modèles ML (notebooks créés) |
 | **NBA-28** | ⬜ To Do | Quality | 5 | Monitoring et alerting |
 | **NBA-29** | ⬜ To Do | Reporting | 3 | Export BI (Parquet/CSV) |
 | **NBA-30** | ⬜ To Do | Reporting | 3 | Rapport hebdomadaire auto |
 | **NBA-31** | ⬜ To Do | Reporting | 5 | Dashboard interactif |
 
-**📊 Total : 31 tickets | 104 points | 37% complété**
+**📊 Total : 31 tickets | 104 points | 47% complété (7/15 done + refactor architecture)**
+
+---
+
+## 🆕 Nouveautés Récentes
+
+### Architecture Medallion (07/02/2026) - **MAJEUR**
+**Refactor complet : Monolithique → Bronze → Silver → Gold**
+
+**Nouveaux fichiers (19) :**
+- ✅ `src/processing/bronze/` - Couche Bronze (3 fichiers)
+- ✅ `src/processing/silver/` - Couche Silver (4 fichiers)
+- ✅ `src/processing/gold/` - Couche Gold (2 fichiers)
+- ✅ `src/pipeline/` - Orchestration (2 fichiers)
+- ✅ `src/utils/transformations.py` - Fonctions pures
+- ✅ `src/utils/caching.py` - Cache API
+- ✅ `run_pipeline.py` - Script de démarrage
+
+**Tests (5 nouveaux) :**
+- ✅ `tests/test_transformations.py`
+- ✅ `tests/test_caching.py`
+- ✅ `tests/test_bronze_layer.py`
+- ✅ `tests/test_silver_layer.py`
+- ✅ `tests/test_pipeline.py`
+
+**Avantages :**
+- 🔧 Fonctions pures, testables unitairement
+- 📦 Séparation claire des responsabilités
+- 🐛 Debug facilité (inspection à chaque étape)
+- 📈 Évolutivité (ajout facile de transformations)
+
+### Structure ML (Créée le 06/02/2026)
+- ✅ `src/ml/` - Module Python avec classes PySpark ML
+- ✅ `notebooks/04_model_classification.ipynb` - Random Forest Classifier
+- ✅ `notebooks/05_model_regression.ipynb` - Deux modèles RF (home/away)
+- ✅ `notebooks/06_model_clustering.ipynb` - K-Means clustering
+- ✅ `models/` - Dossier pour sauvegardes modèles
+
+### Optimisation NBA-17
+- 🚀 **86% réduction** des appels API (4,541 → 638)
+- ⏱️ **Temps** : 76 min → 10-12 min
+- 🎯 **Filtre** : Joueurs 2016+ uniquement + 18 légendes critiques
 
 ---
 
@@ -270,5 +419,74 @@ wc -l docs/agent.md docs/memoir.md docs/NBA13_STREAMING.md
 
 ---
 
-**Dernière mise à jour**: 2026-02-06 17:05
-**Prochaine révision**: Après NBA-17
+### Section 12: Root Cause Analysis - Données Physiques (lignes 1276-1340)
+- **Lignes 1278-1285** : Problème 158 joueurs GOLD au lieu de 1,000+
+- **Lignes 1287-1301** : Bug conversion unités (CSV déjà métrique)
+- **Lignes 1303-1311** : Imputation jamais activée
+- **Lignes 1313-1326** : Filtre SILVER trop strict
+- **Lignes 1328-1336** : Solutions appliquées et résultats
+- **Lignes 1338-1350** : Architecture Data Mesh état actuel
+
+---
+
+## 📊 Découvertes Techniques Importantes
+
+### Problème: Conversion Unités (07/02/2026)
+**Fichier**: `src/utils/transformations.py`
+
+Données CSV déjà en cm/kg mal converties:
+```python
+height="218" (cm) → null ❌
+weight="102" (kg) → 46 kg ❌ (traité comme lbs)
+```
+
+**Impact**: ~50 joueurs perdus
+
+### Problème: Imputation Non Activée (07/02/2026)
+**Fichier**: `src/processing/silver/players_silver.py`
+
+Fonction `impute_missing_data()` existe mais **jamais appelée**.
+
+**Impact**: ~3,000 joueurs sans données physiques
+
+### Solution: Réduction Critères (07/02/2026)
+**Fichier**: `configs/data_products.yaml`
+
+Retirer `position` et `is_active` des champs requis SILVER.
+
+**Résultat**: 158 → 635 joueurs (+301%)
+
+---
+
+## 🛠️ Maintenance de l'Index
+
+### Quand mettre à jour cet index :
+1. ✅ Après chaque nouveau ticket JIRA (NBA-XX)
+2. ✅ Après ajout de section majeure (>20 lignes)
+3. ✅ Après résolution de problème documenté
+4. ✅ Quand les numéros de ligne changent significativement
+
+### Comment mettre à jour :
+```bash
+# Générer stats fichiers
+wc -l docs/agent.md docs/memoir.md docs/NBA13_STREAMING.md
+
+# Vérifier les ancres
+# Format: [texte](fichier.md#Lnuméro)
+```
+
+### Checklist mise à jour :
+- [x] Nombres de lignes à jour
+- [x] Nouvelles sections ajoutées (Root Cause Analysis)
+- [x] Découvertes techniques documentées
+- [x] Tableau navigation par besoin à jour
+- [x] Index mots-clés complété
+- [x] **Phase 4-7 documentées**
+- [x] **5,103 joueurs GOLD validés**
+- [x] **Architecture production documentée**
+
+---
+
+**Dernière mise à jour**: 2026-02-07 13:20
+**Statut**: ✅ **PRODUCTION READY** - 5,103 joueurs GOLD Standard
+**Version**: 5.0

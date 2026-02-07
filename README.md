@@ -151,6 +151,27 @@ nba-analytics/
 - Les tests Spark **doivent** s'exécuter dans Docker
 - Voir [docs/PYTHON_VERSION_FIX.md](docs/PYTHON_VERSION_FIX.md) pour les détails
 
+## 🎯 Progression Actuelle (06/02/2026)
+
+### ✅ Complété (6 tickets)
+- **NBA-11 à NBA-16** : Ingestion données, documentation
+- **NBA-15** : 30 équipes, 532 joueurs, 2624 matchs
+- **NBA-17** : Nettoyage optimisé (filtre 2000-2026, ~1,100 joueurs)
+
+### 🟡 En Cours
+- **NBA-17** : Finalisation (10-12 min restantes)
+
+### 📊 Structure ML Prête
+- ✅ 3 notebooks Jupyter (classification, régression, clustering)
+- ✅ Module `src/ml/` avec classes PySpark
+- ✅ ~1,100 joueurs (2000-2026) avec données complètes
+
+### ⏱️ Prochainement
+- **NBA-18** : Métriques avancées (PER, TS%, USG%)
+- **NBA-22** : 3 modèles ML (priorité: classification > régression > clustering)
+
+**Statut :** 🟢 42% complété - Phase ML prête à démarrer
+
 ## 🤝 Contribution
 
 1. Créer une branche feature : `git checkout -b feature/NBA-XX-description`

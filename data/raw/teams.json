@@ -272,9 +272,8 @@
     }
   ],
   "metadata": {
-    "export_date": "2026-02-05T16:59:48.531061",
+    "export_date": "2026-02-06T09:40:04.081119",
     "record_count": 30,
-    "source": "nba-api (NBA.com)",
-    "package_version": "1.1.11"
+    "source": "nba-api"
   }
 }
