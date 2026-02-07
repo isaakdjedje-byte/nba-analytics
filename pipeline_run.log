@@ -1,0 +1,250 @@
+INFO:utils.caching:Cache chargé: 638 joueurs
+:: loading settings :: url = jar:file:/C:/Users/isaac/AppData/Roaming/Python/Python314/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: C:\Users\isaac\.ivy2\cache
+The jars for the packages stored in: C:\Users\isaac\.ivy2\jars
+io.delta#delta-spark_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-9b998e40-13d7-44c0-afe9-e7eaf4098a6d;1.0
+	confs: [default]
+	found io.delta#delta-spark_2.12;3.0.0 in central
+	found io.delta#delta-storage;3.0.0 in central
+	found org.antlr#antlr4-runtime;4.9.3 in local-m2-cache
+:: resolution report :: resolve 523ms :: artifacts dl 29ms
+	:: modules in use:
+	io.delta#delta-spark_2.12;3.0.0 from central in [default]
+	io.delta#delta-storage;3.0.0 from central in [default]
+	org.antlr#antlr4-runtime;4.9.3 from local-m2-cache in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-9b998e40-13d7-44c0-afe9-e7eaf4098a6d
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/12ms)
+26/02/07 13:11:34 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/02/07 13:11:37 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+INFO:processing.silver.stratification:Configuration chargee: configs\silver_stratification.yaml
+INFO:processing.silver.validators:Validateur initialise: level='contemporary', seuil_nulls=5%
+26/02/07 13:11:40 WARN SparkSession: Using an existing Spark session; only runtime SQL configurations will take effect.
+INFO:pipeline.players_pipeline:
+============================================================
+INFO:pipeline.players_pipeline:NBA PIPELINE - Bronze -> Silver -> Gold
+INFO:pipeline.players_pipeline:Mode: Stratifie (target=all)
+INFO:pipeline.players_pipeline:============================================================
+
+INFO:pipeline.players_pipeline:
+============================================================
+INFO:pipeline.players_pipeline:STEP: Bronze Layer
+INFO:pipeline.players_pipeline:============================================================
+
+INFO:processing.bronze.players_bronze:============================================================
+INFO:processing.bronze.players_bronze:COUCHE BRONZE - Ingestion données brutes
+INFO:processing.bronze.players_bronze:============================================================
+INFO:processing.bronze.players_bronze:Chargement all_players_historical.json...
+INFO:processing.bronze.players_bronze:5103 joueurs de base chargés
+INFO:processing.bronze.players_bronze:532 joueurs enrichis depuis le roster
+INFO:processing.bronze.players_bronze:48 joueurs enrichis depuis CSV
+INFO:processing.bronze.players_bronze:Filtrage 2016+: 638 joueurs à enrichir
+INFO:utils.caching:638 joueurs déjà en cache (pas d'appel API)
+INFO:processing.bronze.players_bronze:Tous les joueurs sont déjà en cache!
+INFO:processing.bronze.players_bronze:638 joueurs mis à jour depuis le cache
+INFO:processing.bronze.players_bronze:Sauvegarde couche Bronze...
+INFO:processing.bronze.players_bronze:Bronze sauvegardé: data\bronze\players_bronze.json (5103 joueurs)
+INFO:processing.bronze.validate_bronze:Validation Bronze: 5103 joueurs
+INFO:processing.bronze.validate_bronze:Taux de complétion Bronze: 56.1%
+INFO:processing.bronze.validate_bronze:\u2705 Validation Bronze OK
+INFO:pipeline.players_pipeline:\u2705 Bronze Layer terminé (0.7s)
+INFO:pipeline.players_pipeline:
+============================================================
+INFO:pipeline.players_pipeline:STEP: Silver Layer
+INFO:pipeline.players_pipeline:Mode: Stratifie (target=all)
+INFO:pipeline.players_pipeline:============================================================
+
+INFO:pipeline.players_pipeline:Initialisation Data Mesh Stratifier...
+INFO:processing.silver.data_mesh_stratifier:Configuration chargée: 8 produits
+INFO:processing.silver.data_mesh_stratifier:DataMeshStratifier initialisé avec config: configs/data_products.yaml
+INFO:processing.silver.players_silver:Bronze chargé: 5103 joueurs
+INFO:pipeline.players_pipeline:Nettoyage des donnees Bronze...
+INFO:processing.silver.players_silver:Nettoyage des données...
+INFO:processing.silver.players_silver:5103 joueurs nettoyés (avec imputation)
+INFO:pipeline.players_pipeline:Stratification Data Mesh en cours (GOLD Tiered)...
+INFO:processing.silver.data_mesh_stratifier:============================================================
+INFO:processing.silver.data_mesh_stratifier:DATA MESH STRATIFICATION - GOLD TIERED
+INFO:processing.silver.data_mesh_stratifier:============================================================
+INFO:processing.silver.data_mesh_stratifier:Input: 5103 joueurs
+INFO:processing.silver.data_mesh_stratifier:
+INFO:processing.silver.data_mesh_stratifier:[1/7] Création dataset RAW...
+INFO:processing.silver.data_mesh_stratifier:[2/7] Filtrage niveau BRONZE...
+INFO:processing.silver.data_mesh_stratifier:  players_bronze: 5103/5103 joueurs (100.0%)
+INFO:processing.silver.data_mesh_stratifier:[3/7] Filtrage niveau SILVER...
+INFO:processing.silver.data_mesh_stratifier:  players_silver: 0/5103 joueurs (0.0%)
+INFO:processing.silver.data_mesh_stratifier:[4-6/7] Filtrage niveau GOLD (3 tiers)...
+INFO:processing.silver.data_mesh_stratifier:  -> GOLD Premium (métadonnées complètes)...
+INFO:processing.silver.data_mesh_stratifier:  -> GOLD Standard (données physiques)...
+INFO:processing.silver.data_mesh_stratifier:  -> GOLD Basic (identité seule)...
+INFO:processing.silver.data_mesh_stratifier:  GOLD Total: 5103 joueurs (P:0 + S:0 + B:5103)
+INFO:processing.silver.data_mesh_stratifier:[7/7] Création sous-catégorie TIER2...
+INFO:processing.silver.data_mesh_stratifier:  players_contemporary_tier2: 0 joueurs
+INFO:processing.silver.data_mesh_stratifier:[8/8] Création GOLD Legacy (deprecated)...
+INFO:processing.silver.data_mesh_stratifier:
+INFO:processing.silver.data_mesh_stratifier:============================================================
+INFO:processing.silver.data_mesh_stratifier:STRATIFICATION TERMINÉE - GOLD TIERED
+INFO:processing.silver.data_mesh_stratifier:============================================================
+INFO:processing.silver.data_mesh_stratifier:Durée: 0.09s
+INFO:processing.silver.data_mesh_stratifier:
+INFO:processing.silver.data_mesh_stratifier:Produits créés:
+INFO:processing.silver.data_mesh_stratifier:  [RAW      ] players_raw                     5103 joueurs (67.0% complet)
+INFO:processing.silver.data_mesh_stratifier:  [BRONZE   ] players_bronze                  5103 joueurs (67.0% complet)
+INFO:processing.silver.data_mesh_stratifier:  [SILVER   ] players_silver                     0 joueurs (0.0% complet)
+INFO:processing.silver.data_mesh_stratifier:  [GOLD-PREMIUM ] players_gold_premium               0 joueurs (0.0% complet)
+INFO:processing.silver.data_mesh_stratifier:  [GOLD-STANDARD] players_gold_standard              0 joueurs (0.0% complet)
+INFO:processing.silver.data_mesh_stratifier:  [GOLD-BASIC   ] players_gold_basic              5103 joueurs (67.0% complet)
+INFO:processing.silver.data_mesh_stratifier:               GOLD TOTAL                      5103 joueurs
+INFO:processing.silver.data_mesh_stratifier:  [GOLD-LEG ] players_gold                       0 joueurs (deprecated)
+INFO:processing.silver.data_mesh_stratifier:============================================================
+INFO:pipeline.players_pipeline:Generation rapports qualite...
+INFO:processing.silver.data_mesh_stratifier:Rapport qualité exporté: data\gold\data_quality_report.json
+INFO:processing.silver.data_mesh_stratifier:Lineage exporté: data\gold\lineage.json
+INFO:pipeline.players_pipeline:
+Traitement produit 'raw' [raw]:
+INFO:pipeline.players_pipeline:  Joueurs: 5103
+INFO:pipeline.players_pipeline:  Completude: 67.0%
+INFO:pipeline.players_pipeline:  Taux nulls: 33.04%
+INFO:pipeline.players_pipeline:Sauvegarde JSON: data\silver\players_raw\players.json (5103 joueurs)
+INFO:pipeline.players_pipeline:Sauvegarde: data\silver\players_raw (5103 joueurs)
+INFO:pipeline.players_pipeline:\u2705 Produit 'raw' sauvegarde: data/silver/players_raw/
+INFO:pipeline.players_pipeline:
+Traitement produit 'bronze' [bronze]:
+INFO:pipeline.players_pipeline:  Joueurs: 5103
+INFO:pipeline.players_pipeline:  Completude: 67.0%
+INFO:pipeline.players_pipeline:  Taux nulls: 33.04%
+INFO:pipeline.players_pipeline:Sauvegarde JSON: data\silver\players_bronze\players.json (5103 joueurs)
+INFO:pipeline.players_pipeline:Sauvegarde: data\silver\players_bronze (5103 joueurs)
+INFO:pipeline.players_pipeline:\u2705 Produit 'bronze' sauvegarde: data/silver/players_bronze/
+INFO:pipeline.players_pipeline:
+Traitement produit 'silver' [silver]:
+INFO:pipeline.players_pipeline:  Joueurs: 0
+INFO:pipeline.players_pipeline:  Completude: 0.0%
+INFO:pipeline.players_pipeline:  Taux nulls: 0.00%
+INFO:pipeline.players_pipeline:Sauvegarde JSON: data\silver\players_silver\players.json (0 joueurs)
+INFO:pipeline.players_pipeline:Sauvegarde: data\silver\players_silver (0 joueurs)
+INFO:pipeline.players_pipeline:\u2705 Produit 'silver' sauvegarde: data/silver/players_silver/
+INFO:pipeline.players_pipeline:
+\U0001f3c6 GOLD TIER [GOLD_PREMIUM]:
+INFO:pipeline.players_pipeline:  Joueurs: 0
+INFO:pipeline.players_pipeline:  Completude: 0.0%
+INFO:pipeline.players_pipeline:  Taux nulls: 0.00%
+INFO:pipeline.players_pipeline:Sauvegarde JSON: data\silver\players_gold_premium\players.json (0 joueurs)
+INFO:pipeline.players_pipeline:Sauvegarde: data\silver\players_gold_premium (0 joueurs)
+INFO:pipeline.players_pipeline:\u2705 Produit 'gold_premium' sauvegarde: data/silver/players_gold_premium/
+INFO:pipeline.players_pipeline:
+\U0001f3c6 GOLD TIER [GOLD_STANDARD]:
+INFO:pipeline.players_pipeline:  Joueurs: 0
+INFO:pipeline.players_pipeline:  Completude: 0.0%
+INFO:pipeline.players_pipeline:  Taux nulls: 0.00%
+INFO:pipeline.players_pipeline:Sauvegarde JSON: data\silver\players_gold_standard\players.json (0 joueurs)
+INFO:pipeline.players_pipeline:Sauvegarde: data\silver\players_gold_standard (0 joueurs)
+INFO:pipeline.players_pipeline:\u2705 Produit 'gold_standard' sauvegarde: data/silver/players_gold_standard/
+INFO:pipeline.players_pipeline:
+\U0001f3c6 GOLD TIER [GOLD_BASIC]:
+INFO:pipeline.players_pipeline:  Joueurs: 5103
+INFO:pipeline.players_pipeline:  Completude: 67.0%
+INFO:pipeline.players_pipeline:  Taux nulls: 33.04%
+INFO:pipeline.players_pipeline:Sauvegarde JSON: data\silver\players_gold_basic\players.json (5103 joueurs)
+INFO:pipeline.players_pipeline:Sauvegarde: data\silver\players_gold_basic (5103 joueurs)
+INFO:pipeline.players_pipeline:\u2705 Produit 'gold_basic' sauvegarde: data/silver/players_gold_basic/
+INFO:pipeline.players_pipeline:
+\U0001f3c6 GOLD TIER [GOLD      ]:
+INFO:pipeline.players_pipeline:  Joueurs: 0
+INFO:pipeline.players_pipeline:  Completude: 0.0%
+INFO:pipeline.players_pipeline:  Taux nulls: 0.00%
+INFO:pipeline.players_pipeline:Sauvegarde JSON: data\silver\players_gold\players.json (0 joueurs)
+INFO:pipeline.players_pipeline:Sauvegarde: data\silver\players_gold (0 joueurs)
+INFO:pipeline.players_pipeline:\u2705 Produit 'gold' sauvegarde: data/silver/players_gold/
+INFO:pipeline.players_pipeline:
+============================================================
+INFO:pipeline.players_pipeline:DATA MESH - GOLD TIERED RESUME
+INFO:pipeline.players_pipeline:============================================================
+INFO:pipeline.players_pipeline:GOLD PREMIUM :    0 joueurs
+INFO:pipeline.players_pipeline:GOLD STANDARD:    0 joueurs
+INFO:pipeline.players_pipeline:GOLD BASIC   : 5103 joueurs
+INFO:pipeline.players_pipeline:                =========================
+INFO:pipeline.players_pipeline:GOLD TOTAL:     5103 joueurs
+INFO:pipeline.players_pipeline:============================================================
+INFO:pipeline.players_pipeline:Produits crees: 7/7
+INFO:pipeline.players_pipeline:Taux reduction RAW\u2192GOLD: 100.0%
+INFO:pipeline.players_pipeline:Rapport qualite: data/gold/data_quality_report.json
+INFO:pipeline.players_pipeline:Lineage: data/gold/lineage.json
+INFO:pipeline.players_pipeline:
+============================================================
+INFO:pipeline.players_pipeline:RÉSUMÉ D'EXÉCUTION
+INFO:pipeline.players_pipeline:============================================================
+INFO:pipeline.players_pipeline:
+Durée totale: 1.5 secondes
+INFO:pipeline.players_pipeline:
+\u2705 Bronze Layer
+INFO:pipeline.players_pipeline:   Statut: success
+INFO:pipeline.players_pipeline:   Durée: 0.7s
+INFO:pipeline.players_pipeline:   Joueurs: 5103
+INFO:pipeline.players_pipeline:
+============================================================
+INFO:pipeline.players_pipeline:\u2705 PIPELINE TERMINE AVEC SUCCES
+INFO:pipeline.players_pipeline:============================================================
+
+======================================================================
+NBA ANALYTICS PLATFORM
+Architecture Medallion - Bronze -> Silver -> Gold
+======================================================================
+
+Mode: Joueurs 2000-2026 uniquement
+Optimise pour ML (recommande)
+
+Mode Stratifie: ACTIVE
+Architecture: GOLD Tiered (Premium + Standard + Basic)
+Target: all datasets (7 produits)
+
+Execution: Pipeline complet (Bronze -> Silver -> Gold)
+
+[SUCCES] Pipeline termine avec succes!
+INFO:py4j.clientserver:Closing down clientserver connection
+26/02/07 13:11:42 ERROR ShutdownHookManager: Exception while deleting Spark temp dir: C:\Users\isaac\AppData\Local\Temp\spark-b6605fbe-2e79-4cd2-addf-0dd4e310a7bb\pyspark-c8d664aa-0870-4cd3-8bae-5f31cdacf2ac
+java.nio.file.NoSuchFileException: C:\Users\isaac\AppData\Local\Temp\spark-b6605fbe-2e79-4cd2-addf-0dd4e310a7bb\pyspark-c8d664aa-0870-4cd3-8bae-5f31cdacf2ac
+	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:85)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108)
+	at java.base/sun.nio.fs.WindowsFileAttributeViews$Basic.readAttributes(WindowsFileAttributeViews.java:53)
+	at java.base/sun.nio.fs.WindowsFileAttributeViews$Basic.readAttributes(WindowsFileAttributeViews.java:38)
+	at java.base/sun.nio.fs.WindowsFileSystemProvider.readAttributes(WindowsFileSystemProvider.java:198)
+	at java.base/java.nio.file.Files.readAttributes(Files.java:1764)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursivelyUsingJavaIO(JavaUtils.java:124)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:117)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:90)
+	at org.apache.spark.util.SparkFileUtils.deleteRecursively(SparkFileUtils.scala:121)
+	at org.apache.spark.util.SparkFileUtils.deleteRecursively$(SparkFileUtils.scala:120)
+	at org.apache.spark.util.Utils$.deleteRecursively(Utils.scala:1126)
+	at org.apache.spark.util.ShutdownHookManager$.$anonfun$new$4(ShutdownHookManager.scala:65)
+	at org.apache.spark.util.ShutdownHookManager$.$anonfun$new$4$adapted(ShutdownHookManager.scala:62)
+	at scala.collection.IndexedSeqOptimized.foreach(IndexedSeqOptimized.scala:36)
+	at scala.collection.IndexedSeqOptimized.foreach$(IndexedSeqOptimized.scala:33)
+	at scala.collection.mutable.ArrayOps$ofRef.foreach(ArrayOps.scala:198)
+	at org.apache.spark.util.ShutdownHookManager$.$anonfun$new$2(ShutdownHookManager.scala:62)
+	at org.apache.spark.util.SparkShutdownHook.run(ShutdownHookManager.scala:214)
+	at org.apache.spark.util.SparkShutdownHookManager.$anonfun$runAll$2(ShutdownHookManager.scala:188)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at org.apache.spark.util.Utils$.logUncaughtExceptions(Utils.scala:1928)
+	at org.apache.spark.util.SparkShutdownHookManager.$anonfun$runAll$1(ShutdownHookManager.scala:188)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.util.Try$.apply(Try.scala:213)
+	at org.apache.spark.util.SparkShutdownHookManager.runAll(ShutdownHookManager.scala:188)
+	at org.apache.spark.util.SparkShutdownHookManager$$anon$2.run(ShutdownHookManager.scala:178)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+SUCCESS: The process with PID 30892 (child process of PID 27580) has been terminated.
+SUCCESS: The process with PID 27580 (child process of PID 38860) has been terminated.
+SUCCESS: The process with PID 38860 (child process of PID 17384) has been terminated.

@@ -1,0 +1,76 @@
+INFO:utils.caching:Cache chargé: 0 joueurs
+:: loading settings :: url = jar:file:/C:/Users/isaac/AppData/Roaming/Python/Python314/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: C:\Users\isaac\.ivy2\cache
+The jars for the packages stored in: C:\Users\isaac\.ivy2\jars
+io.delta#delta-spark_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-16c37d49-6712-4844-8f58-90b147172e39;1.0
+	confs: [default]
+	found io.delta#delta-spark_2.12;3.0.0 in central
+	found io.delta#delta-storage;3.0.0 in central
+	found org.antlr#antlr4-runtime;4.9.3 in local-m2-cache
+:: resolution report :: resolve 120ms :: artifacts dl 5ms
+	:: modules in use:
+	io.delta#delta-spark_2.12;3.0.0 from central in [default]
+	io.delta#delta-storage;3.0.0 from central in [default]
+	org.antlr#antlr4-runtime;4.9.3 from local-m2-cache in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-16c37d49-6712-4844-8f58-90b147172e39
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/5ms)
+26/02/07 11:33:16 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/02/07 11:33:17 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+INFO:processing.silver.stratification:Configuration chargee: configs\silver_stratification.yaml
+INFO:processing.silver.validators:Validateur initialise: level='contemporary', seuil_nulls=5%
+26/02/07 11:33:19 WARN SparkSession: Using an existing Spark session; only runtime SQL configurations will take effect.
+INFO:pipeline.players_pipeline:
+============================================================
+INFO:pipeline.players_pipeline:NBA PIPELINE - Bronze -> Silver -> Gold
+INFO:pipeline.players_pipeline:Mode: Stratifie (target=all)
+INFO:pipeline.players_pipeline:============================================================
+
+INFO:pipeline.players_pipeline:
+============================================================
+INFO:pipeline.players_pipeline:STEP: Bronze Layer
+INFO:pipeline.players_pipeline:============================================================
+
+INFO:processing.bronze.players_bronze:============================================================
+INFO:processing.bronze.players_bronze:COUCHE BRONZE - Ingestion données brutes
+INFO:processing.bronze.players_bronze:============================================================
+INFO:processing.bronze.players_bronze:Chargement all_players_historical.json...
+INFO:processing.bronze.players_bronze:5103 joueurs de base chargés
+INFO:processing.bronze.players_bronze:532 joueurs enrichis depuis le roster
+INFO:processing.bronze.players_bronze:48 joueurs enrichis depuis CSV
+INFO:processing.bronze.players_bronze:Filtrage 2016+: 638 joueurs à enrichir
+INFO:processing.bronze.players_bronze:Appels API nécessaires: 638 joueurs
+INFO:processing.bronze.players_bronze:API call 1/638: player 1629121
+INFO:processing.bronze.players_bronze:API call 50/638: player 1630547
+INFO:processing.bronze.players_bronze:API call 100/638: player 1626262
+INFO:utils.caching:Cache sauvegardé: 100 joueurs
+INFO:utils.caching:Checkpoint 100: 100 joueurs en cache
+INFO:processing.bronze.players_bronze:API call 150/638: player 1628422
+INFO:processing.bronze.players_bronze:API call 200/638: player 1629232
+INFO:utils.caching:Cache sauvegardé: 200 joueurs
+INFO:utils.caching:Checkpoint 200: 200 joueurs en cache
+INFO:processing.bronze.players_bronze:API call 250/638: player 1641842
+INFO:processing.bronze.players_bronze:API call 300/638: player 1627883
+INFO:utils.caching:Cache sauvegardé: 300 joueurs
+INFO:utils.caching:Checkpoint 300: 300 joueurs en cache
+INFO:processing.bronze.players_bronze:API call 350/638: player 1627815
+INFO:processing.bronze.players_bronze:API call 400/638: player 1628500
+INFO:utils.caching:Cache sauvegardé: 400 joueurs
+INFO:utils.caching:Checkpoint 400: 400 joueurs en cache
+INFO:processing.bronze.players_bronze:API call 450/638: player 1642869
+INFO:processing.bronze.players_bronze:API call 500/638: player 1642275
+INFO:utils.caching:Cache sauvegardé: 500 joueurs
+INFO:utils.caching:Checkpoint 500: 500 joueurs en cache
+INFO:processing.bronze.players_bronze:API call 550/638: player 1643141
+INFO:processing.bronze.players_bronze:API call 600/638: player 1630762
+INFO:utils.caching:Cache sauvegardé: 600 joueurs
+INFO:utils.caching:Checkpoint 600: 600 joueurs en cache

@@ -1,0 +1,372 @@
+# Architecture Data Mesh - NBA Analytics Platform
+# Version: 2.0 - Professional Edition
+# Date: 2026-02-07
+# Author: NBA Analytics Team
+#
+# Architecture: 4 datasets avec qualité explicite + 1 sous-catégorie
+# RAW → BRONZE → SILVER → GOLD
+
+version: "2.0"
+created: "2026-02-07"
+metadata:
+  owner: "NBA Analytics Team"
+  contact: "data-team@nba.com"
+  repository: "nba-analytics"
+  lineage_tracking: enabled
+  checksum_algorithm: "sha256"
+
+# ============================================================
+# PRODUITS DE DONNÉES
+# ============================================================
+
+data_products:
+  # ---------------------------------------------------------
+  # NIVEAU RAW - Exploration libre
+  # ---------------------------------------------------------
+  players_raw:
+    quality_level: raw
+    description: "Dataset complet sans validation - Pour exploration et prototypage"
+    validation:
+      enabled: false
+    output_path: "data/silver/players_raw/"
+    schema_version: "1.0"
+    consumers:
+      - data_scientists
+      - analysts
+      - bi_tools
+      - exploratory_analysis
+    retention_days: 90
+    sla:
+      freshness: "48h"
+      availability_pct: 99.5
+    
+  # ---------------------------------------------------------
+  # NIVEAU BRONZE - Analytics standard (PERMISSIF)
+  # ---------------------------------------------------------
+  players_bronze:
+    quality_level: bronze
+    description: "Données de base - Champs essentiels uniquement, conversion après"
+    validation:
+      enabled: true
+      null_threshold: 0.50  # 50% permissif pour garder tous les joueurs
+      required_fields:
+        - id
+        - full_name
+        # height_cm et weight_kg ajoutés APRÈS conversion
+      completeness_min: 30  # Minimum 30% - très permissif
+    output_path: "data/silver/players_bronze/"
+    partitions:
+      - is_active
+      - position
+    schema_version: "1.0"
+    consumers:
+      - dashboard_nba31
+      - bi_exports_nba29
+      - reporting_nba30
+    sla:
+      freshness: "24h"
+      availability_pct: 99.8
+      volume_range:
+        min: 3500
+        max: 5000
+    
+  # ---------------------------------------------------------
+  # NIVEAU SILVER - ML Features
+  # ---------------------------------------------------------
+  players_silver:
+    quality_level: silver
+    description: "Données enrichies avec métriques NBA - Pour feature engineering ML"
+    validation:
+      enabled: true
+      null_threshold: 0.40  # 40% permissif - augmente pour garder plus de joueurs
+      required_fields:
+        - id
+        - full_name
+        - height_cm
+        - weight_kg
+        # Retiré: position et is_active (trop restrictifs)
+      metrics_required: []  # Pas encore calculés
+      completeness_min: 70  # 70% au lieu de 90%
+    output_path: "data/silver/players_silver/"
+    partitions:
+      - is_active
+      - position
+    schema_version: "1.1"
+    dependencies:
+      - players_bronze
+      - metrics_calculation_nba18
+    consumers:
+      - feature_engineering_nba21
+      - clustering_nba23
+      - progression_detection_nba24
+    sla:
+      freshness: "24h"
+      availability_pct: 99.9
+      volume_range:
+        min: 1000
+        max: 2000
+    
+  # ---------------------------------------------------------
+  # NIVEAU GOLD - Architecture Tiered (3 niveaux)
+  # ---------------------------------------------------------
+  
+  # GOLD PREMIUM: Joueurs modernes avec toutes les métadonnées
+  # ~150 joueurs - Pour ML production haute précision
+  players_gold_premium:
+    quality_level: gold
+    description: "Dataset ML-ready Premium - Joueurs actifs avec métadonnées complètes (position, équipe, statut)"
+    validation:
+      enabled: true
+      null_threshold: 0.10  # 10% max - Très strict
+      required_fields:
+        - id
+        - full_name
+        - height_cm
+        - weight_kg
+        - position
+        - is_active
+        - team_id
+      completeness_min: 90  # 90% minimum
+      metrics_required: []
+    output_path: "data/silver/players_gold_premium/"
+    partitions:
+      - is_active
+      - position
+    schema_version: "2.0"
+    dependencies:
+      - players_silver
+      - feature_engineering_nba21
+    consumers:
+      - ml_classification_nba22_production
+      - ml_regression_nba22_production
+    sla:
+      freshness: "24h"
+      availability_pct: 99.9
+      volume_range:
+        min: 100
+        max: 300
+      quality_contract:
+        accuracy_threshold: 0.85
+        feature_coverage: 100
+    
+  # GOLD STANDARD: Joueurs avec données physiques complètes
+  # ~500 joueurs - Pour analyses historiques et clustering
+  players_gold_standard:
+    quality_level: gold
+    description: "Dataset ML-ready Standard - Joueurs avec données physiques (taille/poids) + métadonnées optionnelles"
+    validation:
+      enabled: true
+      null_threshold: 0.20  # 20% max
+      required_fields:
+        - id
+        - full_name
+        - height_cm
+        - weight_kg
+      optional_fields:
+        - position
+        - is_active
+        - team_id
+        - birth_date
+      completeness_min: 75  # 75% minimum (champs requis uniquement)
+      metrics_required: []
+    output_path: "data/silver/players_gold_standard/"
+    partitions:
+      - is_active
+    schema_version: "2.0"
+    dependencies:
+      - players_silver
+    consumers:
+      - ml_clustering_nba22
+      - progression_detection_nba24
+      - dashboard_nba31
+    sla:
+      freshness: "24h"
+      availability_pct: 99.5
+      volume_range:
+        min: 400
+        max: 800
+      quality_contract:
+        accuracy_threshold: 0.75
+        feature_coverage: 80
+    
+  # GOLD BASIC: Joueurs avec identité confirmée
+  # ~1,000+ joueurs - Pour statistiques de carrière et recherches
+  players_gold_basic:
+    quality_level: gold
+    description: "Dataset ML-ready Basic - Tous les joueurs avec identité confirmée, métadonnées partielles acceptées"
+    validation:
+      enabled: true
+      null_threshold: 0.35  # 35% max - Très permissif
+      required_fields:
+        - id
+        - full_name
+      optional_fields:
+        - height_cm
+        - weight_kg
+        - position
+        - birth_date
+        - from_year
+        - to_year
+      completeness_min: 50  # 50% minimum
+      metrics_required: []
+    output_path: "data/silver/players_gold_basic/"
+    partitions:
+      - from_year
+    schema_version: "2.0"
+    dependencies:
+      - players_bronze
+    consumers:
+      - exploratory_analysis
+      - career_statistics
+      - historical_research
+    sla:
+      freshness: "48h"
+      availability_pct: 99.0
+      volume_range:
+        min: 800
+        max: 1500
+      quality_contract:
+        accuracy_threshold: 0.60
+        feature_coverage: 50
+
+  # ---------------------------------------------------------
+  # NIVEAU GOLD - Legacy (conservé pour backward compatibility)
+  # ---------------------------------------------------------
+  players_gold:
+    quality_level: gold
+    description: "[DEPRECATED] Dataset ML-ready optimisé - Utilisez players_gold_premium à la place"
+    validation:
+      enabled: true
+      null_threshold: 0.20
+      required_fields:
+        - id
+        - full_name
+        - height_cm
+        - weight_kg
+        - position
+        - is_active
+      completeness: 85
+      metrics_required: []
+    output_path: "data/silver/players_gold/"
+    partitions:
+      - is_active
+    schema_version: "2.0"
+    deprecated: true
+    replacement: "players_gold_premium"
+    dependencies:
+      - players_silver
+    consumers:
+      - legacy_ml_models
+    sla:
+      freshness: "24h"
+      availability_pct: 99.9
+      volume_range:
+        min: 100
+        max: 200
+    
+  # ---------------------------------------------------------
+  # SOUS-CATÉGORIE: Contemporary Tier 2
+  # ---------------------------------------------------------
+  players_contemporary_tier2:
+    quality_level: silver_tier2
+    description: "Joueurs modernes (2016+) avec données partielles - Usage analytics uniquement"
+    validation:
+      enabled: true
+      null_threshold: 0.15
+      required_fields:
+        - id
+        - full_name
+        - height_cm
+        - weight_kg
+      completeness_min: 85
+    output_path: "data/silver/players_contemporary_tier2/"
+    source_filter:
+      id_min: 1620000
+      include_critical: true
+      exclude_from_gold: true
+    partitions:
+      - is_active
+    schema_version: "1.0"
+    dependencies:
+      - players_raw
+    consumers:
+      - dashboard_nba31
+      - exploratory_analysis
+      - rookie_tracking
+    sla:
+      freshness: "48h"
+      availability_pct: 99.5
+      volume_range:
+        min: 200
+        max: 400
+
+# ============================================================
+# MÉTRIQUES ET MONITORING
+# ============================================================
+
+quality_thresholds:
+  raw:
+    null_acceptance: 100
+    completeness: 0
+  bronze:
+    null_acceptance: 20
+    completeness: 80
+  silver:
+    null_acceptance: 10
+    completeness: 90
+  gold:
+    null_acceptance: 3
+    completeness: 100
+  silver_tier2:
+    null_acceptance: 15
+    completeness: 85
+
+alerting:
+  enabled: true
+  channels:
+    - log
+    - file
+  rules:
+    - condition: "volume < sla.min"
+      severity: warning
+      message: "Volume de données inférieur au SLA"
+    - condition: "null_rate > threshold"
+      severity: error
+      message: "Taux de nulls supérieur au seuil"
+    - condition: "freshness > 48h"
+      severity: critical
+      message: "Données obsolètes"
+
+# ============================================================
+# LÉGENDES NBA (IDs critiques)
+# ============================================================
+
+critical_player_ids:
+  - 23      # Michael Jordan
+  - 977     # Kobe Bryant
+  - 192     # Shaquille O'Neal
+  - 406     # Allen Iverson
+  - 504     # Tim Duncan
+  - 397     # Kevin Garnett
+  - 87      # Hakeem Olajuwon
+  - 56      # David Robinson
+  - 144     # Karl Malone
+  - 417     # Charles Barkley
+  - 937     # John Stockton
+  - 914     # Clyde Drexler
+  - 224     # Patrick Ewing
+  - 346     # Dominique Wilkins
+  - 299     # Reggie Miller
+  - 297     # Gary Payton
+  - 296     # Shawn Kemp
+  - 769     # Alonzo Mourning
+
+# ============================================================
+# NOTES
+# ============================================================
+
+notes:
+  - "Seuil GOLD à 3% pour garantir qualité ML maximale"
+  - "Tier2 pour joueurs récents avec données partielles"
+  - "Partitions optimisées pour requêtes fréquentes"
+  - "Lineage tracking activé pour audit complet"

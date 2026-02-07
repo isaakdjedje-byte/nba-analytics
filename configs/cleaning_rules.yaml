@@ -1,0 +1,135 @@
+# NBA-17: Règles de nettoyage et validation des données joueurs
+# Format: YAML
+# Dernière mise à jour: 2026-02-06
+
+validation:
+  # Colonnes critiques - suppression si null
+  critical_columns:
+    - id
+    - full_name
+  
+  # Plages de valeurs acceptables
+  ranges:
+    height_cm:
+      min: 160
+      max: 240
+      unit: "cm"
+      description: "Taille en centimètres"
+    
+    weight_kg:
+      min: 60
+      max: 160
+      unit: "kg"
+      description: "Poids en kilogrammes"
+    
+    age:
+      min: 18
+      max: 45
+      unit: "years"
+      description: "Âge en années"
+  
+  # Taux de nulls maximum
+  null_threshold:
+    global: 0.05  # 5% global
+    per_column: 0.10  # 10% par colonne
+  
+  # Positions standardisées
+  positions:
+    valid_values:
+      - "G"      # Guard
+      - "F"      # Forward
+      - "C"      # Center
+      - "G-F"    # Guard-Forward
+      - "F-G"    # Forward-Guard
+      - "F-C"    # Forward-Center
+      - "C-F"    # Center-Forward
+      - "Unknown"  # Pour imputation
+
+# Conversion unités
+conversion:
+  height:
+    from_format: "feet-inches"  # Ex: "6-8"
+    to_unit: "cm"
+    formula: "(feet * 30.48) + (inches * 2.54)"
+  
+  weight:
+    from_unit: "lbs"
+    to_unit: "kg"
+    factor: 0.453592
+
+# Imputation statistique
+imputation:
+  enabled: true
+  method: "median_by_position_era"
+  
+  # Époques pour imputation
+  eras:
+    early_nba:    # 1946-1960
+      from_year: 1946
+      to_year: 1960
+    sixties:      # 1960-1970
+      from_year: 1960
+      to_year: 1970
+    seventies:    # 1970-1980
+      from_year: 1970
+      to_year: 1980
+    eighties:     # 1980-1990
+      from_year: 1980
+      to_year: 1990
+    nineties:     # 1990-2000
+      from_year: 1990
+      to_year: 2000
+    two_thousands: # 2000-2010
+      from_year: 2000
+      to_year: 2010
+    modern:       # 2010+
+      from_year: 2010
+      to_year: 2030
+  
+  # Bruit aléatoire pour imputation (± valeur)
+  noise:
+    height_cm: 2
+    weight_kg: 2
+
+# Enrichissement API
+api_enrichment:
+  enabled: true
+  endpoint: "CommonPlayerInfo"
+  rate_limit_seconds: 1
+  max_retries: 3
+  retry_backoff_base: 2
+  
+  # Cache
+  cache_enabled: true
+  cache_file: "data/raw/players_enriched_cache.json"
+  
+  # Mapping colonnes API
+  column_mapping:
+    PERSON_ID: "id"
+    HEIGHT: "height"
+    WEIGHT: "weight"
+    POSITION: "position"
+    BIRTHDATE: "birth_date"
+    FROM_YEAR: "from_year"
+    TO_YEAR: "to_year"
+
+# Fichiers supplementaux
+supplemental:
+  critical_players_csv: "data/supplemental/players_critical.csv"
+  
+# Partitionnement output
+output:
+  format: "delta"
+  path: "data/silver/players_cleaned"
+  partitions:
+    - "is_active"
+    - "position"
+  
+  # Rapport qualité
+  report_file: "data/silver/players_cleaned_stats.json"
+
+# Logging
+logging:
+  level: "INFO"
+  file_pattern: "logs/cleaning_{timestamp}.log"
+  format: "%(asctime)s - %(levelname)s - %(message)s"

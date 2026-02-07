@@ -1,0 +1,68 @@
+:: loading settings :: url = jar:file:/C:/Users/isaac/AppData/Roaming/Python/Python314/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: C:\Users\isaac\.ivy2\cache
+The jars for the packages stored in: C:\Users\isaac\.ivy2\jars
+io.delta#delta-spark_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-cfc95ba3-76d4-413b-9463-c94bcbc2a2bd;1.0
+	confs: [default]
+	found io.delta#delta-spark_2.12;3.0.0 in central
+	found io.delta#delta-storage;3.0.0 in central
+	found org.antlr#antlr4-runtime;4.9.3 in local-m2-cache
+:: resolution report :: resolve 319ms :: artifacts dl 30ms
+	:: modules in use:
+	io.delta#delta-spark_2.12;3.0.0 from central in [default]
+	io.delta#delta-storage;3.0.0 from central in [default]
+	org.antlr#antlr4-runtime;4.9.3 from local-m2-cache in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-cfc95ba3-76d4-413b-9463-c94bcbc2a2bd
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/12ms)
+26/02/06 23:39:54 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/02/06 23:39:56 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+2026-02-06 23:40:00,078 - INFO - ============================================================
+2026-02-06 23:40:00,078 - INFO - NBA-17: Nettoyage des données joueurs
+2026-02-06 23:40:00,078 - INFO - Période: 2000-2026 (joueurs ayant joué pendant cette période)
+2026-02-06 23:40:00,078 - INFO - ============================================================
+2026-02-06 23:40:00,078 - INFO - Chargement et fusion des sources de données...
+2026-02-06 23:40:00,078 - INFO - Chargement all_players_historical.json...
+2026-02-06 23:40:00,112 - INFO - 5103 joueurs de base chargés
+2026-02-06 23:40:00,112 - INFO - Enrichissement avec roster 2023-24...
+2026-02-06 23:40:00,124 - INFO - 532 joueurs enrichis depuis le roster
+2026-02-06 23:40:00,124 - INFO - Enrichissement avec CSV critiques...
+2026-02-06 23:40:01,309 - INFO - 48 joueurs enrichis depuis CSV
+2026-02-06 23:40:01,315 - INFO - Filtrage strict 2016+: 638 joueurs à enrichir (vs 4541 initiaux)
+2026-02-06 23:40:01,315 - INFO - Enrichissement API pour 638 joueurs...
+2026-02-06 23:40:03,153 - INFO - Cache chargé: 375 joueurs en cache
+2026-02-06 23:40:03,154 - INFO - 186 joueurs déjà en cache (pas d'appel API)
+2026-02-06 23:40:03,155 - INFO - Appels API nécessaires: 452 joueurs
+2026-02-06 23:40:03,155 - INFO - API call 1/452: player 1626147
+2026-02-06 23:41:07,073 - INFO - API call 50/452: player 1630165
+2026-02-06 23:42:08,820 - INFO - API call 100/452: player 1628993
+2026-02-06 23:42:10,059 - INFO - Cache API sauvegardé: 475 joueurs
+2026-02-06 23:43:09,134 - INFO - API call 150/452: player 1629665
+2026-02-06 23:44:10,879 - INFO - API call 200/452: player 1626175
+2026-02-06 23:44:14,811 - INFO - Cache API sauvegardé: 574 joueurs
+2026-02-06 23:45:15,422 - INFO - API call 250/452: player 1629671
+2026-02-06 23:46:18,044 - INFO - API call 300/452: player 1641810
+2026-02-06 23:46:19,423 - INFO - Cache API sauvegardé: 674 joueurs
+2026-02-06 23:47:17,664 - INFO - API call 350/452: player 1629034
+2026-02-06 23:48:20,016 - INFO - API call 400/452: player 1642266
+2026-02-06 23:48:21,307 - INFO - Cache API sauvegardé: 772 joueurs
+2026-02-06 23:49:22,642 - INFO - API call 450/452: player 1627790
+2026-02-06 23:49:25,373 - INFO - Cache API sauvegardé: 824 joueurs
+2026-02-06 23:49:25,373 - INFO - 635 joueurs enrichis depuis API
+2026-02-06 23:49:25,374 - INFO - Nettoyage et conversion des données...
+2026-02-06 23:49:25,420 - INFO - 5103 joueurs nettoyés
+2026-02-06 23:49:25,420 - INFO - Validation des données...
+2026-02-06 23:49:25,428 - ERROR - Taux nulls trop élevé: 14.01% > 5.00%
+2026-02-06 23:49:25,428 - ERROR - Validation échouée!
+2026-02-06 23:49:25,464 - INFO - Closing down clientserver connection
+SUCCESS: The process with PID 38804 (child process of PID 29156) has been terminated.
+SUCCESS: The process with PID 29156 (child process of PID 33708) has been terminated.
+SUCCESS: The process with PID 33708 (child process of PID 39876) has been terminated.

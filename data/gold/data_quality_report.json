@@ -1,0 +1,80 @@
+{
+  "report_version": "2.0",
+  "generated_at": "2026-02-07T13:45:03.419835",
+  "pipeline": "data-mesh-stratification",
+  "summary": {
+    "total_products": 7,
+    "total_source_players": 20412,
+    "validation_overall": false
+  },
+  "products": {
+    "raw": {
+      "quality_level": "raw",
+      "player_count": 5103,
+      "completeness_pct": 66.96,
+      "null_rate": 33.04,
+      "validation_passed": true,
+      "output_path": "data/silver/players_raw/",
+      "lineage_steps": 1
+    },
+    "bronze": {
+      "quality_level": "bronze",
+      "player_count": 5103,
+      "completeness_pct": 66.96,
+      "null_rate": 33.04,
+      "validation_passed": true,
+      "output_path": "data/silver/players_bronze/",
+      "lineage_steps": 1
+    },
+    "silver": {
+      "quality_level": "silver",
+      "player_count": 5103,
+      "completeness_pct": 66.96,
+      "null_rate": 33.04,
+      "validation_passed": true,
+      "output_path": "data/silver/players_silver/",
+      "lineage_steps": 1
+    },
+    "gold_premium": {
+      "quality_level": "gold",
+      "player_count": 0,
+      "completeness_pct": 0.0,
+      "null_rate": 0.0,
+      "validation_passed": false,
+      "output_path": "data/silver/players_gold_premium/",
+      "lineage_steps": 1
+    },
+    "gold_standard": {
+      "quality_level": "gold",
+      "player_count": 5103,
+      "completeness_pct": 66.96,
+      "null_rate": 33.04,
+      "validation_passed": true,
+      "output_path": "data/silver/players_gold_standard/",
+      "lineage_steps": 1
+    },
+    "gold_basic": {
+      "quality_level": "gold",
+      "player_count": 0,
+      "completeness_pct": 0.0,
+      "null_rate": 0.0,
+      "validation_passed": false,
+      "output_path": "data/silver/players_gold_basic/",
+      "lineage_steps": 1
+    },
+    "gold": {
+      "quality_level": "gold",
+      "player_count": 0,
+      "completeness_pct": 0.0,
+      "null_rate": 0.0,
+      "validation_passed": false,
+      "output_path": "data/silver/players_gold/",
+      "lineage_steps": 1
+    }
+  },
+  "global_metrics": {
+    "data_reduction_rate": 100.0,
+    "quality_improvement": -66.96,
+    "tier2_extraction": 0
+  }
+}
