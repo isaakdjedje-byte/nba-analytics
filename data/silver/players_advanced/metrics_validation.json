@@ -1,0 +1,54 @@
+{
+  "validation_date": "2026-02-07T14:16:42.494942",
+  "ticket": "NBA-18",
+  "status": "COMPLETED",
+  "results": {
+    "total_players": 5103,
+    "metrics_calculated": [
+      "per",
+      "ts_pct",
+      "efg_pct",
+      "usg_pct",
+      "game_score",
+      "bmi"
+    ],
+    "statistics": {
+      "bmi": {
+        "mean": 24.72,
+        "min": 18.69,
+        "max": 55.36,
+        "count": 5103
+      },
+      "per": {
+        "mean": 0,
+        "min": 0,
+        "max": 0,
+        "count": 0
+      }
+    }
+  },
+  "validation_tests": {
+    "ts_lebron": {
+      "calculated": 0.63,
+      "expected": 0.629,
+      "status": "PASS"
+    },
+    "bmi_lebron": {
+      "calculated": 26.6,
+      "expected": 26.6,
+      "status": "PASS"
+    },
+    "per_range": {
+      "min": 0,
+      "max": 40,
+      "status": "PASS"
+    },
+    "division_by_zero": {
+      "status": "PASS"
+    },
+    "output_file": {
+      "players": 5103,
+      "status": "PASS"
+    }
+  }
+}
