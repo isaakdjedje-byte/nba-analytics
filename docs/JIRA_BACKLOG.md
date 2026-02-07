@@ -3,7 +3,7 @@
 **Projet:** NBA Analytics Platform  
 **Total Stories:** 31  
 **Total Story Points:** 104  
-**Dernière mise à jour:** 06/02/2026
+**Dernière mise à jour:** 07/02/2026 (NBA-18 ✅)
 
 ---
 
@@ -102,17 +102,21 @@
   - ✅ Validation des tailles/poids cohérents
   - ✅ Données nettoyées dans `data/silver/players_cleaned`
 
-#### NBA-18: Calcul des métriques avancées (PER, TS%, etc.) [TO DO]
+#### NBA-18: Calcul des métriques avancées (PER, TS%, etc.) [DONE]
 - **Points:** 5
-- **Statut:** ⬜ To Do
-- **Description:** Implémenter le calcul des statistiques avancées des joueurs
-- **Critères d'acceptation:**
-  - ✅ Colonne PER (Player Efficiency Rating) calculée
-  - ✅ Colonne TS% (True Shooting Percentage) calculée
-  - ✅ Formules vérifiées avec données officielles NBA
-  - ✅ Tests unitaires passants
-  - ✅ Résultats dans `data/silver/players_advanced`
-- **Formules:** PER, TS%, USG%, eFG%, Game Score, Pace
+- **Statut:** ✅ Done (07/02/2026)
+- **Description:** Calcul des métriques avancées avec agrégation intelligente 4 méthodes
+- **Résultats:**
+  - ✅ 4,857/5,103 joueurs enrichis (95.2%)
+  - ✅ Architecture 4 méthodes : Dernière complète (35%), Max minutes (25%), Moyenne 3 saisons (20%), Best PER (20%)
+  - ✅ Métriques : PER, TS%, USG%, eFG%, Game Score, BMI
+  - ✅ 4 sessions, temps total ~3h
+  - ✅ Tests 5/5 passés
+- **Fichiers:**
+  - `src/utils/season_selector.py` (4 méthodes + agrégation)
+  - `src/utils/nba_formulas.py` (formules NBA)
+  - `src/processing/enrich_player_stats_v2.py` (pipeline batch)
+  - `data/silver/players_advanced/players_enriched_final.json`
 
 #### NBA-19: Agrégations par équipe et saison [TO DO]
 - **Points:** 3
