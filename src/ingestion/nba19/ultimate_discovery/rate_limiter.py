@@ -1,6 +1,6 @@
 """
 NBA-19 Ultimate Discovery - Rate Limiter
-Gestion intelligente du rate limiting API avec pauses programmées
+Gestion intelligente du rate limiting API avec pauses programmees
 """
 import time
 from typing import Optional
@@ -18,7 +18,7 @@ class RateLimitConfig:
 
 class RateLimiter:
     """
-    Rate Limiter avec pauses programmées pour respecter les limites API
+    Rate Limiter avec pauses programmees pour respecter les limites API
     
     Usage:
         limiter = RateLimiter(config)
@@ -37,14 +37,14 @@ class RateLimiter:
     
     def wait_if_needed(self):
         """
-        Attendre si nécessaire avant la prochaine requête
-        Gère à la fois le délai entre requêtes et les pauses programmées
+        Attendre si necessaire avant la prochaine requete
+        Gere a la fois le delai entre requetes et les pauses programmees
         """
-        # Vérifier si on doit faire une pause programmée
+        # Verifier si on doit faire une pause programmee
         if self.request_count > 0 and self.request_count % self.config.pause_after_requests == 0:
             self._take_scheduled_pause()
         
-        # Attendre le délai minimum entre requêtes
+        # Attendre le delai minimum entre requetes
         if self.last_request_time is not None:
             elapsed = time.time() - self.last_request_time
             if elapsed < self.config.delay_seconds:
@@ -52,15 +52,15 @@ class RateLimiter:
                 time.sleep(sleep_time)
     
     def record_request(self):
-        """Enregistrer qu'une requête a été faite"""
+        """Enregistrer qu'une requete a ete faite"""
         self.request_count += 1
         self.last_request_time = time.time()
     
     def _take_scheduled_pause(self):
-        """Faire une pause programmée"""
-        print(f"\n⏸️  Pause programmée après {self.request_count} requêtes")
-        print(f"   Durée: {self.config.pause_duration}s")
-        print(f"   Reprise à: {time.strftime('%H:%M:%S', time.localtime(time.time() + self.config.pause_duration))}\n")
+        """Faire une pause programmee"""
+        print(f"\n⏸️  Pause programmee apres {self.request_count} requetes")
+        print(f"   Duree: {self.config.pause_duration}s")
+        print(f"   Reprise a: {time.strftime('%H:%M:%S', time.localtime(time.time() + self.config.pause_duration))}\n")
         
         time.sleep(self.config.pause_duration)
         self.total_pause_time += self.config.pause_duration
@@ -80,7 +80,7 @@ class RateLimiter:
 
 class AdaptiveRateLimiter(RateLimiter):
     """
-    Rate Limiter adaptatif qui ajuste le délai en fonction des erreurs
+    Rate Limiter adaptatif qui ajuste le delai en fonction des erreurs
     """
     
     def __init__(self, config: Optional[RateLimitConfig] = None):
@@ -91,25 +91,25 @@ class AdaptiveRateLimiter(RateLimiter):
         self.max_delay = 5.0
     
     def record_error(self):
-        """Enregistrer une erreur et ajuster le délai"""
+        """Enregistrer une erreur et ajuster le delai"""
         self.error_count += 1
         
-        # Augmenter le délai si trop d'erreurs
+        # Augmenter le delai si trop d'erreurs
         if self.error_count > 5:
             self.current_delay = min(self.current_delay * 1.2, self.max_delay)
-            print(f"⚠️  Augmentation du délai à {self.current_delay:.1f}s (erreurs: {self.error_count})")
+            print(f"[WARN]  Augmentation du delai a {self.current_delay:.1f}s (erreurs: {self.error_count})")
     
     def record_success(self):
-        """Enregistrer un succès et potentiellement réduire le délai"""
+        """Enregistrer un succes et potentiellement reduire le delai"""
         if self.error_count > 0:
             self.error_count = max(0, self.error_count - 1)
             
-            # Réduire lentement le délai après des succès
+            # Reduire lentement le delai apres des succes
             if self.error_count == 0 and self.current_delay > self.config.delay_seconds:
                 self.current_delay = max(self.current_delay * 0.95, self.config.delay_seconds)
     
     def wait_if_needed(self):
-        """Surcharge avec le délai adaptatif"""
+        """Surcharge avec le delai adaptatif"""
         if self.request_count > 0 and self.request_count % self.config.pause_after_requests == 0:
             self._take_scheduled_pause()
         

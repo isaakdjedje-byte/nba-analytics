@@ -1,6 +1,6 @@
 """
 NBA-19 Ultimate Discovery System - Configuration
-Configuration complète pour le système de discovery ultime
+Configuration complete pour le systeme de discovery ultime
 """
 from dataclasses import dataclass, field
 from typing import List, Dict, Optional
@@ -9,11 +9,11 @@ import os
 
 
 class QualityTier(Enum):
-    """Niveaux de qualité des données"""
-    GOLD = "gold"       # API vérifiée + cross-validée
+    """Niveaux de qualite des donnees"""
+    GOLD = "gold"       # API verifiee + cross-validee
     SILVER = "silver"   # API avec incertitudes
-    BRONZE = "bronze"   # Inférence/heuristique
-    UNKNOWN = "unknown" # Pas de données trouvées
+    BRONZE = "bronze"   # Inference/heuristique
+    UNKNOWN = "unknown" # Pas de donnees trouvees
 
 
 class DiscoverySegment(Enum):
@@ -27,16 +27,16 @@ class DiscoverySegment(Enum):
 class DiscoveryConfig:
     """Configuration principale du discovery"""
     
-    # === Paramètres API ===
+    # === Parametres API ===
     REQUEST_DELAY_SECONDS: float = 2.0  # 1 req / 2 sec = 30 req/min
     REQUEST_TIMEOUT: int = 30
     MAX_RETRIES: int = 3
     RETRY_BACKOFF_BASE: float = 2.0  # 2s, 4s, 8s
     
     # === Rate Limiting Global ===
-    RATE_LIMIT_PAUSE_AFTER: int = 100  # Pause après 100 requêtes
+    RATE_LIMIT_PAUSE_AFTER: int = 100  # Pause apres 100 requetes
     RATE_LIMIT_PAUSE_DURATION: int = 30  # 30 secondes de pause
-    MAX_WORKERS: int = 1  # Séquentiel pour respecter rate limit global
+    MAX_WORKERS: int = 1  # Sequentiel pour respecter rate limit global
     
     # === Checkpoints ===
     CHECKPOINT_INTERVAL: int = 50  # Toutes les 50 joueurs
@@ -61,7 +61,7 @@ class DiscoveryConfig:
         "2022-23", "2023-24", "2024-25"
     ])
     
-    # === Qualité ===
+    # === Qualite ===
     QUALITY_THRESHOLDS: Dict[str, float] = field(default_factory=lambda: {
         "gold_min_confidence": 0.95,
         "silver_min_confidence": 0.70,
@@ -69,7 +69,7 @@ class DiscoveryConfig:
     })
     
     def __post_init__(self):
-        # Créer les répertoires nécessaires
+        # Creer les repertoires necessaires
         os.makedirs(self.CHECKPOINT_DIR, exist_ok=True)
         os.makedirs(self.OUTPUT_DIR, exist_ok=True)
         os.makedirs(self.LOGS_DIR, exist_ok=True)

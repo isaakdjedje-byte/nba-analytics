@@ -1,8 +1,8 @@
 """
 NBA-19 Phase 2: Discovery Engine (Version Test - 100 joueurs)
 
-Moteur de discovery pour trouver les équipes des joueurs via PlayerCareerStats API.
-Version limitée à 100 joueurs pour test rapide.
+Moteur de discovery pour trouver les equipes des joueurs via PlayerCareerStats API.
+Version limitee a 100 joueurs pour test rapide.
 
 Usage:
     python phase2_discovery_engine.py --segment A --limit 100
@@ -15,18 +15,25 @@ import argparse
 from datetime import datetime
 from typing import Dict, List, Optional
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', '..'))
+# Imports relatifs
+from circuit_breaker import CircuitBreaker, CircuitBreakerOpen
+from rate_limiter import RateLimiter, RateLimitConfig
 
-from nba_api.stats.endpoints import PlayerCareerStats
-from src.ingestion.nba19.ultimate_discovery.circuit_breaker import CircuitBreaker, CircuitBreakerOpen
-from src.ingestion.nba19.ultimate_discovery.rate_limiter import RateLimiter
+# Import NBA API
+try:
+    from nba_api.stats.endpoints import PlayerCareerStats
+except ImportError:
+    # Si lance depuis le repo principal
+    sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', '..'))
+    from nba_api.stats.endpoints import PlayerCareerStats
 
 
 class DiscoveryEngine:
-    """Moteur de discovery pour trouver les équipes des joueurs"""
+    """Moteur de discovery pour trouver les equipes des joueurs"""
     
     def __init__(self):
-        self.rate_limiter = RateLimiter(delay_seconds=2.0)
+        config = RateLimitConfig(delay_seconds=2.0)
+        self.rate_limiter = RateLimiter(config)
         self.circuit_breaker = CircuitBreaker(failure_threshold=0.10)
         
         self.successful_mappings = []
@@ -46,10 +53,10 @@ class DiscoveryEngine:
         retry: int = 0
     ) -> Optional[List[Dict]]:
         """
-        Découvrir les équipes d'un joueur via PlayerCareerStats
+        Decouvrir les equipes d'un joueur via PlayerCareerStats
         
         Returns:
-            Liste des mappings saison-équipe ou None si échec
+            Liste des mappings saison-equipe ou None si echec
         """
         try:
             # Appel API
@@ -66,11 +73,11 @@ class DiscoveryEngine:
                 team_abbr = row.get('TEAM_ABBREVIATION', '')
                 games = row.get('GP', 0)
                 
-                # Filtrer les entrées TOT (team_id = 0)
+                # Filtrer les entrees TOT (team_id = 0)
                 if team_id == 0 or team_abbr == 'TOT':
                     continue
                 
-                # Filtrer pour les saisons qui nous intéressent
+                # Filtrer pour les saisons qui nous interessent
                 if season and team_id:
                     mappings.append({
                         'player_id': player_id,
@@ -89,11 +96,11 @@ class DiscoveryEngine:
         except Exception as e:
             if retry < 2:  # 3 tentatives max
                 wait_time = 2 ** retry
-                print(f"      ⚠️ Retry {retry + 1}/3 dans {wait_time}s...")
+                print(f"      [WARN] Retry {retry + 1}/3 dans {wait_time}s...")
                 time.sleep(wait_time)
                 return self.discover_player_teams(player_id, player_name, retry + 1)
             else:
-                print(f"      ❌ Échec après 3 tentatives: {e}")
+                print(f"      [FAIL] Echec apres 3 tentatives: {e}")
                 return None
     
     def process_players(self, players: List[Dict], segment_name: str):
@@ -101,7 +108,7 @@ class DiscoveryEngine:
         total = len(players)
         self.stats['total'] = total
         
-        print(f"\n🚀 Démarrage du discovery: {total} joueurs (Segment {segment_name})")
+        print(f"\n[START] Demarrage du discovery: {total} joueurs (Segment {segment_name})")
         print(f"   Rate limit: 1 req / 2 sec")
         print(f"   Estimation: ~{total * 2 // 60} minutes\n")
         
@@ -112,13 +119,13 @@ class DiscoveryEngine:
             # Progress
             if idx % 10 == 0:
                 progress = (idx / total) * 100
-                print(f"\n📊 Progression: {idx}/{total} ({progress:.0f}%)")
+                print(f"\n[STATS] Progression: {idx}/{total} ({progress:.0f}%)")
             
             print(f"[{idx:3d}/{total}] {player_name[:30]:30}...", end=" ", flush=True)
             
             # Circuit breaker check
             if not self.circuit_breaker.can_execute():
-                print("⛔ CIRCUIT OUVERT - Arrêt")
+                print("[STOP] CIRCUIT OUVERT - Arret")
                 break
             
             # Rate limiting
@@ -134,7 +141,7 @@ class DiscoveryEngine:
                     self.stats['success'] += 1
                     self.stats['teams_found'] += len(mappings)
                     self.circuit_breaker.record_success()
-                    print(f"✅ {len(mappings)} équipes")
+                    print(f"[OK] {len(mappings)} equipes")
                 else:
                     self.failed_players.append({
                         'player_id': player_id,
@@ -143,7 +150,7 @@ class DiscoveryEngine:
                     })
                     self.stats['failed'] += 1
                     self.circuit_breaker.record_failure()
-                    print("❌ Pas de données")
+                    print("[FAIL] Pas de donnees")
                     
             except Exception as e:
                 self.rate_limiter.record_request()
@@ -154,13 +161,13 @@ class DiscoveryEngine:
                 })
                 self.stats['failed'] += 1
                 self.circuit_breaker.record_failure()
-                print(f"❌ Erreur: {e}")
+                print(f"[FAIL] Erreur: {e}")
             
             # Checkpoint tous les 20 joueurs
             if idx % 20 == 0:
                 self._save_checkpoint(idx, segment_name)
         
-        # Résumé final
+        # Resume final
         self._print_summary()
     
     def _save_checkpoint(self, index: int, segment: str):
@@ -180,32 +187,32 @@ class DiscoveryEngine:
         with open(checkpoint_file, 'w') as f:
             json.dump(data, f, indent=2)
         
-        print(f"   💾 Checkpoint sauvegardé")
+        print(f"   [SAVE] Checkpoint sauvegarde")
     
     def _print_summary(self):
-        """Afficher le résumé"""
+        """Afficher le resume"""
         print("\n" + "=" * 60)
-        print("📊 RÉSUMÉ DU DISCOVERY")
+        print("[STATS] RESUME DU DISCOVERY")
         print("=" * 60)
-        print(f"👥 Total joueurs: {self.stats['total']}")
-        print(f"✅ Succès: {self.stats['success']} ({self.stats['success']/self.stats['total']*100:.1f}%)")
-        print(f"❌ Échecs: {self.stats['failed']}")
-        print(f"🏀 Équipes trouvées: {self.stats['teams_found']}")
+        print(f"[USERS] Total joueurs: {self.stats['total']}")
+        print(f"[OK] Succes: {self.stats['success']} ({self.stats['success']/self.stats['total']*100:.1f}%)")
+        print(f"[FAIL] Echecs: {self.stats['failed']}")
+        print(f"[NBA] Equipes trouvees: {self.stats['teams_found']}")
         
         if self.successful_mappings:
             avg_teams = self.stats['teams_found'] / self.stats['success']
-            print(f"📈 Moyenne équipes/joueur: {avg_teams:.1f}")
+            print(f"[UP] Moyenne equipes/joueur: {avg_teams:.1f}")
         
         print("=" * 60)
     
     def save_results(self, segment: str):
-        """Sauvegarder les résultats"""
+        """Sauvegarder les resultats"""
         output_dir = "logs/nba19_discovery/results"
         os.makedirs(output_dir, exist_ok=True)
         
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         
-        # Mappings réussis
+        # Mappings reussis
         mappings_file = f"{output_dir}/mappings_{segment}_{timestamp}.json"
         with open(mappings_file, 'w', encoding='utf-8') as f:
             json.dump({
@@ -218,7 +225,7 @@ class DiscoveryEngine:
                 'data': self.successful_mappings
             }, f, indent=2)
         
-        # Joueurs en échec
+        # Joueurs en echec
         if self.failed_players:
             failed_file = f"{output_dir}/failed_{segment}_{timestamp}.json"
             with open(failed_file, 'w', encoding='utf-8') as f:
@@ -230,41 +237,42 @@ class DiscoveryEngine:
                     'data': self.failed_players
                 }, f, indent=2)
         
-        print(f"\n💾 Résultats sauvegardés:")
+        print(f"\n[SAVE] Resultats sauvegardes:")
         print(f"   Mappings: {mappings_file}")
         if self.failed_players:
-            print(f"   Échecs: {failed_file}")
+            print(f"   Echecs: {failed_file}")
 
 
 def main():
-    """Point d'entrée principal"""
+    """Point d'entree principal"""
     parser = argparse.ArgumentParser(description='NBA-19 Discovery Engine (Test)')
     parser.add_argument(
         '--segment', 
         choices=['A', 'B', 'C'],
         default='A',
-        help='Segment à traiter (A=GOLD, B=SILVER, C=BRONZE)'
+        help='Segment a traiter (A=GOLD, B=SILVER, C=BRONZE)'
     )
     parser.add_argument(
         '--limit',
         type=int,
         default=100,
-        help='Nombre de joueurs à traiter (défaut: 100)'
+        help='Nombre de joueurs a traiter (defaut: 100)'
     )
     
     args = parser.parse_args()
     
     print("=" * 60)
-    print("🔍 NBA-19 PHASE 2: DISCOVERY ENGINE (TEST)")
+    print("[SCAN] NBA-19 PHASE 2: DISCOVERY ENGINE (TEST)")
     print("=" * 60)
-    print(f"🎯 Segment: {args.segment} ({'GOLD' if args.segment=='A' else 'SILVER' if args.segment=='B' else 'BRONZE'})")
-    print(f"👥 Limite: {args.limit} joueurs")
+    print(f"[TARGET] Segment: {args.segment} ({'GOLD' if args.segment=='A' else 'SILVER' if args.segment=='B' else 'BRONZE'})")
+    print(f"[USERS] Limite: {args.limit} joueurs")
     
     # Charger les joueurs du segment
-    segment_file = f"logs/nba19_discovery/segments/segment_{args.segment}_{args.segment.lower()}.json"
+    tier = {'A': 'gold', 'B': 'silver', 'C': 'bronze'}[args.segment]
+    segment_file = f"logs/nba19_discovery/segments/segment_{args.segment}_{tier}.json"
     
     if not os.path.exists(segment_file):
-        print(f"\n❌ Fichier non trouvé: {segment_file}")
+        print(f"\n[FAIL] Fichier non trouve: {segment_file}")
         print("   Lancer d'abord: python phase1_pre_validation.py")
         return
     
@@ -273,14 +281,14 @@ def main():
     
     players = data.get('data', [])[:args.limit]
     
-    print(f"✅ {len(players)} joueurs chargés\n")
+    print(f"[OK] {len(players)} joueurs charges\n")
     
     # Lancer le discovery
     engine = DiscoveryEngine()
     engine.process_players(players, args.segment)
     engine.save_results(args.segment)
     
-    print("\n✨ Phase 2 terminée!")
+    print("\n[DONE] Phase 2 terminee!")
 
 
 if __name__ == "__main__":

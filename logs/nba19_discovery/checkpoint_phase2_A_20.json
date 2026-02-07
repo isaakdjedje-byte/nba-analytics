@@ -1,0 +1,14 @@
+{
+  "index": 20,
+  "segment": "A",
+  "successful_mappings": 101,
+  "failed": 1,
+  "stats": {
+    "total": 100,
+    "success": 19,
+    "failed": 1,
+    "skipped": 0,
+    "teams_found": 101
+  },
+  "timestamp": "2026-02-07T22:45:03.364850"
+}

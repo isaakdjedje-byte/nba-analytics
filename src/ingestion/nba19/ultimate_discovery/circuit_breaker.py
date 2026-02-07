@@ -9,15 +9,15 @@ from typing import Optional
 
 
 class CircuitState(Enum):
-    """États du circuit breaker"""
+    """Etats du circuit breaker"""
     CLOSED = "closed"      # Fonctionnement normal
-    OPEN = "open"          # Circuit ouvert (arrêt)
-    HALF_OPEN = "half_open"  # Test de récupération
+    OPEN = "open"          # Circuit ouvert (arret)
+    HALF_OPEN = "half_open"  # Test de recuperation
 
 
 class CircuitBreaker:
     """
-    Circuit Breaker Pattern pour protéger contre les erreurs en cascade
+    Circuit Breaker Pattern pour proteger contre les erreurs en cascade
     
     Usage:
         cb = CircuitBreaker(threshold=0.05, timeout=300)
@@ -50,7 +50,7 @@ class CircuitBreaker:
         self.last_state_change = time.time()
     
     def can_execute(self) -> bool:
-        """Vérifier si l'exécution est autorisée"""
+        """Verifier si l'execution est autorisee"""
         if self.state == CircuitState.CLOSED:
             return True
         
@@ -65,24 +65,24 @@ class CircuitBreaker:
         return True
     
     def record_success(self):
-        """Enregistrer un succès"""
+        """Enregistrer un succes"""
         self.success_count += 1
         
         if self.state == CircuitState.HALF_OPEN:
-            # Réinitialiser si le test réussit
+            # Reinitialiser si le test reussit
             self._reset()
     
     def record_failure(self):
-        """Enregistrer un échec"""
+        """Enregistrer un echec"""
         self.failure_count += 1
         self.last_failure_time = time.time()
         
         if self.state == CircuitState.HALF_OPEN:
-            # Retourner en OPEN si le test échoue
+            # Retourner en OPEN si le test echoue
             self.state = CircuitState.OPEN
             self.last_state_change = time.time()
         elif self.state == CircuitState.CLOSED:
-            # Vérifier si on doit ouvrir le circuit
+            # Verifier si on doit ouvrir le circuit
             if self._should_open():
                 self.state = CircuitState.OPEN
                 self.last_state_change = time.time()
@@ -105,7 +105,7 @@ class CircuitBreaker:
         }
     
     def _should_open(self) -> bool:
-        """Déterminer si on doit ouvrir le circuit"""
+        """Determiner si on doit ouvrir le circuit"""
         total = self.success_count + self.failure_count
         if total < self.min_calls:
             return False
@@ -114,7 +114,7 @@ class CircuitBreaker:
         return failure_rate > self.failure_threshold
     
     def _should_attempt_reset(self) -> bool:
-        """Vérifier si on peut tenter une réinitialisation"""
+        """Verifier si on peut tenter une reinitialisation"""
         if self.last_failure_time is None:
             return True
         
@@ -122,7 +122,7 @@ class CircuitBreaker:
         return elapsed > self.timeout_seconds
     
     def _reset(self):
-        """Réinitialiser le circuit"""
+        """Reinitialiser le circuit"""
         self.state = CircuitState.CLOSED
         self.failure_count = 0
         self.success_count = 0
@@ -132,12 +132,12 @@ class CircuitBreaker:
     def _alert_open(self):
         """Alerter quand le circuit s'ouvre"""
         stats = self.get_stats()
-        print(f"🚨 CIRCUIT BREAKER OPENED!")
+        print(f"[ALERT] CIRCUIT BREAKER OPENED!")
         print(f"   Failure rate: {stats['failure_rate']:.1%}")
         print(f"   Total calls: {stats['total_calls']}")
         print(f"   Will retry in {self.timeout_seconds}s")
 
 
 class CircuitBreakerOpen(Exception):
-    """Exception levée quand le circuit est ouvert"""
+    """Exception levee quand le circuit est ouvert"""
     pass

@@ -1,6 +1,6 @@
 """
 NBA-19 Ultimate Discovery - Checkpoint Manager
-Gestion des checkpoints granulaires pour reprise d'exécution
+Gestion des checkpoints granulaires pour reprise d'execution
 """
 import json
 import os
@@ -12,20 +12,20 @@ from pathlib import Path
 
 class CheckpointManager:
     """
-    Gestionnaire de checkpoints avancé pour le discovery
+    Gestionnaire de checkpoints avance pour le discovery
     
     Features:
-    - Sauvegarde compressée (gzip)
+    - Sauvegarde compressee (gzip)
     - Rotation automatique des checkpoints
-    - Récupération granulaire par segment
-    - Validation d'intégrité
+    - Recuperation granulaire par segment
+    - Validation d'integrite
     """
     
     def __init__(self, checkpoint_dir: str, max_checkpoints: int = 10):
         self.checkpoint_dir = checkpoint_dir
         self.max_checkpoints = max_checkpoints
         
-        # Créer le répertoire
+        # Creer le repertoire
         os.makedirs(checkpoint_dir, exist_ok=True)
     
     def save_checkpoint(
@@ -41,7 +41,7 @@ class CheckpointManager:
         Sauvegarder un checkpoint
         
         Returns:
-            Chemin du fichier checkpoint créé
+            Chemin du fichier checkpoint cree
         """
         checkpoint = {
             "version": "2.0",
@@ -65,14 +65,14 @@ class CheckpointManager:
         filename = f"checkpoint_{phase}_{segment}_{timestamp}.json.gz"
         filepath = os.path.join(self.checkpoint_dir, filename)
         
-        # Sauvegarde compressée
+        # Sauvegarde compressee
         with gzip.open(filepath, 'wt', encoding='utf-8') as f:
             json.dump(checkpoint, f, indent=2)
         
         # Nettoyer les vieux checkpoints
         self._rotate_checkpoints()
         
-        print(f"💾 Checkpoint sauvegardé: {filename}")
+        print(f"[SAVE] Checkpoint sauvegarde: {filename}")
         print(f"   Phase: {phase}, Segment: {segment}, Index: {player_index}")
         print(f"   Mappings: {len(successful_mappings)}, Failed: {len(failed_players)}")
         
@@ -84,36 +84,36 @@ class CheckpointManager:
         segment: Optional[str] = None
     ) -> Optional[Dict]:
         """
-        Charger le checkpoint le plus récent
+        Charger le checkpoint le plus recent
         
         Args:
             phase: Filtrer par phase (optionnel)
             segment: Filtrer par segment (optionnel)
             
         Returns:
-            Données du checkpoint ou None
+            Donnees du checkpoint ou None
         """
         checkpoints = self._list_checkpoints(phase, segment)
         
         if not checkpoints:
             return None
         
-        # Prendre le plus récent
+        # Prendre le plus recent
         latest = checkpoints[0]
         
         try:
             with gzip.open(latest, 'rt', encoding='utf-8') as f:
                 checkpoint = json.load(f)
             
-            print(f"📂 Checkpoint chargé: {os.path.basename(latest)}")
-            print(f"   Créé le: {checkpoint.get('created_at')}")
+            print(f"[FILE] Checkpoint charge: {os.path.basename(latest)}")
+            print(f"   Cree le: {checkpoint.get('created_at')}")
             print(f"   Phase: {checkpoint.get('phase')}, Segment: {checkpoint.get('segment')}")
             print(f"   Index: {checkpoint.get('player_index')}")
             
             return checkpoint
             
         except (json.JSONDecodeError, gzip.BadGzipFile, IOError) as e:
-            print(f"⚠️ Erreur chargement checkpoint: {e}")
+            print(f"[WARN] Erreur chargement checkpoint: {e}")
             return None
     
     def get_resume_position(
@@ -122,7 +122,7 @@ class CheckpointManager:
         segment: str
     ) -> tuple:
         """
-        Déterminer la position de reprise pour un segment
+        Determiner la position de reprise pour un segment
         
         Returns:
             tuple: (player_index, successful_mappings, failed_players)
@@ -139,7 +139,7 @@ class CheckpointManager:
         )
     
     def list_all_checkpoints(self) -> List[Dict]:
-        """Lister tous les checkpoints avec métadonnées"""
+        """Lister tous les checkpoints avec metadonnees"""
         checkpoints = self._list_checkpoints()
         result = []
         
@@ -166,7 +166,7 @@ class CheckpointManager:
         checkpoints = self._list_checkpoints()
         for filepath in checkpoints:
             os.remove(filepath)
-        print(f"🗑️ {len(checkpoints)} checkpoints effacés")
+        print(f"[DELETE] {len(checkpoints)} checkpoints effaces")
     
     def _list_checkpoints(
         self,
@@ -180,7 +180,7 @@ class CheckpointManager:
         files = []
         for filename in os.listdir(self.checkpoint_dir):
             if filename.startswith('checkpoint_') and filename.endswith('.json.gz'):
-                # Filtrer si nécessaire
+                # Filtrer si necessaire
                 if phase and not filename.startswith(f'checkpoint_{phase}_'):
                     continue
                 if segment and segment not in filename:
@@ -189,7 +189,7 @@ class CheckpointManager:
                 filepath = os.path.join(self.checkpoint_dir, filename)
                 files.append((filepath, os.path.getmtime(filepath)))
         
-        # Trier par date (plus récent en premier)
+        # Trier par date (plus recent en premier)
         files.sort(key=lambda x: x[1], reverse=True)
         return [f[0] for f in files]
     
@@ -201,12 +201,12 @@ class CheckpointManager:
             to_delete = checkpoints[self.max_checkpoints:]
             for filepath in to_delete:
                 os.remove(filepath)
-                print(f"🗑️ Vieux checkpoint supprimé: {os.path.basename(filepath)}")
+                print(f"[DELETE] Vieux checkpoint supprime: {os.path.basename(filepath)}")
 
 
 class RecoveryManager:
     """
-    Gestionnaire de récupération après interruption
+    Gestionnaire de recuperation apres interruption
     """
     
     def __init__(self, checkpoint_manager: CheckpointManager):
@@ -214,17 +214,17 @@ class RecoveryManager:
     
     def analyze_interruption(self) -> Dict:
         """
-        Analyser l'état après interruption
+        Analyser l'etat apres interruption
         
         Returns:
-            Rapport de récupération
+            Rapport de recuperation
         """
         checkpoints = self.checkpoint_mgr.list_all_checkpoints()
         
         if not checkpoints:
             return {
                 "can_resume": False,
-                "message": "Aucun checkpoint trouvé - démarrage frais"
+                "message": "Aucun checkpoint trouve - demarrage frais"
             }
         
         # Grouper par phase/segment
@@ -235,10 +235,10 @@ class RecoveryManager:
                 by_segment[key] = []
             by_segment[key].append(cp)
         
-        # Déterminer où reprendre
+        # Determiner ou reprendre
         resume_points = []
         for key, cps in by_segment.items():
-            latest = cps[0]  # Plus récent
+            latest = cps[0]  # Plus recent
             resume_points.append({
                 "phase": latest['phase'],
                 "segment": latest['segment'],
@@ -256,7 +256,7 @@ class RecoveryManager:
     
     def resume_segment(self, phase: str, segment: str) -> tuple:
         """
-        Préparer la reprise d'un segment
+        Preparer la reprise d'un segment
         
         Returns:
             tuple: (index, mappings, failed, is_resuming)
@@ -266,9 +266,9 @@ class RecoveryManager:
         if checkpoint is None:
             return 0, [], [], False
         
-        print(f"🔄 Reprise du segment {phase}/{segment}")
+        print(f"[RESUME] Reprise du segment {phase}/{segment}")
         print(f"   Index: {checkpoint['player_index']}")
-        print(f"   Mappings déjà réussis: {len(checkpoint['successful_mappings'])}")
+        print(f"   Mappings deja reussis: {len(checkpoint['successful_mappings'])}")
         print(f"   Failed: {len(checkpoint['failed_players'])}")
         
         return (

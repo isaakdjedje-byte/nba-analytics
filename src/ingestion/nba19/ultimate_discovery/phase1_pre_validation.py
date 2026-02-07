@@ -1,10 +1,10 @@
 """
-NBA-19 Phase 1: Pré-validation et Segmentation
+NBA-19 Phase 1: Pre-validation et Segmentation
 
 Analyse les 5 103 joueurs et les segmente en 3 cohortes:
-- Segment A (GOLD): api_cached + roster + csv (priorité 1)
-- Segment B (SILVER): imputed avec season data (priorité 2)
-- Segment C (BRONZE): imputed sans season data (priorité 3)
+- Segment A (GOLD): api_cached + roster + csv (priorite 1)
+- Segment B (SILVER): imputed avec season data (priorite 2)
+- Segment C (BRONZE): imputed sans season data (priorite 3)
 """
 import json
 import os
@@ -13,7 +13,7 @@ from collections import defaultdict
 
 
 class PlayerSegmenter:
-    """Segmente les joueurs selon la qualité des données disponibles"""
+    """Segmente les joueurs selon la qualite des donnees disponibles"""
     
     def __init__(self, players_file: str):
         self.players_file = players_file
@@ -26,35 +26,35 @@ class PlayerSegmenter:
     
     def load_players(self) -> int:
         """Charger les joueurs depuis le fichier JSON"""
-        print(f"📂 Chargement: {self.players_file}")
+        print(f"[FILE] Chargement: {self.players_file}")
         
         with open(self.players_file, 'r', encoding='utf-8') as f:
             data = json.load(f)
         
         self.players = data.get('data', [])
-        print(f"✅ {len(self.players)} joueurs chargés")
+        print(f"[OK] {len(self.players)} joueurs charges")
         return len(self.players)
     
     def segment_players(self):
-        """Segmenter les joueurs selon la qualité des données"""
-        print("\n🔍 Analyse et segmentation...")
+        """Segmenter les joueurs selon la qualite des donnees"""
+        print("\n[SCAN] Analyse et segmentation...")
         
         for player in self.players:
             player_id = player.get('id')
             data_source = player.get('data_source', 'unknown')
             
-            # Critères de segmentation
+            # Criteres de segmentation
             has_from_year = player.get('from_year') is not None
             has_position = player.get('position') is not None
             has_birth_date = player.get('birth_date') is not None
             
-            # Segment A: GOLD (api_cached, roster, csv avec métadonnées)
+            # Segment A: GOLD (api_cached, roster, csv avec metadonnees)
             if data_source in ['api_cached', 'roster', 'csv']:
                 if has_from_year or has_position:
                     self.segments['A'].append(player)
                     continue
             
-            # Segment B: SILVER (imputed avec season ou métadonnées)
+            # Segment B: SILVER (imputed avec season ou metadonnees)
             if data_source == 'imputed':
                 if has_position or has_birth_date:
                     self.segments['B'].append(player)
@@ -66,9 +66,9 @@ class PlayerSegmenter:
         self._print_summary()
     
     def _print_summary(self):
-        """Afficher le résumé de la segmentation"""
+        """Afficher le resume de la segmentation"""
         print("\n" + "=" * 60)
-        print("📊 RÉSULTATS DE LA SEGMENTATION")
+        print("[STATS] RESULTATS DE LA SEGMENTATION")
         print("=" * 60)
         
         total = sum(len(s) for s in self.segments.values())
@@ -77,12 +77,12 @@ class PlayerSegmenter:
             tier = {'A': 'GOLD', 'B': 'SILVER', 'C': 'BRONZE'}[segment]
             pct = (len(players) / total * 100) if total > 0 else 0
             
-            print(f"\n🎯 Segment {segment} ({tier}): {len(players)} joueurs ({pct:.1f}%)")
+            print(f"\n[TARGET] Segment {segment} ({tier}): {len(players)} joueurs ({pct:.1f}%)")
             
-            # Échantillon
+            # Echantillon
             if players:
                 sample = players[:3]
-                print("   Échantillon:")
+                print("   Echantillon:")
                 for p in sample:
                     src = p.get('data_source', 'unknown')
                     name = p.get('full_name', 'Unknown')
@@ -111,7 +111,7 @@ class PlayerSegmenter:
             with open(filepath, 'w', encoding='utf-8') as f:
                 json.dump(data, f, indent=2)
             
-            print(f"💾 Segment {segment} sauvegardé: {filepath}")
+            print(f"[SAVE] Segment {segment} sauvegarde: {filepath}")
     
     def get_top_players_for_test(self, segment: str, limit: int = 100) -> List[Dict]:
         """
@@ -119,7 +119,7 @@ class PlayerSegmenter:
         
         Args:
             segment: 'A', 'B', ou 'C'
-            limit: Nombre de joueurs (défaut: 100)
+            limit: Nombre de joueurs (defaut: 100)
             
         Returns:
             Liste des joueurs
@@ -134,16 +134,16 @@ class PlayerSegmenter:
 
 
 def main():
-    """Point d'entrée principal"""
+    """Point d'entree principal"""
     print("=" * 60)
-    print("🔍 NBA-19 PHASE 1: PRÉ-VALIDATION ET SEGMENTATION")
+    print("[SCAN] NBA-19 PHASE 1: PRE-VALIDATION ET SEGMENTATION")
     print("=" * 60)
     
     # Configuration
     players_file = "data/silver/players_advanced/players.json"
     output_dir = "logs/nba19_discovery/segments"
     
-    # Créer le segmenteur
+    # Creer le segmenteur
     segmenter = PlayerSegmenter(players_file)
     
     # Charger et segmenter
@@ -154,12 +154,12 @@ def main():
     segmenter.save_segments(output_dir)
     
     # Afficher recommandation
-    print("\n✨ Phase 1 terminée!")
-    print(f"\n🎯 Pour le test (100 joueurs), je recommande:")
+    print("\n[DONE] Phase 1 terminee!")
+    print(f"\n[TARGET] Pour le test (100 joueurs), je recommande:")
     print(f"   Segment A (GOLD): {min(100, len(segmenter.segments['A']))} joueurs")
-    print(f"   → Qualité optimale, API fiable")
+    print(f"   -> Qualite optimale, API fiable")
     
-    print("\n📁 Prochaine étape:")
+    print("\n[FOLDER] Prochaine etape:")
     print(f"   python phase2_discovery_engine.py --segment A --limit 100")
 
 
