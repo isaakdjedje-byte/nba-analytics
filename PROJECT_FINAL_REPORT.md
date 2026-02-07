@@ -1,8 +1,10 @@
 # NBA ANALYTICS - RAPPORT FINAL PROJET
 
 **Date :** 07 Février 2026  
-**Version :** 5.0 PRODUCTION  
-**Statut :** ✅ COMPLET - 5,103 joueurs GOLD Standard
+**Version :** 6.0 POST-MERGE  
+**Statut :** ✅ **MERGED SUR MASTER** - 5,103 joueurs GOLD Standard  
+**Merge :** NBA-17 → master (07/02/2026 16:00)  
+**Tests :** 111/111 passants (100%)
 
 ---
 

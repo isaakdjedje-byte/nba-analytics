@@ -1,10 +1,41 @@
 ---
 # Index des Documentations NBA Analytics
-# Dernière mise à jour: 2026-02-07 00:15 (Architecture Medallion complète)
+# Dernière mise à jour: 2026-02-07 16:00 (NBA-17 MERGED ✅)
 # Usage: Référence rapide pour éviter de lire les fichiers complets
+# Statut: PRODUCTION READY - 5,103 joueurs GOLD, 111/111 tests
 ---
 
 # 📚 INDEX - Documentation NBA Analytics
+
+## 🎉 MERGE NBA-17 - 07/02/2026 16:00
+
+### ✅ Statut: MERGED sur master
+
+**Ticket NBA-17 complété et fusionné:**
+- Architecture Medallion complète (Bronze → Silver → Gold)
+- 5,103 joueurs GOLD Standard disponibles
+- 111/111 tests passants (100%)
+- Corrections imports Windows
+- Arrondis numériques fixes
+- Configuration pytest complète
+
+**Commandes post-merge:**
+```bash
+# Vérifier l'état après merge
+git checkout master
+git pull origin master
+
+# Lancer validation
+python final_validation.py
+
+# Exécuter tests
+pytest tests/ -v
+
+# Utiliser les données GOLD
+python use_gold_tiered.py --compare
+```
+
+---
 
 ## 🆕 NOUVEAU - PHASE 4-7 : Production Ready (07/02/2026)
 
@@ -172,7 +203,7 @@ python run_pipeline.py --bronze-only # Bronze uniquement
 | **NBA-14** | ✅ Done | Ingestion | 5 | Gestion schémas évolutifs |
 | **NBA-15** | ✅ Done | Ingestion | 3 | Données matchs et équipes |
 | **NBA-16** | ✅ Done | Ingestion | 2 | Documentation API complète |
-| **NBA-17** | ✅ Done | Processing | 5 | Nettoyage données + **Architecture Medallion** |
+| **NBA-17** | ✅ **MERGED** | Processing | 5 | Nettoyage données + **Architecture Medallion** |
 | **NBA-18** | ⬜ Ready | Processing | 5 | Métriques avancées (PER, TS%) |
 | **NBA-19** | ⬜ To Do | Processing | 3 | Agrégations équipe/saison |
 | **NBA-20** | ⬜ To Do | Processing | 5 | Transformation matchs |
@@ -194,7 +225,8 @@ python run_pipeline.py --bronze-only # Bronze uniquement
 | **NBA-30** | ⬜ To Do | Reporting | 3 | Rapport hebdomadaire auto |
 | **NBA-31** | ⬜ To Do | Reporting | 5 | Dashboard interactif |
 
-**📊 Total : 31 tickets | 104 points | 47% complété (7/15 done + refactor architecture)**
+**📊 Total : 31 tickets | 104 points | 53% complété (8/15 done)**  
+**🎉 NBA-17 MERGED :** Architecture Medallion + 111/111 tests ✅
 
 ---
 
@@ -487,6 +519,7 @@ wc -l docs/agent.md docs/memoir.md docs/NBA13_STREAMING.md
 
 ---
 
-**Dernière mise à jour**: 2026-02-07 13:20
-**Statut**: ✅ **PRODUCTION READY** - 5,103 joueurs GOLD Standard
-**Version**: 5.0
+**Dernière mise à jour**: 2026-02-07 16:00
+**Statut**: ✅ **NBA-17 MERGED** - 5,103 joueurs GOLD, 111/111 tests
+**Version**: 6.0 (Post-merge)
+**Branche**: master

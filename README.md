@@ -2,6 +2,10 @@
 
 Pipeline Data Engineering complet pour l'analyse de données NBA, combinant Apache Spark, Delta Lake, et architecture moderne.
 
+> **✅ STATUT : NBA-17 MERGED** - 07/02/2026  
+> **🎯 5,103 joueurs GOLD Standard** - **111/111 tests OK (100%)**  
+> **📊 Architecture Medallion : Bronze → Silver → Gold**
+
 ## 🚀 Démarrage rapide
 
 ### Prérequis

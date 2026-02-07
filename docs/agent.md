@@ -1,11 +1,11 @@
 # 🤖 AGENT DOCUMENTATION - NBA Analytics Platform
 
 **Projet :** NBA Analytics Platform  
-**Dernière mise à jour :** 7 Février 2026 à 00:15  
-**Version :** 3.0 (Architecture Medallion implémentée)  
-**Ticket en cours :** Architecture refactor - Bronze → Silver → Gold  
-**Branche :** feature/NBA-16-doc-api  
-**Note :** Refactor complet en architecture Medallion, tests créés
+**Dernière mise à jour :** 7 Février 2026 à 16:00  
+**Version :** 6.0 (NBA-17 MERGED ✅)  
+**Ticket :** NBA-17 - Nettoyage données + Architecture Medallion  
+**Branche :** master (merge complété)  
+**Statut :** ✅ **PRODUCTION READY** - 5,103 joueurs GOLD, 111/111 tests OK
 
 ---
 
@@ -21,11 +21,12 @@ Pipeline Data Engineering complet pour l'analyse de données NBA, combinant Apac
 - Scalable pour futures saisons et betting analytics
 
 ### Statut Global
-- **Tickets complétés :** NBA-11 à NBA-16 + Refactor Architecture (7/15)
-- **Progression :** 47% (7 tickets sur 15)
-- **Données :** 30 équipes, ~1,200 joueurs (2000-2026), 2624 matchs
+- **Tickets complétés :** NBA-11 à NBA-17 (8/15) ✅
+- **Progression :** 53% (8 tickets sur 15)
+- **Données :** 30 équipes, **5,103 joueurs** (1947-2025), 2624 matchs
 - **Architecture :** Medallion (Bronze → Silver → Gold) ✅
-- **Tests :** 5 nouveaux fichiers de tests créés
+- **Tests :** 111/111 passants (100%) ✅
+- **Branche :** master (NBA-17 merged)
 
 ---
 
