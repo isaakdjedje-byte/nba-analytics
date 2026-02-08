@@ -4,8 +4,27 @@ Professional pytest setup with proper Spark session management
 """
 import pytest
 import shutil
+import os
+import sys
+import subprocess
 from pathlib import Path
 from pyspark.sql import SparkSession
+
+# Setup Windows Hadoop compatibility before anything else
+if sys.platform == 'win32':
+    setup_script = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'setup_windows_hadoop_complete.py')
+    if os.path.exists(setup_script):
+        subprocess.run([sys.executable, setup_script], capture_output=True)
+    
+    # Set environment variables explicitly
+    hadoop_home = os.path.join(os.getcwd(), 'tmp', 'hadoop')
+    bin_dir = os.path.join(hadoop_home, 'bin')
+    os.environ['HADOOP_HOME'] = hadoop_home
+    os.environ['PATH'] = bin_dir + os.pathsep + os.environ.get('PATH', '')
+    os.environ['SPARK_LOCAL_DIRS'] = os.path.join(os.getcwd(), 'tmp', 'spark')
+    os.environ['HADOOP_OPTS'] = '-Djava.library.path=' + bin_dir
+    
+    os.makedirs(os.environ['SPARK_LOCAL_DIRS'], exist_ok=True)
 
 
 @pytest.fixture(scope="session")
@@ -19,7 +38,7 @@ def spark_session():
     Yields:
         SparkSession: Configured SparkSession with Delta Lake support
     """
-    spark = (SparkSession.builder
+    builder = (SparkSession.builder
         .appName("NBA-Analytics-Tests")
         .master("local[1]")
         .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
@@ -29,8 +48,17 @@ def spark_session():
         .config("spark.serializer", "org.apache.spark.serializer.JavaSerializer")
         .config("spark.sql.shuffle.partitions", "1")
         .config("spark.default.parallelism", "1")
-        .getOrCreate()
     )
+    
+    # Configurations specifiques Windows
+    if sys.platform == 'win32':
+        builder = (builder
+            .config("spark.hadoop.fs.file.impl", "org.apache.hadoop.fs.LocalFileSystem")
+            .config("spark.hadoop.fs.hdfs.impl", "org.apache.hadoop.hdfs.DistributedFileSystem")
+            .config("spark.sql.warehouse.dir", os.path.join(os.getcwd(), 'tmp', 'spark-warehouse'))
+        )
+    
+    spark = builder.getOrCreate()
     spark.sparkContext.setLogLevel("ERROR")
     
     yield spark

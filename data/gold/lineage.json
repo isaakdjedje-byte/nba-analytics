@@ -1,6 +1,6 @@
 {
   "pipeline_version": "2.0",
-  "generated_at": "2026-02-07T13:45:03.453448",
+  "generated_at": "2026-02-08T09:54:31.175956",
   "products": {
     "raw": {
       "quality_level": "raw",
@@ -12,13 +12,13 @@
       "quality_level": "bronze",
       "player_count": 5103,
       "lineage_steps": 1,
-      "checksum": "1ab1310ac00e0910"
+      "checksum": "14d10ddf72188432"
     },
     "silver": {
       "quality_level": "silver",
       "player_count": 5103,
       "lineage_steps": 1,
-      "checksum": "1ab1310ac00e0910"
+      "checksum": "14d10ddf72188432"
     },
     "gold_premium": {
       "quality_level": "gold",
@@ -30,7 +30,7 @@
       "quality_level": "gold",
       "player_count": 5103,
       "lineage_steps": 1,
-      "checksum": "1ab1310ac00e0910"
+      "checksum": "14d10ddf72188432"
     },
     "gold_basic": {
       "quality_level": "gold",
