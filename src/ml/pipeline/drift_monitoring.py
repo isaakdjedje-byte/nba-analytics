@@ -10,9 +10,14 @@ from pathlib import Path
 from datetime import datetime, timedelta
 from scipy import stats
 import logging
+import sys
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+# Import monitoring et alerts (NBA-28)
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+from utils.monitoring import get_logger
+from utils.alerts import alert_on_drift, alert_on_performance_degradation
+
+logger = get_logger(__name__)
 
 
 class DataDriftMonitor:
@@ -79,6 +84,8 @@ class DataDriftMonitor:
             logger.warning(f"🚨 DRIFT DÉTECTÉ: {len(drifted_features)} features affectées")
             for feat in drifted_features[:5]:  # Top 5
                 logger.warning(f"  - {feat['feature']}: p={feat['p_value']:.4f}")
+                # Alerte pour chaque feature driftée (NBA-28)
+                alert_on_drift(feat['feature'], feat['p_value'], self.alert_threshold)
         else:
             logger.info(f"✅ Pas de drift détecté (seuil: {self.alert_threshold})")
         
@@ -159,6 +166,13 @@ class DataDriftMonitor:
             logger.warning(f"🚨 DÉGRADATION DE PERFORMANCE: {result['accuracy_drop']:.1%} de baisse")
             logger.warning(f"  Accuracy récente: {recent_acc:.1%}")
             logger.warning(f"  Accuracy globale: {global_acc:.1%}")
+            # Alerte de dégradation (NBA-28)
+            alert_on_performance_degradation(
+                metric_name="accuracy",
+                current=float(recent_acc),
+                baseline=float(global_acc),
+                threshold_pct=10.0
+            )
         else:
             logger.info(f"✅ Performance stable: récente={recent_acc:.1%}, globale={global_acc:.1%}")
         

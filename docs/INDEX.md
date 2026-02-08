@@ -1,11 +1,13 @@
 # 📚 INDEX - Documentation NBA Analytics
 
-**Dernière mise à jour :** 2026-02-08 18:00  
-**Statut :** ✅ NBA-23 V3.1 - Refactoring complet, optimisation 65%, 14 tests, NBA-19 intégré
+**Dernière mise à jour :** 2026-02-08 20:00  
+**Statut :** ✅ Epic 4 (NBA-26/27/28) - Data Quality & Monitoring [TERMINÉ]
 
 **Meilleur modèle** : XGBoost V3 76.76% > Neural Network 76.84% (testé) > RF 76.19%
 
-**🚀 Production** : Pipeline quotidien fonctionnel avec API NBA Live + Tracking ROI
+**🚀 Production** : Pipeline quotidien fonctionnel avec API NBA Live + Tracking ROI + Monitoring complet
+
+**📊 Avancement** : 87% (25/31 stories, 91/104 points) - Epic 4 DONE ✅
 
 ---
 
@@ -293,6 +295,70 @@ python -c "from src.ml.archetype import quick_validation; import pandas as pd; d
 
 ---
 
+## ✅ Epic 4: Data Quality & Monitoring (NBA-26/27/28) [TERMINÉ]
+
+### 🎯 Réalisations
+- ✅ **NBA-26** : 15 tests ML pipeline critiques (`tests/test_ml_pipeline_critical.py`)
+- ✅ **NBA-27** : Validation qualité centralisée (`DataQualityReporter`)
+- ✅ **NBA-28** : Monitoring complet avec logs, métriques et alertes
+
+### 🏗️ Architecture Monitoring
+```
+src/utils/
+├── monitoring.py          # Logger, DataQualityReporter, PipelineMetrics
+├── alerts.py             # Système d'alertes
+└── __init__.py           # API publique
+
+logs/
+├── metrics/              # Métriques pipeline (JSON)
+├── quality/              # Rapports qualité
+└── alerts.log           # Alertes critiques
+```
+
+### 📊 Fonctionnalités
+
+**Monitoring centralisé:**
+- `get_logger()` : Logger standardisé pour tout le projet
+- `PipelineMetrics` : Timings, volumes, erreurs en temps réel
+- `DataQualityReporter` : Validation unifiée Bronze→Silver→Gold
+
+**Alertes:**
+- `alert_on_drift()` : Détection drift données/features
+- `alert_on_quality_failure()` : Échec validation
+- `alert_on_pipeline_failure()` : Erreur pipeline
+- `alert_on_performance_degradation()` : Baisse performance ML
+
+**Intégrations:**
+- `enhanced_pipeline.py` : Métriques temps réel
+- `drift_monitoring.py` : Alertes automatiques
+
+### 🔧 Commandes Monitoring
+
+```bash
+# Voir les alertes récentes
+tail -f logs/alerts.log
+
+# Tests ML pipeline
+pytest tests/test_ml_pipeline_critical.py -v
+
+# Validation qualité manuelle
+python -c "from src.utils import DataQualityReporter; reporter = DataQualityReporter(); print('OK')"
+```
+
+### 📁 Fichiers créés
+| Fichier | Description | Lignes |
+|---------|-------------|--------|
+| `src/utils/monitoring.py` | Monitoring central | 520 |
+| `src/utils/alerts.py` | Système d'alertes | 275 |
+| `tests/test_ml_pipeline_critical.py` | Tests ML | 15 tests |
+| `configs/monitoring.yaml` | Configuration | 150 |
+
+### 💡 Philosophie
+**"Centraliser, pas dupliquer"** - Réutilise les validateurs existants, 
+centralise les patterns dispersés de logging. -47% de code vs plan initial.
+
+---
+
 ## 🚀 Production (Nouveau)
 
 ### Prédictions Quotidiennes
@@ -336,4 +402,31 @@ python src/processing/enrich_player_stats_v2.py
 # Tests
 python test_full_pipeline.py
 pytest tests/test_integration.py -v
+
+# Monitoring (Epic 4)
+pytest tests/test_ml_pipeline_critical.py -v
+tail -f logs/alerts.log
 ```
+
+---
+
+## 📚 Documentation Complète
+
+### Guides Utilisateur
+- **[MONITORING.md](MONITORING.md)** - Guide complet du système de monitoring (NOUVEAU)
+- **[memoir.md](memoir.md)** - Journal chronologique du projet
+- **[agent.md](agent.md)** - Documentation technique et commandes
+- **[JIRA_BACKLOG.md](JIRA_BACKLOG.md)** - Tickets et planning
+
+### Documentation par Story
+- **NBA-22** : `NBA22_OPTIMIZATION_GUIDE.md`, `WEEK1_SUMMARY.md`, `WEEK2_SUMMARY.md`
+- **NBA-23** : `NBA23_FINAL_REPORT.md`, `NBA23_REFACTORING_REPORT.md`
+
+### Configuration
+- **[configs/monitoring.yaml](../configs/monitoring.yaml)** - Configuration monitoring
+
+---
+
+**Dernière mise à jour :** 8 Février 2026  
+**Version documentation :** 8.0 (Epic 4)  
+**Projet :** NBA Analytics Platform

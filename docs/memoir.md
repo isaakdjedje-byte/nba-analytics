@@ -1,7 +1,73 @@
 # 📖 MEMOIR - NBA Analytics Platform
 
-**Dernière mise à jour :** 8 Février 2026 à 18:00  
-**Statut :** ✅ NBA-23 V3.1 - Refactoring Complet & Optimisé
+**Dernière mise à jour :** 8 Février 2026 à 20:00  
+**Statut :** ✅ Epic 4 (NBA-26/27/28) - Data Quality & Monitoring [TERMINÉ]
+
+---
+
+## 2026-02-08 - Epic 4: Data Quality & Monitoring [TERMINÉ ✅]
+
+**Statut**: ✅ TERMINÉ - Infrastructure monitoring et qualité de données
+
+### 🎯 Objectif:
+Implémenter les stories NBA-26 (Tests), NBA-27 (Data Quality), NBA-28 (Monitoring) 
+sans duplication de code avec l'existant.
+
+### 🚀 Réalisations majeures:
+- ✅ **Centralisation**: Logger unique `get_logger()` remplace 5+ configs dispersées
+- ✅ **Validation unifiée**: `DataQualityReporter` agrège Bronze/Silver/Gold validators existants
+- ✅ **Métriques pipeline**: `PipelineMetrics` avec timings, volumes, erreurs
+- ✅ **Alertes**: Système simple avec `logs/alerts.log` (pas de SMTP/Slack complexe)
+- ✅ **Tests ML**: 15 tests critiques pour pipeline ML (entraînement, drift, calibration)
+- ✅ **Zéro duplication**: Réutilise `SilverValidator`, `BronzeValidator`, `drift_monitoring.py` existants
+
+### 📊 Architecture:
+```
+src/utils/
+├── monitoring.py          # 520 lignes - Logger, DataQualityReporter, PipelineMetrics
+├── alerts.py             # 275 lignes - AlertManager, fonctions helper
+└── __init__.py           # Expose fonctions publiques
+
+tests/
+└── test_ml_pipeline_critical.py  # 15 tests pour ML pipeline
+
+configs/
+└── monitoring.yaml       # Configuration seuils et alertes
+
+logs/
+├── .gitignore           # Ignore fichiers générés
+└── alerts.log           # Alertes critiques (créé automatiquement)
+```
+
+### 🔧 Intégrations:
+- **enhanced_pipeline.py**: Métriques temps réel + alertes échec
+- **drift_monitoring.py**: Alertes automatiques sur drift détecté
+- **Validation qualité**: Rapport unifié Bronze→Silver→Gold
+
+### 📈 Résultats:
+- **Fichiers créés**: 7 (monitoring.py, alerts.py, tests, config, logs)
+- **Lignes de code**: ~800 (vs 1,500 initialement prévu)
+- **Réduction**: -47% par approche "centraliser vs créer"
+- **Tests**: 15 nouveaux tests ML pipeline
+- **Documentation**: Complète avec docstrings et examples
+
+### 📁 Livrables:
+- `src/utils/monitoring.py` - Module monitoring central
+- `src/utils/alerts.py` - Système d'alertes
+- `tests/test_ml_pipeline_critical.py` - Tests ML
+- `configs/monitoring.yaml` - Configuration
+- `logs/` - Répertoire logs avec .gitignore
+
+### ✅ Critères de succès atteints:
+- [x] >80% couverture tests ML pipeline
+- [x] Validation qualité centralisée (NBA-27)
+- [x] Logs JSON structurés (NBA-28)
+- [x] Alertes drift/performance automatiques
+- [x] Aucune duplication avec code existant
+
+### 🎯 Philosophie:
+**"Ne pas ajouter, refactoriser"** - NBA-23 a montré la voie (-1,630 lignes),
+l'Epic 4 suit la même approche en centralisant l'existant plutôt que de recréer.
 
 ---
 
