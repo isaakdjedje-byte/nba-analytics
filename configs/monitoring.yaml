@@ -1,0 +1,163 @@
+# Configuration monitoring - NBA Analytics Platform
+# 
+# Ce fichier configure les seuils et comportements du système
+# de monitoring et d'alertes.
+#
+# Usage:
+#   Les modules monitoring.py et alerts.py lisent cette config
+#   automatiquement si présente.
+
+monitoring:
+  version: "1.0"
+  
+  # Configuration du logging
+  logging:
+    level: INFO  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+    format: json  # json ou text
+    rotation: daily  # daily, weekly, never
+    retention_days: 30
+    
+    # Fichiers de log
+    files:
+      pipeline: logs/pipeline.json
+      metrics: logs/metrics.json
+      quality: logs/quality/quality_report.json
+      alerts: logs/alerts.log
+      
+  # Collecte de métriques
+  metrics:
+    enabled: true
+    collect_timing: true
+    collect_volume: true
+    collect_errors: true
+    
+    # Seuils pour métriques critiques
+    thresholds:
+      max_pipeline_duration_seconds: 3600  # 1 heure
+      min_records_per_batch: 10
+      max_error_rate: 0.05  # 5%
+      
+  # Validation qualité données
+  quality:
+    enabled: true
+    
+    # Seuils par couche
+    thresholds:
+      bronze:
+        max_duplicates: 0
+        min_completion_rate: 0.30  # 30%
+        max_null_rate: 0.70  # 70%
+        
+      silver:
+        max_duplicates: 0
+        min_completion_rate: 0.80  # 80%
+        max_null_rate: 0.20  # 20%
+        validation_level: contemporary  # all, intermediate, contemporary
+        
+      gold:
+        max_duplicates: 0
+        min_completion_rate: 0.95  # 95%
+        max_null_rate: 0.01  # 1%
+        max_nan_rate: 0.01  # 1%
+        ml_ready_required: true
+        
+  # Système d'alertes
+  alerts:
+    enabled: true
+    
+    # Canaux d'alerte
+    channels:
+      log:  # Toujours activé
+        enabled: true
+        file: logs/alerts.log
+        
+      console:
+        enabled: true
+        min_severity: error  # info, warning, error, critical
+        
+      # Pour activer les alertes email, décommentez et configurez:
+      # email:
+      #   enabled: false
+      #   smtp_host: smtp.gmail.com
+      #   smtp_port: 587
+      #   username: ""
+      #   password: ""  # Utilisez variables d'environnement
+      #   from: "alerts@nba-analytics.com"
+      #   to:
+      #     - "admin@nba-analytics.com"
+      #   min_severity: error
+        
+      # Pour activer Slack, décommentez et configurez:
+      # slack:
+      #   enabled: false
+      #   webhook_url: ""  # URL webhook Slack
+      #   channel: "#nba-alerts"
+      #   min_severity: warning
+        
+    # Règles d'alerte
+    rules:
+      # Drift des données
+      drift:
+        enabled: true
+        threshold: 0.05  # p-value KS test
+        min_samples: 100
+        check_features:
+          - weighted_form_diff
+          - win_pct_diff
+          - pts_diff
+          
+      # Performance ML
+      performance:
+        enabled: true
+        metrics:
+          accuracy:
+            baseline: 0.76
+            degradation_threshold_pct: 5.0  # Alerte si -5%
+            
+          brier_score:
+            baseline: 0.15
+            degradation_threshold_pct: 10.0
+            
+      # Qualité données
+      quality:
+        enabled: true
+        alert_on_failure: true
+        
+      # Pipeline
+      pipeline:
+        enabled: true
+        alert_on_failure: true
+        alert_on_timeout: true
+        timeout_seconds: 3600
+        
+  # Monitoring ML spécifique
+  ml:
+    # Détection drift
+    drift_monitoring:
+      enabled: true
+      method: ks  # ks (Kolmogorov-Smirnov), psi (Population Stability Index)
+      reference_samples: 1000
+      check_frequency: daily
+      
+    # Calibration
+    calibration:
+      enabled: true
+      method: isotonic  # isotonic, sigmoid
+      check_brier_score: true
+      max_brier_score: 0.20
+      
+    # Feature importance
+    feature_importance:
+      enabled: true
+      top_n: 10
+      alert_on_change: true
+      change_threshold_pct: 20.0  # Alerte si changement >20%
+
+# Environnement
+environment:
+  # Mode développement vs production
+  mode: development  # development, production
+  
+  # Debug
+  debug: false
+  verbose: false

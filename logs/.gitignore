@@ -1,0 +1,12 @@
+# Logs directory - ignore generated files
+*.json
+*.log
+*.csv
+
+# Keep directory structure
+!.gitignore
+
+# Subdirectories
+metrics/
+quality/
+alerts/

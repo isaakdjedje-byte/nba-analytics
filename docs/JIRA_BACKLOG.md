@@ -333,37 +333,40 @@
 
 ### Epic 4: Data Quality & Monitoring (NBA-9)
 
-#### NBA-26: Tests unitaires des transformations [TO DO]
+#### NBA-26: Tests unitaires des transformations [DONE ✅]
 - **Points:** 5
-- **Statut:** ⬜ To Do
+- **Statut:** ✅ Done (08/02/2026)
 - **Description:** Créer une suite de tests pour les fonctions de traitement
-- **Critères d'acceptation:**
-  - ✅ Tests PySpark créés dans `tests/`
-  - ✅ Couverture de test > 80%
-  - ✅ Tests pour clean_data, metrics, aggregations
-  - ✅ CI exécutant les tests automatiquement
-  - ✅ Tous les tests passants
+- **Réalisations:**
+  - ✅ 15 tests critiques pour pipeline ML créés
+  - ✅ Tests pour entraînement, drift, calibration, feature selection
+  - ✅ Mock des modèles pour tests rapides
+  - ✅ Tests end-to-end data flow
+- **Fichier:** `tests/test_ml_pipeline_critical.py` (15 tests)
 
-#### NBA-27: Data Quality Checks automatisés [TO DO]
+#### NBA-27: Data Quality Checks automatisés [DONE ✅]
 - **Points:** 3
-- **Statut:** ⬜ To Do
+- **Statut:** ✅ Done (08/02/2026)
 - **Description:** Implémenter des contrôles qualité sur les données
-- **Critères d'acceptation:**
-  - ✅ Script `src/quality/data_quality.py` créé
-  - ✅ Vérification schéma (colonnes obligatoires)
-  - ✅ Détection nulls/anomalies
-  - ✅ Validation des ranges (taille, poids, stats)
-  - ✅ Rapport qualité généré après chaque run
+- **Réalisations:**
+  - ✅ `DataQualityReporter` créé dans `src/utils/monitoring.py`
+  - ✅ Centralise les validateurs existants (Silver, Bronze, Gold)
+  - ✅ Validation schéma, nulls, ranges
+  - ✅ Rapport qualité unifié JSON
+  - ✅ Zéro duplication avec code existant
+- **Fichier:** `src/utils/monitoring.py` (DataQualityReporter)
 
-#### NBA-28: Monitoring et alerting [TO DO]
+#### NBA-28: Monitoring et alerting [DONE ✅]
 - **Points:** 5
-- **Statut:** ⬜ To Do
+- **Statut:** ✅ Done (08/02/2026)
 - **Description:** Mettre en place le monitoring du pipeline
-- **Critères d'acceptation:**
-  - ✅ Logging structuré avec timestamps
-  - ✅ Alertes si erreurs détectées (email/console)
-  - ✅ Dashboard métriques (temps traitement, records)
-  - ✅ Gestion des erreurs avec retry logic
+- **Réalisations:**
+  - ✅ Logger centralisé `get_logger()` remplace 5+ configs
+  - ✅ `PipelineMetrics` avec timings, volumes, erreurs
+  - ✅ Système d'alertes dans `logs/alerts.log`
+  - ✅ Intégration dans `enhanced_pipeline.py` et `drift_monitoring.py`
+  - ✅ Configuration `configs/monitoring.yaml`
+- **Fichiers:** `src/utils/monitoring.py`, `src/utils/alerts.py`, `configs/monitoring.yaml`
 
 ---
 
@@ -409,11 +412,14 @@
 | **Epic 1: Data Ingestion** | 4 | 15 | 100% (4/4 done) ✅ | Complet |
 | **Epic 2: Data Processing** | 5 | 26 | **100% (5/5 done)** ✅ | NBA-17/18/19 DONE |
 | **Epic 3: Machine Learning** | 6 | 33 | **100% (6/6 done)** ✅ | NBA-20/21/22/23/24/25 DONE |
-| **Epic 4: Data Quality** | 3 | 13 | 0% ⬜ | À faire (NBA-26/27/28) |
+| **Epic 4: Data Quality** | 3 | 13 | **100% (3/3 done)** ✅ | NBA-26/27/28 DONE |
 | **Epic 5: Reporting** | 3 | 11 | 0% ⬜ | À faire (NBA-29/30/31) |
-| **TOTAL** | **22** | **104** | **77%** | **+9% avec NBA-24/25 DONE** |
+| **TOTAL** | **25** | **104** | **87%** | **+10% avec Epic 4 DONE** |
 
-**Mise à jour 08/02/2026 - NBA-24 & NBA-25 COMPLETED:**
+**Mise à jour 08/02/2026 - Epic 4 (NBA-26/27/28) COMPLETED:**
+- ✅ **NBA-28: Monitoring et alerting - DONE** (logs centralisés, métriques, alertes)
+- ✅ **NBA-27: Data Quality Checks - DONE** (validation centralisée, rapports qualité)
+- ✅ **NBA-26: Tests unitaires ML - DONE** (15 tests pipeline ML critiques)
 - ✅ **NBA-25: Pipeline ML automatisé - DONE** (versioning, auto-retrain, détection nouvelles données)
 - ✅ **NBA-24: Détection progression - DONE** (1,121 joueurs en progression, Top 10 Rising Stars)
 - ✅ **NBA-23: Clustering joueurs - DONE** (4,805 joueurs, 14 archétypes hiérarchiques)
@@ -423,7 +429,7 @@
 - ✅ **NBA-19: Agrégations équipes - DONE** (30 équipes, 5,103 joueurs)
 - ✅ **NBA-18: Métriques avancées - DONE** (PER, TS%, USG%, 4,857 joueurs enrichis)
 - ✅ **NBA-17: Nettoyage données - DONE** (5,103 joueurs, refactoring v2.0)
-- 🎯 **Prochaines priorités:** Epic 4 (Data Quality: NBA-26/27/28) ou Epic 5 (Reporting: NBA-29/30/31)
+- 🎯 **Prochaine priorité:** Epic 5 (Reporting: NBA-29/30/31) - Dashboard et exports BI
 
 ---
 

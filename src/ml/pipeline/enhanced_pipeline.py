@@ -20,17 +20,20 @@ import logging
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Optional
+import time
 
 # Import du pipeline existant
 from .daily_pipeline import DailyPredictionPipeline
 from .model_versioning import ModelVersionManager
 from .auto_retrain import AutoRetrainer
 
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+# Import monitoring centralisé (NBA-28)
+import sys
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+from utils.monitoring import get_logger, PipelineMetrics, log_pipeline_start, log_pipeline_end
+from utils.alerts import alert_on_pipeline_failure, alert_on_performance_degradation
+
+logger = get_logger(__name__)
 
 
 class EnhancedPredictionPipeline(DailyPredictionPipeline):
@@ -203,9 +206,10 @@ class EnhancedPredictionPipeline(DailyPredictionPipeline):
         Returns:
             Dict avec résultats complets
         """
-        logger.info(f"\n{'='*70}")
-        logger.info("NBA-25: PIPELINE ML AUTOMATISÉ")
-        logger.info(f"{'='*70}\n")
+        log_pipeline_start("NBA-25: PIPELINE ML AUTOMATISÉ")
+        
+        # Initialisation métriques (NBA-28)
+        metrics = PipelineMetrics("nba25_auto_pipeline")
         
         results = {
             'timestamp': datetime.now().isoformat(),
@@ -220,19 +224,24 @@ class EnhancedPredictionPipeline(DailyPredictionPipeline):
         
         try:
             # 1. Vérifier santé système
+            phase_start = time.time()
             logger.info("\n📊 PHASE 1: Vérification santé système")
             health = self.check_system_health()
             results['health_check'] = health
+            metrics.record_timing("health_check", time.time() - phase_start)
             
             if health['overall_status'] == 'CRITICAL':
                 logger.error("❌ Système en état critique - arrêt")
                 results['status'] = 'CRITICAL_ERROR'
+                alert_on_pipeline_failure("nba25_auto_pipeline", "Système en état critique", "health_check")
                 return results
             
             # 2. Vérifier nouvelles données
+            phase_start = time.time()
             logger.info("\n📊 PHASE 2: Détection nouvelles données")
             has_new_data = self.check_for_new_data()
             results['new_data_detected'] = has_new_data
+            metrics.record_timing("new_data_check", time.time() - phase_start)
             
             if skip_if_no_new_data and not has_new_data and not force_retrain:
                 logger.info("\n⏳ Pas de nouvelles données - pipeline terminé")
@@ -240,6 +249,7 @@ class EnhancedPredictionPipeline(DailyPredictionPipeline):
                 return results
             
             # 3. Réentraînement si nécessaire
+            phase_start = time.time()
             logger.info("\n📊 PHASE 3: Vérification réentraînement")
             if force_retrain:
                 logger.info("Mode FORCE - réentraînement demandé")
@@ -251,21 +261,29 @@ class EnhancedPredictionPipeline(DailyPredictionPipeline):
                 results['retrain_triggered'] = True
                 results['new_version'] = new_version
                 results['version'] = new_version
+                
+            metrics.record_timing("retrain_check", time.time() - phase_start)
             
             # 4. Prédictions
+            phase_start = time.time()
             logger.info("\n📊 PHASE 4: Prédictions")
             predictions = self.run_daily_predictions()
             results['predictions'] = {
                 'count': len(predictions),
                 'successful': len([p for p in predictions if 'error' not in p])
             }
+            metrics.record_timing("predictions", time.time() - phase_start)
+            metrics.record_volume("predictions", len(predictions))
             
             # 5. Sauvegarder rapport
             self._save_pipeline_report(results)
             
-            logger.info(f"\n{'='*70}")
-            logger.info("✅ PIPELINE TERMINÉ AVEC SUCCÈS")
-            logger.info(f"{'='*70}\n")
+            # Finalisation métriques
+            metrics.finalize("success")
+            metrics_path = metrics.save_report()
+            logger.info(f"📊 Métriques sauvegardées: {metrics_path}")
+            
+            log_pipeline_end("NBA-25: PIPELINE ML AUTOMATISÉ", "success")
             
         except Exception as e:
             logger.error(f"\n❌ Erreur pipeline: {e}")
@@ -273,6 +291,11 @@ class EnhancedPredictionPipeline(DailyPredictionPipeline):
             logger.error(traceback.format_exc())
             results['status'] = 'ERROR'
             results['error'] = str(e)
+            metrics.record_error("PipelineError", str(e))
+            metrics.finalize("failure")
+            metrics.save_report()
+            alert_on_pipeline_failure("nba25_auto_pipeline", str(e), "pipeline_execution")
+            log_pipeline_end("NBA-25: PIPELINE ML AUTOMATISÉ", "failure")
         
         return results
     

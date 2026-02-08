@@ -1,11 +1,12 @@
 # 🤖 AGENT DOCUMENTATION - NBA Analytics Platform
 
-**Version :** 7.1 (NBA-23 V3.1 - Refactoring Complet)  
-**Mise à jour :** 8 Février 2026 à 18:00  
-**Statut :** ✅ Production Ready - NBA-23 Optimisé (-67% temps, 14 tests)
+**Version :** 8.0 (Epic 4 DONE - Data Quality & Monitoring)  
+**Mise à jour :** 8 Février 2026 à 20:00  
+**Statut :** ✅ Production Ready - Epic 4 Terminé (87% projet)
 
-**Meilleur modèle** : XGBoost V3 76.76% - Pipeline quotidien + Tracking ROI  
-**NBA-23** : 4 805 joueurs clusterisés, 14 archétypes, -1 630 lignes nettes
+**Meilleur modèle** : XGBoost V3 76.76% - Pipeline quotidien + Tracking ROI + Monitoring  
+**NBA-23** : 4 805 joueurs clusterisés, 14 archétypes, -1 630 lignes nettes  
+**Epic 4** : Monitoring centralisé, 15 tests ML, alertes automatisées
 
 ---
 
@@ -204,7 +205,27 @@ src/utils/
 ├── season_selector.py         # Sélection 4 méthodes + agrégation
 ├── nba_formulas.py            # PER, TS%, USG%, eFG%, Game Score, BMI
 ├── circuit_breaker.py         # Protection API
-└── transformations.py         # Fonctions pures
+├── transformations.py         # Fonctions pures
+├── monitoring.py              # Logger, DataQualityReporter, PipelineMetrics ⭐ NEW
+└── alerts.py                  # Système d'alertes ⭐ NEW
+```
+
+**Usage Monitoring:**
+```python
+from src.utils import get_logger, PipelineMetrics, DataQualityReporter
+from src.utils import alert_on_drift, alert_on_quality_failure
+
+# Logger standardisé
+logger = get_logger(__name__)
+
+# Métriques pipeline
+metrics = PipelineMetrics("mon_pipeline")
+metrics.record_timing("feature_engineering", 2.5)
+metrics.save_report()
+
+# Validation qualité
+reporter = DataQualityReporter()
+reporter.run_full_check(bronze_data, silver_data, gold_data)
 ```
 
 ---
@@ -250,6 +271,39 @@ python test_full_pipeline.py
 
 # Tests intégration
 pytest tests/test_integration.py -v
+
+# Tests ML Pipeline (Epic 4 - NEW)
+pytest tests/test_ml_pipeline_critical.py -v
+```
+
+### Monitoring & Alertes (Epic 4 - NEW)
+
+**Visualiser logs et alertes:**
+```bash
+# Voir les alertes en temps réel
+tail -f logs/alerts.log
+
+# Voir les métriques du dernier run
+ls -lt logs/metrics/ | head -5
+cat logs/metrics/pipeline_20260208_*.json
+
+# Voir les rapports qualité
+ls -lt logs/quality/ | head -5
+```
+
+**Utilisation programmatique:**
+```python
+# Dans vos pipelines
+from src.utils import get_logger, PipelineMetrics, alert_on_pipeline_failure
+
+logger = get_logger(__name__)
+metrics = PipelineMetrics("mon_pipeline")
+
+try:
+    # Votre code
+    metrics.record_timing("etape", 1.5)
+except Exception as e:
+    alert_on_pipeline_failure("mon_pipeline", str(e), "etape")
 ```
 
 ---
@@ -268,6 +322,7 @@ pytest tests/test_integration.py -v
 
 ## 📚 Documentation
 
+- **[MONITORING.md](MONITORING.md)** - Guide monitoring (Epic 4) ⭐ NEW
 - **[memoir.md](memoir.md)** - Journal projet
 - **[INDEX.md](INDEX.md)** - Navigation rapide
 - **[JIRA_BACKLOG.md](JIRA_BACKLOG.md)** - Tous les tickets
@@ -277,16 +332,21 @@ pytest tests/test_integration.py -v
 
 ## 🎯 Prochaines Étapes
 
-### Immédiat
-1. ⏳ Finaliser NBA-18 (~5h enrichissement restant)
-2. Compiler dataset final
-3. Valider vs NBA.com
+### ✅ Terminés (87% du projet)
+- ✅ **Epic 1** : Data Ingestion (NBA-11 à NBA-16)
+- ✅ **Epic 2** : Data Processing (NBA-17 à NBA-20)  
+- ✅ **Epic 3** : Machine Learning (NBA-21 à NBA-25)
+- ✅ **Epic 4** : Data Quality & Monitoring (NBA-26 à NBA-28)
 
-### Suite
-4. NBA-19 : Agrégations équipe/saison
-5. NBA-20 : Feature engineering ML
-6. NBA-22 : Modèles prédiction
+### 🔄 Reste à faire (13%)
+- ⏳ **Epic 5** : Reporting & Visualization (NBA-29 à NBA-31)
+  - NBA-29 : Export BI (Parquet/CSV)
+  - NBA-30 : Rapports hebdomadaires auto
+  - NBA-31 : Dashboard interactif
+
+### 🎯 Objectif final
+Atteindre **100%** (31/31 stories) avec Epic 5 !
 
 ---
 
-**Résultats :** 5,103 joueurs GOLD, infrastructure NBA-18 validée (5/5 tests), prêt pour ML
+**Résultats :** 5,103 joueurs GOLD, pipeline ML 76.76% accuracy, monitoring production-ready
