@@ -5,6 +5,34 @@
 
 ---
 
+## 2026-02-08 - NBA-19: Agrégations par équipe et saison [COMPLET]
+
+**Statut**: ✅ TERMINE
+
+**Réalisations**:
+- Discovery complet de 5 103 joueurs
+- 4 868 joueurs traités avec succès (95.4%)
+- 27 152 mappings joueur-équipe-saison validés
+- Couverture: 91.4% des joueurs
+- Qualité: 3 478 GOLD (12.8%), 23 674 SILVER (87.2%)
+
+**Architecture implementee**:
+- Phase 1: Segmentation (GOLD/SILVER/BRONZE)
+- Phase 2: Discovery complet avec auto-resume
+- Phase 3: Validation multi-source
+- Phase 4: Enrichissement (career summaries, positions)
+- Phase 5: Consolidation (5 fichiers de sortie)
+
+**Fichiers generes**:
+- player_team_history_complete.json (6.6 MB, 27 152 records)
+- team_season_rosters.json (3.5 MB, 1 691 rosters)
+- career_summaries.json (1.2 MB, 4 665 resumes)
+- quality_report.json
+- manual_review_queue.json
+
+**Tests**: 120/128 tests passes (8 failures Delta Lake - config Windows)
+
+---
 ## 🎯 Vue d'Ensemble
 
 Pipeline Data Engineering complet pour analyse NBA : ingestion, transformation, ML, avec architecture Medallion et workflow Git/JIRA professionnel.

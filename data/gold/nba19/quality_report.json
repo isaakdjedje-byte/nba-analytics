@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-02-08T09:32:32.254013",
+  "summary": {
+    "total_players_in_dataset": 5103,
+    "players_with_mappings": 4665,
+    "coverage_percent": 91.41681363903587,
+    "total_mappings": 27152,
+    "avg_mappings_per_player": 5.820364415862808
+  },
+  "quality_distribution": {
+    "SILVER": 23674,
+    "GOLD": 3478
+  },
+  "segments": {
+    "GOLD": 3478,
+    "SILVER": 23674,
+    "BRONZE": 0,
+    "UNKNOWN": 0
+  }
+}

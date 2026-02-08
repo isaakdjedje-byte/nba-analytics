@@ -1,0 +1,1417 @@
+{
+  "metadata": {
+    "total": 235
+  },
+  "data": [
+    {
+      "player_id": 1629152,
+      "player_name": "DeVaughn Akoon-Purcell",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1641851,
+      "player_name": "Timmy Allen",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630828,
+      "player_name": "Alex Antetokounmpo",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1642379,
+      "player_name": "Taran Armstrong",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630555,
+      "player_name": "Joel Ayayi",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1627760,
+      "player_name": "Cat Barber",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1628238,
+      "player_name": "Paris Bass",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1642926,
+      "player_name": "Tamar Bates",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1627791,
+      "player_name": "Ben Bentil",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629129,
+      "player_name": "Trevon Bluiett",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629714,
+      "player_name": "Jarrell Brantley",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1628515,
+      "player_name": "Isaiah Briscoe",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1631167,
+      "player_name": "Izaiah Brockington",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629783,
+      "player_name": "Shaq Buchanan",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629958,
+      "player_name": "Ahmad Caver",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630608,
+      "player_name": "Malcolm Cazalon",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1626262,
+      "player_name": "Coty Clarke",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1628492,
+      "player_name": "Gian Clavell",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1628435,
+      "player_name": "Chance Comanche",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1627822,
+      "player_name": "Petr Cornelie",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1642385,
+      "player_name": "Cui Cui",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629600,
+      "player_name": "Jarron Cumberland",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629093,
+      "player_name": "Tyler Davis",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629602,
+      "player_name": "Javin DeLaurier",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1626214,
+      "player_name": "Bryce Dejean-Jones",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1641926,
+      "player_name": "Dexter Dennis",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630693,
+      "player_name": "Jaime Echenique",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630306,
+      "player_name": "Rob Edwards",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630758,
+      "player_name": "Aleem Ford",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630701,
+      "player_name": "Michael Foster Jr.",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629606,
+      "player_name": "Robert Franks",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1641945,
+      "player_name": "Jaylin Galloway",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629232,
+      "player_name": "Kaiser Gates",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629755,
+      "player_name": "Hassani Gravett",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1631160,
+      "player_name": "Jordan Hall",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629788,
+      "player_name": "Tyler Hall",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1628605,
+      "player_name": "Dusty Hannahs",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630223,
+      "player_name": "Jalen Harris",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630565,
+      "player_name": "Aaron Henry",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1641793,
+      "player_name": "D'Moi Hodge",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630258,
+      "player_name": "Caleb Homesley",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1626205,
+      "player_name": "Vincent Hunter",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629713,
+      "player_name": "Justin James",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630610,
+      "player_name": "DeJon Jarreau",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630686,
+      "player_name": "Georgios Kalaitzakis",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629742,
+      "player_name": "Stanton Kidd",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1627879,
+      "player_name": "Nicolas Laprovittola",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1631171,
+      "player_name": "Justin Lewis",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629155,
+      "player_name": "Zach Lofton",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630266,
+      "player_name": "Will Magnay",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630211,
+      "player_name": "Karim Mane",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629751,
+      "player_name": "Dakota Mathias",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1628769,
+      "player_name": "Tahjere McCall",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630787,
+      "player_name": "Cameron McGriff",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630605,
+      "player_name": "JaQuori McLaughlin",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1641877,
+      "player_name": "Nathan Mensah",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1628450,
+      "player_name": "Eric Mika",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630278,
+      "player_name": "Ade Murkey",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629005,
+      "player_name": "Malik Newman",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629668,
+      "player_name": "Zach Norvell Jr.",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1641806,
+      "player_name": "Markquis Nowell",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1626266,
+      "player_name": "JJ O'Brien",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1628419,
+      "player_name": "Cameron Oliver",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629873,
+      "player_name": "Jaysean Paige",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629309,
+      "player_name": "Trayvon Palmer",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630698,
+      "player_name": "Kevin Pangos",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1641970,
+      "player_name": "Maozinha Pereira",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1628506,
+      "player_name": "London Perrantes",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630196,
+      "player_name": "Filip Petrusev",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629341,
+      "player_name": "Tarik Phillip",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629044,
+      "player_name": "Shamorie Ponds",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1626643,
+      "player_name": "Jacob Pullen",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1628504,
+      "player_name": "Xavier Rathan-Mayes",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629620,
+      "player_name": "Justin Robinson",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630286,
+      "player_name": "Trevon Scott",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1626296,
+      "player_name": "Jordan Sibert",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630285,
+      "player_name": "Zavier Simpson",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1631376,
+      "player_name": "Dmytro Skapintsev",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1642850,
+      "player_name": "Thomas Sorber",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1627293,
+      "player_name": "Alex Stepheson",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630597,
+      "player_name": "DJ Stewart",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1628591,
+      "player_name": "Craig Sword",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1626208,
+      "player_name": "Keifer Sykes",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629150,
+      "player_name": "Emanuel Terry",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630257,
+      "player_name": "Jon Teske",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1627861,
+      "player_name": "Mike Tobey",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1642910,
+      "player_name": "John Tonje",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1642260,
+      "player_name": "Nikola Topi\u0107",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630492,
+      "player_name": "Luca Vildoza",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1630640,
+      "player_name": "MJ Walker",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1627866,
+      "player_name": "Jameel Warney",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1628451,
+      "player_name": "Jacob Wiley",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1628475,
+      "player_name": "Matt Williams Jr.",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1629624,
+      "player_name": "Kenny Wooten",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1642911,
+      "player_name": "Rocco Zikarsky",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1642365,
+      "player_name": "Nikola \u0110uri\u0161i\u0107",
+      "segment": "A",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1643047,
+      "player_name": "CJ Huntley",
+      "segment": "B",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1642947,
+      "player_name": "Eli John Ndiaye",
+      "segment": "B",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1642893,
+      "player_name": "Alex Toohey",
+      "segment": "B",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1824,
+      "player_name": "Peter Aluma",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202079,
+      "player_name": "Antonio Anderson",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 203951,
+      "player_name": "Keith Appling",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1858,
+      "player_name": "Mark Baker",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 203968,
+      "player_name": "Jerrelle Benimon",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202728,
+      "player_name": "Keith Benson",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 204021,
+      "player_name": "Sim Bhullar",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202392,
+      "player_name": "Marqus Blakely",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2800,
+      "player_name": "Tony Bobbitt",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1121,
+      "player_name": "Dexter Boney",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 200841,
+      "player_name": "Cedric Bozeman",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1920,
+      "player_name": "A.J. Bramlett",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202221,
+      "player_name": "Brian Butch",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202364,
+      "player_name": "Da'Sean Butler",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2367,
+      "player_name": "Geno Carlisle",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1131,
+      "player_name": "Jimmy Carruth",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 203805,
+      "player_name": "Will Cherry",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 203565,
+      "player_name": "Patrick Christopher",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202395,
+      "player_name": "Sherron Collins",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1526,
+      "player_name": "James Cotton",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 989,
+      "player_name": "Ben Davis",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 203958,
+      "player_name": "Andre Dawkins",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 201286,
+      "player_name": "Eric Dawson",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202458,
+      "player_name": "Justin Dentmon",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2079,
+      "player_name": "Kaniel Dickens",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1059,
+      "player_name": "Aleksandar Djordjevic",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202197,
+      "player_name": "Shane Edwards",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2765,
+      "player_name": "Andre Emmett",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2824,
+      "player_name": "Desmon Farmer",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2809,
+      "player_name": "Gerald Fitch",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1829,
+      "player_name": "Ike Fontaine",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202880,
+      "player_name": "Jeff Foote",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 101213,
+      "player_name": "Sharrod Ford",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2782,
+      "player_name": "Matt Freije",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2673,
+      "player_name": "Hiram Fuller",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202070,
+      "player_name": "Tony Gaffney",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 101184,
+      "player_name": "Deng Gai",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2092,
+      "player_name": "Ruben Garces",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1831,
+      "player_name": "Marlon Garnett",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 201821,
+      "player_name": "Trey Gilder",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2601,
+      "player_name": "Andreas Glyniadakis",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 204079,
+      "player_name": "Drew Gordon",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1070,
+      "player_name": "Devin Gray",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1026,
+      "player_name": "Evric Gray",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 101209,
+      "player_name": "Devin Green",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1575,
+      "player_name": "Derek Grimm",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 203548,
+      "player_name": "Elias Harris",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202238,
+      "player_name": "Kenny Hasbrouck",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 201195,
+      "player_name": "Herbert Hill",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 201631,
+      "player_name": "Steven Hill",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 200823,
+      "player_name": "Robert Hite",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202359,
+      "player_name": "Darington Hobson",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202862,
+      "player_name": "Dennis Horner",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1965,
+      "player_name": "Rick Hughes",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 203510,
+      "player_name": "Pierre Jackson",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 201998,
+      "player_name": "Curtis Jerrells",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 201291,
+      "player_name": "Carldell Johnson",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1746,
+      "player_name": "DeMarco Johnson",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 204179,
+      "player_name": "Omari Johnson",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 203130,
+      "player_name": "Darius Johnson-Odom",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 90000,
+      "player_name": "Mark Jones",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2123,
+      "player_name": "Garth Joseph",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 203945,
+      "player_name": "Alex Kirk",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2688,
+      "player_name": "Brandin Knight",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2825,
+      "player_name": "Ibrahim Kutluay",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202068,
+      "player_name": "Marcus Landry",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2591,
+      "player_name": "James Lang",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 101247,
+      "player_name": "Keith Langford",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 200970,
+      "player_name": "Renaldo Major",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 986,
+      "player_name": "Marcus Mann",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 200840,
+      "player_name": "Chris McCray",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1075,
+      "player_name": "Michael McDonald",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 200829,
+      "player_name": "Ivan McFarlin",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 203590,
+      "player_name": "Trey McKinney-Jones",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 101223,
+      "player_name": "Aaron Miles",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1954,
+      "player_name": "Jason Miskiri",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 203183,
+      "player_name": "Tony Mitchell",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2752,
+      "player_name": "Sergei Monia",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 101238,
+      "player_name": "Boniface Ndong",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1129,
+      "player_name": "Ruben Nembhard",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1093,
+      "player_name": "Gaylon Nickerson",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 999,
+      "player_name": "Jeff Nordgaard",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1950,
+      "player_name": "Andy Panko",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2130,
+      "player_name": "Mike Penberthy",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2667,
+      "player_name": "Desmond Penigar",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2632,
+      "player_name": "Kirk Penney",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 200838,
+      "player_name": "Kevinn Pinkney",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2750,
+      "player_name": "Pavel Podkolzin",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 101232,
+      "player_name": "Roger Powell",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1893,
+      "player_name": "Aleksandar Radojevic",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2762,
+      "player_name": "Peter John Ramos",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202385,
+      "player_name": "Ryan Reid",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 720,
+      "player_name": "Terrence Rencher",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2541,
+      "player_name": "Antoine Rigaudeau",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2121,
+      "player_name": "Terrance Roberson",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1926,
+      "player_name": "Ryan Robertson",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1554,
+      "player_name": "Jamal Robinson",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202375,
+      "player_name": "Magnum Rolle",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2684,
+      "player_name": "Melvin Sanders",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2637,
+      "player_name": "Alex Scales",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1578,
+      "player_name": "Shea Seals",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1852,
+      "player_name": "Jeff Sheppard",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202067,
+      "player_name": "Diamon Simpson",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1591,
+      "player_name": "Alvin Sims",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 201235,
+      "player_name": "Courtney Sims",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 203147,
+      "player_name": "Chris Smith",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202536,
+      "player_name": "Jerry Smith",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 200848,
+      "player_name": "Steven Smith",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1099,
+      "player_name": "Matt Steigenga",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 203474,
+      "player_name": "DJ Stephens",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1086,
+      "player_name": "Joe Stephens",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1055,
+      "player_name": "Ed Stokes",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2657,
+      "player_name": "Yuta Tabuse",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2839,
+      "player_name": "James Thomas",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 101159,
+      "player_name": "Dijon Thompson",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202814,
+      "player_name": "Mychel Thompson",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1943,
+      "player_name": "Wayne Turner",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202775,
+      "player_name": "Edwin Ubiles",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 201987,
+      "player_name": "Robert Vaden",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2582,
+      "player_name": "Slavko Vranes",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 101190,
+      "player_name": "Matt Walsh",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 200827,
+      "player_name": "Darius Washington",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 204033,
+      "player_name": "David Wear",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 101156,
+      "player_name": "Robert Whaley",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1755,
+      "player_name": "Tyson Wheeler",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202358,
+      "player_name": "Terrico White",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1126,
+      "player_name": "Donald Whiteside",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 204222,
+      "player_name": "Greg Whittington",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1585,
+      "player_name": "Brandon Williams",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2000,
+      "player_name": "Dedric Willoughby",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 203966,
+      "player_name": "Jamil Wilson",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1868,
+      "player_name": "Trevor Winter",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 203203,
+      "player_name": "Chris Wright",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 1748,
+      "player_name": "Korleone Young",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 202545,
+      "player_name": "Luke Zeller",
+      "segment": "C",
+      "reason": "no_data"
+    },
+    {
+      "player_id": 2583,
+      "player_name": "Derrick Zimmerman",
+      "segment": "C",
+      "reason": "no_data"
+    }
+  ]
+}
