@@ -1,7 +1,7 @@
 # 📖 MEMOIR - NBA Analytics Platform
 
-**Dernière mise à jour :** 8 Février 2026 à 14:00  
-**Statut :** ✅ NBA-19 + NBA-21 + NBA-22 TERMINÉS - Production Ready 76.76%
+**Dernière mise à jour :** 8 Février 2026 à 16:30  
+**Statut :** ✅ NBA-22 OPTIMISÉ v2.0 - Production Ready 76.65% avec Calibration & Monitoring
 
 ---
 
@@ -76,6 +76,79 @@ python run_predictions.py --update
 
 # Voir rapport ROI
 python run_predictions.py --report
+```
+
+---
+
+## 2026-02-08 - NBA-22: Optimisations ML v2.0 [TERMINÉ ✅]
+
+**Statut**: ✅ OPTIMISATIONS COMPLÈTES - Production Ready v2.0
+
+**Objectif**: Améliorer la robustesse et la fiabilité du système ML sans perdre en performance
+
+### Optimisations réalisées:
+
+#### 1. Feature Selection (80 → 35 features)
+- **Méthode**: XGBoost Feature Importance
+- **Résultat**: Réduction de 56% des features
+- **Impact**: Moins d'overfitting, inférence plus rapide
+- **Top feature**: `weighted_form_diff` (29.9% importance)
+
+#### 2. Calibration des probabilités
+- **Méthode**: Isotonic Regression
+- **Brier Score avant**: 0.1580
+- **Brier Score après**: 0.1539
+- **Amélioration**: 2.6%
+- **Impact**: Probabilités fiables pour Kelly Criterion
+
+#### 3. Monitoring Data Drift
+- **Méthode**: Kolmogorov-Smirnov test
+- **Seuil**: p-value < 0.05
+- **Détection**: Feature drift, Concept drift, Performance drift
+- **Impact**: Alertes précoces pour réentraînement
+
+#### 4. Système de santé
+- **Checks**: Data, Models, Predictions, Tracking
+- **Rapport**: JSON automatisé
+- **Impact**: Détection proactive des problèmes
+
+### Performance v2.0:
+| Métrique | V1 | v2.0 | Évolution |
+|----------|-----|------|-----------|
+| **Accuracy** | 76.76% | **76.65%** | -0.11% (négligeable) |
+| **Features** | 54 | **35** | -35% ✅ |
+| **Calibration** | ❌ | ✅ | Nouveau |
+| **Monitoring** | ❌ | ✅ | Nouveau |
+| **Brier Score** | 0.1580 | **0.1539** | -2.6% ✅ |
+
+### Fichiers créés:
+- `src/ml/pipeline/probability_calibration.py` - Module calibration
+- `src/ml/pipeline/feature_selection.py` - Feature selection
+- `src/ml/pipeline/drift_monitoring.py` - Monitoring
+- `src/ml/pipeline/train_optimized.py` - Entraînement optimisé
+- `run_predictions_optimized.py` - Pipeline v2.0
+- `launch_optimization.py` - Lanceur complet
+- `test_nba_full_project.py` - Tests complets (16/16 passés)
+- `NBA22_OPTIMIZATION_GUIDE.md` - Documentation utilisateur
+
+### Tests:
+- ✅ 16/16 tests passés (100%)
+- ✅ Tous les composants NBA-11 à NBA-22 validés
+- ✅ API NBA Live: 10 matchs/jour fonctionnels
+- ✅ Pipeline complet: 2.48s de test
+
+### Commandes v2.0:
+```bash
+# Lancer optimisation complète
+python launch_optimization.py
+
+# Prédictions optimisées
+python run_predictions_optimized.py
+
+# Monitoring
+python run_predictions_optimized.py --health
+python run_predictions_optimized.py --drift
+python run_predictions_optimized.py --report
 ```
 
 ---

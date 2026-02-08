@@ -1,0 +1,262 @@
+{
+  "timestamp": "2026-02-08T14:56:32.068288",
+  "nba23_status": "COMPLETED",
+  "data": {
+    "total_players": 5103,
+    "players_clustered": 4805
+  },
+  "clustering": {
+    "algorithm": "GMM_k6",
+    "n_clusters": 6,
+    "silhouette_score": 0.117657485241193
+  },
+  "archetypes": {
+    "n_archetypes": 6,
+    "total_players": 4805,
+    "archetypes": [
+      {
+        "id": "ROLE_PLAYER",
+        "name": "Role Player",
+        "name_fr": "Joueur de R\u00f4le",
+        "description": "Solid contributor without standout skills",
+        "description_fr": "Contributeur solide sans competence dominante",
+        "n_players": 2740,
+        "pct_total": 57.02393340270552,
+        "examples": [
+          "Dorian Finney-Smith",
+          "Royce O'Neale",
+          "Josh Hart"
+        ],
+        "key_features": [
+          "per",
+          "usg_pct",
+          "minutes_per_game",
+          "consistency_score"
+        ],
+        "signature": {
+          "per": [
+            "between",
+            [
+              11,
+              16
+            ]
+          ],
+          "usg_pct": [
+            "between",
+            [
+              15,
+              22
+            ]
+          ],
+          "minutes_per_game": [
+            "between",
+            [
+              15,
+              28
+            ]
+          ]
+        }
+      },
+      {
+        "id": "ROLE_PLAYER",
+        "name": "Role Player",
+        "name_fr": "Joueur de R\u00f4le",
+        "description": "Solid contributor without standout skills",
+        "description_fr": "Contributeur solide sans competence dominante",
+        "n_players": 968,
+        "pct_total": 20.145681581685743,
+        "examples": [
+          "Dorian Finney-Smith",
+          "Royce O'Neale",
+          "Josh Hart"
+        ],
+        "key_features": [
+          "per",
+          "usg_pct",
+          "minutes_per_game",
+          "consistency_score"
+        ],
+        "signature": {
+          "per": [
+            "between",
+            [
+              11,
+              16
+            ]
+          ],
+          "usg_pct": [
+            "between",
+            [
+              15,
+              22
+            ]
+          ],
+          "minutes_per_game": [
+            "between",
+            [
+              15,
+              28
+            ]
+          ]
+        }
+      },
+      {
+        "id": "ENERGY_BIG",
+        "name": "Energy Big",
+        "name_fr": "Grand \u00c9nergie",
+        "description": "High-energy big man off the bench",
+        "description_fr": "Grand homme a haute energie sortant du banc",
+        "n_players": 157,
+        "pct_total": 3.267429760665973,
+        "examples": [
+          "Montrezl Harrell",
+          "Isaiah Stewart",
+          "Naz Reid"
+        ],
+        "key_features": [
+          "reb_per_36",
+          "pf_per_36",
+          "minutes_per_game",
+          "blk_per_36"
+        ],
+        "signature": {
+          "reb_per_36": [
+            ">",
+            12
+          ],
+          "pf_per_36": [
+            ">",
+            4.5
+          ],
+          "minutes_per_game": [
+            "<",
+            24
+          ],
+          "blk_per_36": [
+            ">",
+            1.0
+          ]
+        }
+      },
+      {
+        "id": "VOLUME_SCORER",
+        "name": "Volume Scorer",
+        "name_fr": "Scoreur Volume",
+        "description": "High shot volume with moderate efficiency",
+        "description_fr": "Haut volume de tirs avec efficacite moderee",
+        "n_players": 333,
+        "pct_total": 6.930280957336109,
+        "examples": [
+          "Bradley Beal",
+          "Zach LaVine",
+          "Klay Thompson"
+        ],
+        "key_features": [
+          "pts_per_36",
+          "fga_per_36",
+          "usg_pct",
+          "ts_pct"
+        ],
+        "signature": {
+          "pts_per_36": [
+            ">",
+            22
+          ],
+          "fga_per_36": [
+            ">",
+            18
+          ],
+          "usg_pct": [
+            ">",
+            26
+          ],
+          "ts_pct": [
+            "<",
+            0.57
+          ]
+        }
+      },
+      {
+        "id": "ROLE_PLAYER",
+        "name": "Role Player",
+        "name_fr": "Joueur de R\u00f4le",
+        "description": "Solid contributor without standout skills",
+        "description_fr": "Contributeur solide sans competence dominante",
+        "n_players": 358,
+        "pct_total": 7.45057232049948,
+        "examples": [
+          "Dorian Finney-Smith",
+          "Royce O'Neale",
+          "Josh Hart"
+        ],
+        "key_features": [
+          "per",
+          "usg_pct",
+          "minutes_per_game",
+          "consistency_score"
+        ],
+        "signature": {
+          "per": [
+            "between",
+            [
+              11,
+              16
+            ]
+          ],
+          "usg_pct": [
+            "between",
+            [
+              15,
+              22
+            ]
+          ],
+          "minutes_per_game": [
+            "between",
+            [
+              15,
+              28
+            ]
+          ]
+        }
+      },
+      {
+        "id": "ENERGY_BIG",
+        "name": "Energy Big",
+        "name_fr": "Grand \u00c9nergie",
+        "description": "High-energy big man off the bench",
+        "description_fr": "Grand homme a haute energie sortant du banc",
+        "n_players": 249,
+        "pct_total": 5.18210197710718,
+        "examples": [
+          "Montrezl Harrell",
+          "Isaiah Stewart",
+          "Naz Reid"
+        ],
+        "key_features": [
+          "reb_per_36",
+          "pf_per_36",
+          "minutes_per_game",
+          "blk_per_36"
+        ],
+        "signature": {
+          "reb_per_36": [
+            ">",
+            12
+          ],
+          "pf_per_36": [
+            ">",
+            4.5
+          ],
+          "minutes_per_game": [
+            "<",
+            24
+          ],
+          "blk_per_36": [
+            ">",
+            1.0
+          ]
+        }
+      }
+    ]
+  }
+}
