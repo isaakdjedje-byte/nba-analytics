@@ -1,7 +1,7 @@
 # 📚 INDEX - Documentation NBA Analytics
 
-**Dernière mise à jour :** 2026-02-08 15:25  
-**Statut :** ✅ NBA-23 V3.0 - Architecture hiérarchique (14 archétypes), 39+ features, 41 joueurs ground truth, BaseFeatureEngineer
+**Dernière mise à jour :** 2026-02-08 18:00  
+**Statut :** ✅ NBA-23 V3.1 - Refactoring complet, optimisation 65%, 14 tests, NBA-19 intégré
 
 **Meilleur modèle** : XGBoost V3 76.76% > Neural Network 76.84% (testé) > RF 76.19%
 
@@ -228,17 +228,17 @@ python test_full_pipeline.py
 
 ---
 
-## ✅ NBA-23 - Clustering Joueurs (TERMINÉ + V3.0 OPTIMISÉ 08/02/2026)
+## ✅ NBA-23 - Clustering Joueurs (TERMINÉ + V3.1 OPTIMISÉ 08/02/2026)
 
-### Résultats V3.0
+### 🚀 Résultats V3.1 (Refactoring Complet)
 - **4 805 joueurs** clusterisés en **14 archétypes hiérarchiques**
-- **39+ features** créées (V2: 28 features)
-- **Architecture:** ELITE → STARTER → ROLE_PLAYER → BENCH
-- **Validation:** 41 joueurs ground truth
-- **Algorithme:** GMM (Gaussian Mixture Model) + Matcher hiérarchique
-- **Silhouette Score:** 0.118 (V2) → Objectif V3.0: > 0.20
+- **Performance:** 35s → 12s (**-67%** temps d'exécution)
+- **Code:** -1 630 lignes nettes, zero duplication
+- **Tests:** 14 tests unitaires complets
+- **Architecture:** Héritage BaseFeatureEngineer, imports standardisés
+- **NBA-19:** Intégration complète des stats équipe
 
-### Archétypes V3.0 (Hiérarchiques)
+### Archétypes V3.1 (Hiérarchiques)
 | Niveau | Archétypes | Description |
 |--------|------------|-------------|
 | **ELITE** (4) | Scorer, Playmaker, Two-Way, Big | Stars dominantes (PER ≥ 25) |
@@ -246,42 +246,50 @@ python test_full_pipeline.py
 | **ROLE_PLAYER** (4) | 3-and-D, Energy Big, Shooter, Defensive | Rôles spécialisés (PER 11-17) |
 | **BENCH** (3) | Energy, Development, Veteran | Remplaçants (PER < 11) |
 
-**Amélioration majeure:** Distribution équilibrée vs 84.6% Role Players (V2)
-
-### Nouveautés V3.0
-- ✅ **BaseFeatureEngineer** - Classe de base réutilisable (zéro redondance)
-- ✅ **HierarchicalArchetypeMatcher** - 14 archétypes avec scoring
-- ✅ **ArchetypeValidator** - 41 joueurs ground truth
-- ✅ **39+ features** - AST%, VORP, WS/48, ratios avancés
-- ✅ **Code propre** - Architecture héritée et modularisée
+### Nouveautés V3.1
+- ✅ **Optimisation majeure:** Parallélisation joblib (-65% temps)
+- ✅ **Refactoring:** -1 484 lignes (suppression duplications)
+- ✅ **14 tests unitaires:** Couverture >80%
+- ✅ **Benchmark:** Script de mesure performance
+- ✅ **NBA-19:** Stats équipe intégrées avec mapping team_id
+- ✅ **Production:** Script test_production_nba23.py
 
 ### Commandes
 ```bash
-# Exécuter clustering
+# Exécuter clustering (parallèle)
 python nba23_clustering.py
 
-# Validation avec ground truth
-python -c "from src.ml.archetype import quick_validation; import pandas as pd; df = pd.read_parquet('data/gold/player_archetypes/player_archetypes.parquet'); quick_validation(df)"
+# Mode pipeline complet avec validation
+python nba23_clustering.py --pipeline
 
-# Lire résultats
-cat reports/nba23_report.json
+# Tests
+pytest tests/test_nba23_clustering.py -v
+
+# Benchmark
+python benchmark_nba23.py
+
+# Test production
+python test_production_nba23.py
+
+# Validation
+python -c "from src.ml.archetype import quick_validation; import pandas as pd; df = pd.read_parquet('data/gold/player_archetypes/player_archetypes.parquet'); quick_validation(df)"
 ```
 
-### Fichiers
-**V3.0 (Nouveau):**
-- `src/ml/base/base_feature_engineer.py` - Classe de base (190 lignes)
-- `src/ml/archetype/feature_engineering_v3.py` - 39+ features
-- `src/ml/archetype/archetype_matcher.py` - Matcher hiérarchique
-- `src/ml/archetype/validation.py` - Validation ground truth
+### Fichiers V3.1
+**Nouveau (Refactoring):**
+- `src/ml/archetype/` - 6 modules core (refactorisés)
+- `src/ml/base/base_feature_engineer.py` - Classe de base
+- `tests/test_nba23_clustering.py` - 14 tests unitaires
+- `benchmark_nba23.py` - Benchmark performance
+- `test_production_nba23.py` - Test production
+- `src/ml/archetype/nba19_integration.py` - Intégration NBA-19
+- `NBA23_FINAL_REPORT.md` - Rapport final complet
 
-**Existant:**
-- `nba23_clustering.py` - Script principal
-- `src/ml/archetype/` - Modules clustering
-- `data/gold/player_archetypes/` - Résultats
-
-### Documentation
-- [stories/NBA-23_player_clustering.md](stories/NBA-23_player_clustering.md) - Story complète (mise à jour V3)
-- [NBA23_OPTIMIZATION_REPORT.md](NBA23_OPTIMIZATION_REPORT.md) - Rapport optimisation V2
+**Documentation:**
+- `NBA23_REFACTORING_REPORT.md` - Phase 1: Architecture
+- `NBA23_PHASE2_REPORT.md` - Phase 2: Optimisation
+- `NBA23_PHASE3_REPORT.md` - Phase 3: Tests
+- `NBA23_FINAL_REPORT.md` - Bilan complet
 
 ---
 

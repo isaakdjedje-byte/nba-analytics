@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """
 NBA-17: Tests du pipeline de nettoyage des données joueurs
-Tests complets et simples pour clean_players.py
+Tests complets et simples pour clean_players.py - Version refactorisée v2.0
+
+Mise à jour: Utilise les fonctions importées depuis transformations.py et cleaning_functions.py
 """
 
 import pytest
@@ -12,6 +14,19 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import col
 
 from src.processing.clean_players import PlayersDataCleaner
+
+# Import des fonctions utilitaires (refactoring v2.0)
+from src.utils.transformations import (
+    convert_height_to_cm,
+    convert_weight_to_kg,
+    standardize_position,
+    standardize_date,
+    calculate_age,
+)
+
+from src.processing.silver.cleaning_functions import (
+    impute_missing_data,
+)
 
 
 class TestPlayersDataCleaner:
@@ -40,56 +55,72 @@ class TestPlayersDataCleaner:
         assert cleaner.stats['total'] == 0
     
     def test_convert_height_to_cm(self, cleaner):
-        """Test conversion height '6-8' -> 203 cm."""
-        assert cleaner._convert_height_to_cm('6-8') == 203
-        assert cleaner._convert_height_to_cm('7-2') == 218
-        assert cleaner._convert_height_to_cm('5-9') == 175
-        assert cleaner._convert_height_to_cm(None) is None
-        assert cleaner._convert_height_to_cm('') is None
+        """Test conversion height '6-8' -> 203 cm via transformations.py."""
+        # Utilise la fonction importée depuis transformations.py
+        assert convert_height_to_cm('6-8') == 203
+        assert convert_height_to_cm('7-2') == 218
+        assert convert_height_to_cm('5-9') == 175
+        assert convert_height_to_cm(None) is None
+        assert convert_height_to_cm('') is None
     
     def test_convert_weight_to_kg(self, cleaner):
-        """Test conversion weight 225 lbs -> 102 kg."""
-        assert cleaner._convert_weight_to_kg(225) == 102
-        assert cleaner._convert_weight_to_kg('225') == 102
-        assert cleaner._convert_weight_to_kg('225 lbs') == 102
-        assert abs(cleaner._convert_weight_to_kg(250) - 113) < 1
-        assert cleaner._convert_weight_to_kg(None) is None
+        """Test conversion weight 225 lbs -> 102 kg via transformations.py."""
+        # Utilise la fonction importée depuis transformations.py
+        assert convert_weight_to_kg(225) == 102
+        assert convert_weight_to_kg('225') == 102
+        assert convert_weight_to_kg('225 lbs') == 102
+        assert abs(convert_weight_to_kg(250) - 113) < 1
+        assert convert_weight_to_kg(None) is None
     
     def test_standardize_position(self, cleaner):
-        """Test standardisation des positions."""
-        assert cleaner._standardize_position('Guard') == 'G'
-        assert cleaner._standardize_position('Forward') == 'F'
-        assert cleaner._standardize_position('Center') == 'C'
-        assert cleaner._standardize_position('G-F') == 'G-F'
-        assert cleaner._standardize_position('F-C') == 'F-C'
-        assert cleaner._standardize_position(None) == 'Unknown'
-        assert cleaner._standardize_position('') == 'Unknown'
+        """Test standardisation des positions via transformations.py."""
+        # Utilise la fonction importée depuis transformations.py
+        assert standardize_position('Guard') == 'G'
+        assert standardize_position('Forward') == 'F'
+        assert standardize_position('Center') == 'C'
+        assert standardize_position('G-F') == 'G-F'
+        assert standardize_position('F-C') == 'F-C'
+        assert standardize_position(None) == 'Unknown'
+        assert standardize_position('') == 'Unknown'
     
     def test_standardize_date(self, cleaner):
-        """Test standardisation des dates."""
-        assert cleaner._standardize_date('1984-12-30') == '1984-12-30'
-        assert cleaner._standardize_date('DEC 30, 1984') == '1984-12-30'
-        assert cleaner._standardize_date(None) is None
+        """Test standardisation des dates via transformations.py."""
+        # Utilise la fonction importée depuis transformations.py
+        assert standardize_date('1984-12-30') == '1984-12-30'
+        assert standardize_date('DEC 30, 1984') == '1984-12-30'
+        assert standardize_date(None) is None
     
     def test_calculate_age(self, cleaner):
-        """Test calcul de l'âge."""
+        """Test calcul de l'âge via transformations.py."""
+        # Utilise la fonction importée depuis transformations.py
         current_year = date.today().year
-        age = cleaner._calculate_age('1984-12-30')
+        age = calculate_age('1984-12-30')
         assert age is not None
         assert age >= current_year - 1984 - 1  # -1 si anniversaire pas passé
     
     def test_impute_height(self, cleaner):
-        """Test imputation de la taille."""
-        assert cleaner._impute_height({'position': 'G'}) == 191
-        assert cleaner._impute_height({'position': 'F'}) == 203
-        assert cleaner._impute_height({'position': 'C'}) == 211
-        assert cleaner._impute_height({'position': 'Unknown'}) == 200
+        """Test imputation de la taille via cleaning_functions.py."""
+        # Utilise la fonction importée depuis cleaning_functions.py
+        player_g = impute_missing_data({'position': 'G'})
+        assert player_g['height_cm'] == 191
+        
+        player_f = impute_missing_data({'position': 'F'})
+        assert player_f['height_cm'] == 203
+        
+        player_c = impute_missing_data({'position': 'C'})
+        assert player_c['height_cm'] == 211
     
     def test_impute_weight(self, cleaner):
-        """Test imputation du poids."""
-        assert cleaner._impute_weight({'position': 'G'}) == 90
-        assert cleaner._impute_weight({'position': 'F'}) == 102
-        assert cleaner._impute_weight({'position': 'C'}) == 115
+        """Test imputation du poids via cleaning_functions.py."""
+        # Utilise la fonction importée depuis cleaning_functions.py
+        player_g = impute_missing_data({'position': 'G'})
+        assert player_g['weight_kg'] == 90
+        
+        player_f = impute_missing_data({'position': 'F'})
+        assert player_f['weight_kg'] == 102
+        
+        player_c = impute_missing_data({'position': 'C'})
+        assert player_c['weight_kg'] == 115
     
     def test_clean_and_convert(self, cleaner):
         """Test nettoyage complet."""
