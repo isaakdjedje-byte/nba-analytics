@@ -1,0 +1,22 @@
+{
+  "timestamp": "2026-02-08T14:17:31.521381",
+  "status": "OK",
+  "checks": {
+    "data": {
+      "status": "OK",
+      "n_matches": 8871,
+      "n_features": 85
+    },
+    "predictions": {
+      "status": "OK",
+      "n_predictions": 10,
+      "last_update": "2026-02-08T13:23:25.697416"
+    },
+    "tracking": {
+      "status": "OK",
+      "total_predictions": 23,
+      "evaluated": 3,
+      "accuracy": 0.6666666666666666
+    }
+  }
+}

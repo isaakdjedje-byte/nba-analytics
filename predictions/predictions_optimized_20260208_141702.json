@@ -1,0 +1,116 @@
+{
+  "timestamp": "2026-02-08T14:17:02.378991",
+  "model": "optimized_xgb",
+  "predictions": [
+    {
+      "home_team": "Nets",
+      "away_team": "Wizards",
+      "prediction": "Away Win",
+      "proba_home_win": 0.4665846526622772,
+      "confidence": 0.5394736528396606,
+      "recommendation": "SKIP",
+      "proba_home_win_calibrated": 0.46052631735801697,
+      "confidence_calibrated": 0.5394736528396606,
+      "recommendation_calibrated": "SKIP"
+    },
+    {
+      "home_team": "Thunder",
+      "away_team": "Rockets",
+      "prediction": "Home Win",
+      "proba_home_win": 0.7394141554832458,
+      "confidence": 0.75,
+      "recommendation": "HIGH_CONFIDENCE",
+      "proba_home_win_calibrated": 0.75,
+      "confidence_calibrated": 0.75,
+      "recommendation_calibrated": "HIGH_CONFIDENCE"
+    },
+    {
+      "home_team": "Spurs",
+      "away_team": "Mavericks",
+      "prediction": "Home Win",
+      "proba_home_win": 0.5262731909751892,
+      "confidence": 0.5605320930480957,
+      "recommendation": "LOW_CONFIDENCE",
+      "proba_home_win_calibrated": 0.5605320930480957,
+      "confidence_calibrated": 0.5605320930480957,
+      "recommendation_calibrated": "LOW_CONFIDENCE"
+    },
+    {
+      "home_team": "Magic",
+      "away_team": "Jazz",
+      "prediction": "Home Win",
+      "proba_home_win": 0.7339351773262024,
+      "confidence": 0.75,
+      "recommendation": "HIGH_CONFIDENCE",
+      "proba_home_win_calibrated": 0.75,
+      "confidence_calibrated": 0.75,
+      "recommendation_calibrated": "HIGH_CONFIDENCE"
+    },
+    {
+      "home_team": "Hawks",
+      "away_team": "Hornets",
+      "prediction": "Home Win",
+      "proba_home_win": 0.8664583563804626,
+      "confidence": 0.8780487775802612,
+      "recommendation": "HIGH_CONFIDENCE",
+      "proba_home_win_calibrated": 0.8780487775802612,
+      "confidence_calibrated": 0.8780487775802612,
+      "recommendation_calibrated": "HIGH_CONFIDENCE"
+    },
+    {
+      "home_team": "Bulls",
+      "away_team": "Nuggets",
+      "prediction": "Home Win",
+      "proba_home_win": 0.8921706676483154,
+      "confidence": 0.8780487775802612,
+      "recommendation": "HIGH_CONFIDENCE",
+      "proba_home_win_calibrated": 0.8780487775802612,
+      "confidence_calibrated": 0.8780487775802612,
+      "recommendation_calibrated": "HIGH_CONFIDENCE"
+    },
+    {
+      "home_team": "Lakers",
+      "away_team": "Warriors",
+      "prediction": "Away Win",
+      "proba_home_win": 0.41958725452423096,
+      "confidence": 0.6352940797805786,
+      "recommendation": "MEDIUM_CONFIDENCE",
+      "proba_home_win_calibrated": 0.364705890417099,
+      "confidence_calibrated": 0.6352940797805786,
+      "recommendation_calibrated": "MEDIUM_CONFIDENCE"
+    },
+    {
+      "home_team": "Suns",
+      "away_team": "76ers",
+      "prediction": "Home Win",
+      "proba_home_win": 0.5996784567832947,
+      "confidence": 0.5714285969734192,
+      "recommendation": "LOW_CONFIDENCE",
+      "proba_home_win_calibrated": 0.5714285969734192,
+      "confidence_calibrated": 0.5714285969734192,
+      "recommendation_calibrated": "LOW_CONFIDENCE"
+    },
+    {
+      "home_team": "Trail Blazers",
+      "away_team": "Grizzlies",
+      "prediction": "Home Win",
+      "proba_home_win": 0.551372230052948,
+      "confidence": 0.5714285969734192,
+      "recommendation": "LOW_CONFIDENCE",
+      "proba_home_win_calibrated": 0.5714285969734192,
+      "confidence_calibrated": 0.5714285969734192,
+      "recommendation_calibrated": "LOW_CONFIDENCE"
+    },
+    {
+      "home_team": "Kings",
+      "away_team": "Cavaliers",
+      "prediction": "Home Win",
+      "proba_home_win": 0.672389566898346,
+      "confidence": 0.7049180269241333,
+      "recommendation": "HIGH_CONFIDENCE",
+      "proba_home_win_calibrated": 0.7049180269241333,
+      "confidence_calibrated": 0.7049180269241333,
+      "recommendation_calibrated": "HIGH_CONFIDENCE"
+    }
+  ]
+}

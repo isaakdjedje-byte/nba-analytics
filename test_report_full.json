@@ -1,0 +1,215 @@
+{
+  "timestamp": "2026-02-08T14:20:46.166635",
+  "summary": {
+    "total": 16,
+    "ok": 16,
+    "fail": 0,
+    "skip": 0,
+    "success_rate": 1.0,
+    "duration": 2.479384183883667
+  },
+  "categories": {
+    "Structure": {
+      "ok": 2,
+      "total": 2
+    },
+    "Ingestion": {
+      "ok": 3,
+      "total": 3
+    },
+    "Processing": {
+      "ok": 4,
+      "total": 4
+    },
+    "Feature Engineering": {
+      "ok": 2,
+      "total": 2
+    },
+    "ML": {
+      "ok": 3,
+      "total": 3
+    },
+    "Intégration": {
+      "ok": 2,
+      "total": 2
+    }
+  },
+  "tests": [
+    {
+      "name": "Structure des dossiers",
+      "category": "Structure",
+      "status": "OK",
+      "duration": "0.00s",
+      "error": null,
+      "details": {
+        "directories_checked": 10
+      }
+    },
+    {
+      "name": "Fichiers de configuration",
+      "category": "Structure",
+      "status": "OK",
+      "duration": "0.00s",
+      "error": null,
+      "details": {
+        "files_checked": 6
+      }
+    },
+    {
+      "name": "Données brutes (NBA-11)",
+      "category": "Ingestion",
+      "status": "OK",
+      "duration": "0.00s",
+      "error": null,
+      "details": {
+        "data_dirs_found": "3/3"
+      }
+    },
+    {
+      "name": "Mapping équipes (NBA-15)",
+      "category": "Ingestion",
+      "status": "OK",
+      "duration": "0.00s",
+      "error": null,
+      "details": {
+        "teams": 30
+      }
+    },
+    {
+      "name": "API NBA Live",
+      "category": "Ingestion",
+      "status": "OK",
+      "duration": "0.90s",
+      "error": null,
+      "details": {
+        "api_available": true
+      }
+    },
+    {
+      "name": "Nettoyage données (NBA-17)",
+      "category": "Processing",
+      "status": "OK",
+      "duration": "0.00s",
+      "error": null,
+      "details": {
+        "silver_layer": "Existe"
+      }
+    },
+    {
+      "name": "Métriques avancées (NBA-18)",
+      "category": "Processing",
+      "status": "OK",
+      "duration": "0.16s",
+      "error": null,
+      "details": {
+        "enriched_files": 4
+      }
+    },
+    {
+      "name": "Agrégations équipes (NBA-19)",
+      "category": "Processing",
+      "status": "OK",
+      "duration": "0.00s",
+      "error": null,
+      "details": {
+        "team_stats_files": 2
+      }
+    },
+    {
+      "name": "Transformation matchs (NBA-20)",
+      "category": "Processing",
+      "status": "OK",
+      "duration": "0.03s",
+      "error": null,
+      "details": {
+        "games_count": 2
+      }
+    },
+    {
+      "name": "Features V1",
+      "category": "Feature Engineering",
+      "status": "OK",
+      "duration": "0.00s",
+      "error": null,
+      "details": {
+        "v1_exists": true
+      }
+    },
+    {
+      "name": "Features V3 (Optimisées)",
+      "category": "Feature Engineering",
+      "status": "OK",
+      "duration": "1.38s",
+      "error": null,
+      "details": {
+        "matches": 8871,
+        "features": 85
+      }
+    },
+    {
+      "name": "Modèles entraînés",
+      "category": "ML",
+      "status": "OK",
+      "duration": "0.00s",
+      "error": null,
+      "details": {
+        "models_count": 8,
+        "models": [
+          "rf_optimized.pkl",
+          "smart_ensemble.pkl",
+          "xgb_optimized.pkl",
+          "xgb_v3.pkl",
+          "calibrator_rf.joblib"
+        ]
+      }
+    },
+    {
+      "name": "Modèle optimisé (v2.0)",
+      "category": "ML",
+      "status": "OK",
+      "duration": "0.00s",
+      "error": null,
+      "details": {
+        "model": true,
+        "calibrator": true,
+        "features": true,
+        "n_selected_features": 35
+      }
+    },
+    {
+      "name": "Pipeline de prédiction",
+      "category": "ML",
+      "status": "OK",
+      "duration": "0.00s",
+      "error": null,
+      "details": {
+        "script_exists": true,
+        "prediction_files": 7
+      }
+    },
+    {
+      "name": "Pipeline complet",
+      "category": "Intégration",
+      "status": "OK",
+      "duration": "0.00s",
+      "error": null,
+      "details": {
+        "data_exists": true,
+        "models_exist": true,
+        "predictions_exist": true,
+        "scripts_exist": true
+      }
+    },
+    {
+      "name": "Tracking ROI",
+      "category": "Intégration",
+      "status": "OK",
+      "duration": "0.00s",
+      "error": null,
+      "details": {
+        "tracking_exists": true,
+        "tracked_predictions": 23
+      }
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 # 🤖 AGENT DOCUMENTATION - NBA Analytics Platform
 
-**Version :** 6.0 (NBA-22 - Production Ready)  
-**Mise à jour :** 8 Février 2026 à 13:30  
-**Statut :** ✅ NBA-22 TERMINÉ - Production (76.76% accuracy)
+**Version :** 6.0 (NBA-19 + NBA-21 + NBA-22 - Production Ready)  
+**Mise à jour :** 8 Février 2026 à 14:00  
+**Statut :** ✅ Production Ready - 76.76% accuracy (XGBoost)
 
 **Meilleur modèle** : XGBoost V3 76.76% - Pipeline quotidien + Tracking ROI
 
