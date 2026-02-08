@@ -1,7 +1,34 @@
 # 📚 INDEX - Documentation NBA Analytics
 
-**Dernière mise à jour :** 2026-02-07 16:20  
-**Statut :** NBA-18 V2 en cours (143/5,103 joueurs, 2.8%)
+**Dernière mise à jour :** 2026-02-08 10:20  
+**Statut :** NBA-20 ✅ TERMINÉ - 1,230 matchs structurés
+
+---
+
+## ✅ NBA-20 - TERMINÉ (08/02/2026)
+
+### Résultats
+- **1,230 matchs** structurés depuis 2,460 box scores
+- **Home win rate** : 54.3% (668 wins)
+- **Marge moyenne** : 12.6 points
+- **0 erreurs** de transformation
+- **Fichier généré** : 889KB
+
+### Fichiers
+| Fichier | Description | Lignes |
+|---------|-------------|--------|
+| [src/pipeline/nba20_transform_games.py](../src/pipeline/nba20_transform_games.py) | Transformateur matchs | ~270 |
+| [src/pipeline/unified_ml_pipeline.py](../src/pipeline/unified_ml_pipeline.py) | Orchestrateur ML | ~220 |
+| [data/silver/games_processed/games_structured.json](../data/silver/games_processed/games_structured.json) | Matchs structurés | 1,230 |
+
+### Commandes
+```bash
+# NBA-20 uniquement
+python src/pipeline/nba20_transform_games.py
+
+# Pipeline complet
+python src/pipeline/unified_ml_pipeline.py
+```
 
 ---
 
