@@ -1,7 +1,7 @@
 # 📚 INDEX - Documentation NBA Analytics
 
-**Dernière mise à jour :** 2026-02-08 14:00  
-**Statut :** ✅ NBA-19 + NBA-21 + NBA-22 TERMINÉS - Production Ready 76.76%
+**Dernière mise à jour :** 2026-02-08 16:00  
+**Statut :** ✅ NBA-22 OPTIMISÉ v2.0 - Production Ready avec Calibration + Feature Selection
 
 **Meilleur modèle** : XGBoost V3 76.76% > Neural Network 76.84% (testé) > RF 76.19%
 
@@ -9,7 +9,25 @@
 
 ---
 
-## ✅ NBA-22 - Production ML (TERMINÉ)
+## ✅ NBA-22 - Production ML (TERMINÉ + OPTIMISÉ v2.0)
+
+### 🎯 NBA-22 Optimized v2.0 (Nouveau)
+
+**Optimisations majeures ajoutées:**
+- ✅ **Feature Selection**: 80 → 35 features (réduction 56%)
+- ✅ **Calibration des probabilités**: Isotonic Regression pour probabilités fiables
+- ✅ **Monitoring Data Drift**: Détection automatique de dérive des données
+- ✅ **Système de santé**: Vérification automatisée des composants
+- ✅ **Pipeline optimisé**: `run_predictions_optimized.py`
+
+**Fichiers créés:**
+- `src/ml/pipeline/probability_calibration.py` - Calibration module
+- `src/ml/pipeline/feature_selection.py` - Feature selection
+- `src/ml/pipeline/drift_monitoring.py` - Drift detection
+- `src/ml/pipeline/train_optimized.py` - Entraînement optimisé
+- `run_predictions_optimized.py` - Pipeline optimisé
+- `launch_optimization.py` - Lanceur complet
+- `NBA22_OPTIMIZATION_GUIDE.md` - Guide d'utilisation
 
 ### Résultats Finaux (08/02/2026)
 
@@ -29,8 +47,28 @@
 ### 🚀 Production (Nouveau)
 - **API NBA Live** : 10 matchs/jour récupérés automatiquement
 - **Pipeline quotidien** : `run_predictions.py` - Prédictions automatisées
+- **Pipeline optimisé** : `run_predictions_optimized.py` - Avec calibration
 - **Tracking ROI** : Suivi des performances avec rapports
 - **Mapping étendu** : 61 variantes de noms d'équipes
+
+### Commandes Optimisées
+```bash
+# Pipeline optimisé complet
+python launch_optimization.py
+
+# Prédictions avec calibration
+python run_predictions_optimized.py
+
+# Entraînement optimisé
+python src/ml/pipeline/train_optimized.py
+
+# Monitoring
+python run_predictions_optimized.py --health
+python run_predictions_optimized.py --drift
+
+# Documentation
+voir NBA22_OPTIMIZATION_GUIDE.md
+```
 
 ### Documentation
 - [WEEK1_SUMMARY.md](WEEK1_SUMMARY.md) - Résumé Semaine 1 (Optimisation)
