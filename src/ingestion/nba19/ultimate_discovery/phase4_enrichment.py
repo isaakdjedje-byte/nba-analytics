@@ -105,7 +105,7 @@ class EnrichmentEngine:
         print("\n[ENRICH] Inference des positions...")
         
         # Charger donnees joueurs originales
-        with open("data/silver/players_advanced/players.json", 'r') as f:
+        with open("data/silver/players_advanced/players.json", 'r', encoding='utf-8') as f:
             players_data = json.load(f)
         
         player_info = {p['id']: p for p in players_data.get('data', [])}

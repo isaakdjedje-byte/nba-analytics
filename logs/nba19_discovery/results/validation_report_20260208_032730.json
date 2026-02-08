@@ -1,0 +1,455 @@
+{
+  "generated_at": "2026-02-08T03:27:30.902173",
+  "summary": {
+    "total_mappings": 28280,
+    "validated": 27152,
+    "issues": 1128,
+    "quality_distribution": {
+      "SILVER": 23674,
+      "GOLD": 3478
+    }
+  },
+  "quality_distribution": {
+    "SILVER": 23674,
+    "GOLD": 3478
+  },
+  "issues_sample": [
+    {
+      "player_id": 76007,
+      "player_name": "John Abramovic",
+      "mapping": {
+        "player_id": 76007,
+        "player_name": "John Abramovic",
+        "season": "1946-47",
+        "team_id": 1610610031,
+        "team_abbreviation": "PIT",
+        "games_played": 47,
+        "discovery_method": "career_stats_api",
+        "confidence": 1.0,
+        "discovered_at": "2026-02-07T23:02:14.548078"
+      },
+      "issue": {
+        "status": "invalid",
+        "quality": "BRONZE",
+        "confidence": 0.3,
+        "validation": "invalid_team_id"
+      }
+    },
+    {
+      "player_id": 76007,
+      "player_name": "John Abramovic",
+      "mapping": {
+        "player_id": 76007,
+        "player_name": "John Abramovic",
+        "season": "1947-48",
+        "team_id": 1610610034,
+        "team_abbreviation": "BOM",
+        "games_played": 4,
+        "discovery_method": "career_stats_api",
+        "confidence": 1.0,
+        "discovered_at": "2026-02-07T23:02:14.548078"
+      },
+      "issue": {
+        "status": "invalid",
+        "quality": "BRONZE",
+        "confidence": 0.3,
+        "validation": "invalid_team_id"
+      }
+    },
+    {
+      "player_id": 76007,
+      "player_name": "John Abramovic",
+      "mapping": {
+        "player_id": 76007,
+        "player_name": "John Abramovic",
+        "season": "1947-48",
+        "team_id": 1610610024,
+        "team_abbreviation": "BAL",
+        "games_played": 5,
+        "discovery_method": "career_stats_api",
+        "confidence": 1.0,
+        "discovered_at": "2026-02-07T23:02:14.548078"
+      },
+      "issue": {
+        "status": "invalid",
+        "quality": "BRONZE",
+        "confidence": 0.3,
+        "validation": "invalid_team_id"
+      }
+    },
+    {
+      "player_id": 1630173,
+      "player_name": "Precious Achiuwa",
+      "mapping": {
+        "player_id": 1630173,
+        "player_name": "Precious Achiuwa",
+        "season": "2023-24",
+        "team_id": 1610612761,
+        "team_abbreviation": "TOR",
+        "games_played": 25,
+        "discovery_method": "career_stats_api",
+        "confidence": 1.0,
+        "discovered_at": "2026-02-07T23:02:16.971873"
+      },
+      "issue": {
+        "status": "mismatch",
+        "quality": "SILVER",
+        "confidence": 0.5,
+        "validation": "ground_truth_mismatch",
+        "expected_team": 1610612752
+      }
+    },
+    {
+      "player_id": 1630534,
+      "player_name": "Ochai Agbaji",
+      "mapping": {
+        "player_id": 1630534,
+        "player_name": "Ochai Agbaji",
+        "season": "2023-24",
+        "team_id": 1610612762,
+        "team_abbreviation": "UTA",
+        "games_played": 51,
+        "discovery_method": "career_stats_api",
+        "confidence": 1.0,
+        "discovered_at": "2026-02-07T23:02:28.434653"
+      },
+      "issue": {
+        "status": "mismatch",
+        "quality": "SILVER",
+        "confidence": 0.5,
+        "validation": "ground_truth_mismatch",
+        "expected_team": 1610612761
+      }
+    },
+    {
+      "player_id": 1629638,
+      "player_name": "Nickeil Alexander-Walker",
+      "mapping": {
+        "player_id": 1629638,
+        "player_name": "Nickeil Alexander-Walker",
+        "season": "2021-22",
+        "team_id": 1610612740,
+        "team_abbreviation": "NOP",
+        "games_played": 50,
+        "discovery_method": "career_stats_api",
+        "confidence": 1.0,
+        "discovered_at": "2026-02-07T23:02:47.134630"
+      },
+      "issue": {
+        "status": "mismatch",
+        "quality": "SILVER",
+        "confidence": 0.5,
+        "validation": "ground_truth_mismatch",
+        "expected_team": 1610612762
+      }
+    },
+    {
+      "player_id": 1629638,
+      "player_name": "Nickeil Alexander-Walker",
+      "mapping": {
+        "player_id": 1629638,
+        "player_name": "Nickeil Alexander-Walker",
+        "season": "2022-23",
+        "team_id": 1610612762,
+        "team_abbreviation": "UTA",
+        "games_played": 36,
+        "discovery_method": "career_stats_api",
+        "confidence": 1.0,
+        "discovered_at": "2026-02-07T23:02:47.134630"
+      },
+      "issue": {
+        "status": "mismatch",
+        "quality": "SILVER",
+        "confidence": 0.5,
+        "validation": "ground_truth_mismatch",
+        "expected_team": 1610612750
+      }
+    },
+    {
+      "player_id": 1628386,
+      "player_name": "Jarrett Allen",
+      "mapping": {
+        "player_id": 1628386,
+        "player_name": "Jarrett Allen",
+        "season": "2020-21",
+        "team_id": 1610612751,
+        "team_abbreviation": "BKN",
+        "games_played": 12,
+        "discovery_method": "career_stats_api",
+        "confidence": 1.0,
+        "discovered_at": "2026-02-07T23:02:54.275745"
+      },
+      "issue": {
+        "status": "mismatch",
+        "quality": "SILVER",
+        "confidence": 0.5,
+        "validation": "ground_truth_mismatch",
+        "expected_team": 1610612739
+      }
+    },
+    {
+      "player_id": 203937,
+      "player_name": "Kyle Anderson",
+      "mapping": {
+        "player_id": 203937,
+        "player_name": "Kyle Anderson",
+        "season": "2024-25",
+        "team_id": 1610612744,
+        "team_abbreviation": "GSW",
+        "games_played": 36,
+        "discovery_method": "career_stats_api",
+        "confidence": 1.0,
+        "discovered_at": "2026-02-07T23:03:05.795005"
+      },
+      "issue": {
+        "status": "mismatch",
+        "quality": "SILVER",
+        "confidence": 0.5,
+        "validation": "ground_truth_mismatch",
+        "expected_team": 1610612748
+      }
+    },
+    {
+      "player_id": 1630175,
+      "player_name": "Cole Anthony",
+      "mapping": {
+        "player_id": 1630175,
+        "player_name": "Cole Anthony",
+        "season": "2024-25",
+        "team_id": 1610612753,
+        "team_abbreviation": "ORL",
+        "games_played": 67,
+        "discovery_method": "career_stats_api",
+        "confidence": 1.0,
+        "discovered_at": "2026-02-07T23:03:20.447773"
+      },
+      "issue": {
+        "status": "mismatch",
+        "quality": "SILVER",
+        "confidence": 0.5,
+        "validation": "ground_truth_mismatch",
+        "expected_team": 1610612763
+      }
+    },
+    {
+      "player_id": 1628384,
+      "player_name": "OG Anunoby",
+      "mapping": {
+        "player_id": 1628384,
+        "player_name": "OG Anunoby",
+        "season": "2023-24",
+        "team_id": 1610612761,
+        "team_abbreviation": "TOR",
+        "games_played": 27,
+        "discovery_method": "career_stats_api",
+        "confidence": 1.0,
+        "discovered_at": "2026-02-07T23:03:22.891714"
+      },
+      "issue": {
+        "status": "mismatch",
+        "quality": "SILVER",
+        "confidence": 0.5,
+        "validation": "ground_truth_mismatch",
+        "expected_team": 1610612752
+      }
+    },
+    {
+      "player_id": 1628963,
+      "player_name": "Marvin Bagley III",
+      "mapping": {
+        "player_id": 1628963,
+        "player_name": "Marvin Bagley III",
+        "season": "2021-22",
+        "team_id": 1610612758,
+        "team_abbreviation": "SAC",
+        "games_played": 30,
+        "discovery_method": "career_stats_api",
+        "confidence": 1.0,
+        "discovered_at": "2026-02-07T23:03:54.175384"
+      },
+      "issue": {
+        "status": "mismatch",
+        "quality": "SILVER",
+        "confidence": 0.5,
+        "validation": "ground_truth_mismatch",
+        "expected_team": 1610612765
+      }
+    },
+    {
+      "player_id": 1628963,
+      "player_name": "Marvin Bagley III",
+      "mapping": {
+        "player_id": 1628963,
+        "player_name": "Marvin Bagley III",
+        "season": "2023-24",
+        "team_id": 1610612765,
+        "team_abbreviation": "DET",
+        "games_played": 26,
+        "discovery_method": "career_stats_api",
+        "confidence": 1.0,
+        "discovered_at": "2026-02-07T23:03:54.175384"
+      },
+      "issue": {
+        "status": "mismatch",
+        "quality": "SILVER",
+        "confidence": 0.5,
+        "validation": "ground_truth_mismatch",
+        "expected_team": 1610612764
+      }
+    },
+    {
+      "player_id": 1628963,
+      "player_name": "Marvin Bagley III",
+      "mapping": {
+        "player_id": 1628963,
+        "player_name": "Marvin Bagley III",
+        "season": "2024-25",
+        "team_id": 1610612764,
+        "team_abbreviation": "WAS",
+        "games_played": 19,
+        "discovery_method": "career_stats_api",
+        "confidence": 1.0,
+        "discovered_at": "2026-02-07T23:03:54.175384"
+      },
+      "issue": {
+        "status": "mismatch",
+        "quality": "SILVER",
+        "confidence": 0.5,
+        "validation": "ground_truth_mismatch",
+        "expected_team": 1610612763
+      }
+    },
+    {
+      "player_id": 1631116,
+      "player_name": "Patrick Baldwin Jr.",
+      "mapping": {
+        "player_id": 1631116,
+        "player_name": "Patrick Baldwin Jr.",
+        "season": "2024-25",
+        "team_id": 1610612764,
+        "team_abbreviation": "WAS",
+        "games_played": 22,
+        "discovery_method": "career_stats_api",
+        "confidence": 1.0,
+        "discovered_at": "2026-02-07T23:04:07.127257"
+      },
+      "issue": {
+        "status": "mismatch",
+        "quality": "SILVER",
+        "confidence": 0.5,
+        "validation": "ground_truth_mismatch",
+        "expected_team": 1610612746
+      }
+    },
+    {
+      "player_id": 1628964,
+      "player_name": "Mo Bamba",
+      "mapping": {
+        "player_id": 1628964,
+        "player_name": "Mo Bamba",
+        "season": "2022-23",
+        "team_id": 1610612753,
+        "team_abbreviation": "ORL",
+        "games_played": 40,
+        "discovery_method": "career_stats_api",
+        "confidence": 1.0,
+        "discovered_at": "2026-02-07T23:04:14.956487"
+      },
+      "issue": {
+        "status": "mismatch",
+        "quality": "SILVER",
+        "confidence": 0.5,
+        "validation": "ground_truth_mismatch",
+        "expected_team": 1610612747
+      }
+    },
+    {
+      "player_id": 1630217,
+      "player_name": "Desmond Bane",
+      "mapping": {
+        "player_id": 1630217,
+        "player_name": "Desmond Bane",
+        "season": "2024-25",
+        "team_id": 1610612763,
+        "team_abbreviation": "MEM",
+        "games_played": 69,
+        "discovery_method": "career_stats_api",
+        "confidence": 1.0,
+        "discovered_at": "2026-02-07T23:04:19.837812"
+      },
+      "issue": {
+        "status": "mismatch",
+        "quality": "SILVER",
+        "confidence": 0.5,
+        "validation": "ground_truth_mismatch",
+        "expected_team": 1610612753
+      }
+    },
+    {
+      "player_id": 1630625,
+      "player_name": "Dalano Banton",
+      "mapping": {
+        "player_id": 1630625,
+        "player_name": "Dalano Banton",
+        "season": "2023-24",
+        "team_id": 1610612738,
+        "team_abbreviation": "BOS",
+        "games_played": 24,
+        "discovery_method": "career_stats_api",
+        "confidence": 1.0,
+        "discovered_at": "2026-02-07T23:04:22.358472"
+      },
+      "issue": {
+        "status": "mismatch",
+        "quality": "SILVER",
+        "confidence": 0.5,
+        "validation": "ground_truth_mismatch",
+        "expected_team": 1610612757
+      }
+    },
+    {
+      "player_id": 203084,
+      "player_name": "Harrison Barnes",
+      "mapping": {
+        "player_id": 203084,
+        "player_name": "Harrison Barnes",
+        "season": "2018-19",
+        "team_id": 1610612742,
+        "team_abbreviation": "DAL",
+        "games_played": 49,
+        "discovery_method": "career_stats_api",
+        "confidence": 1.0,
+        "discovered_at": "2026-02-07T23:04:29.715631"
+      },
+      "issue": {
+        "status": "mismatch",
+        "quality": "SILVER",
+        "confidence": 0.5,
+        "validation": "ground_truth_mismatch",
+        "expected_team": 1610612758
+      }
+    },
+    {
+      "player_id": 1629628,
+      "player_name": "RJ Barrett",
+      "mapping": {
+        "player_id": 1629628,
+        "player_name": "RJ Barrett",
+        "season": "2023-24",
+        "team_id": 1610612752,
+        "team_abbreviation": "NYK",
+        "games_played": 26,
+        "discovery_method": "career_stats_api",
+        "confidence": 1.0,
+        "discovered_at": "2026-02-07T23:04:37.031929"
+      },
+      "issue": {
+        "status": "mismatch",
+        "quality": "SILVER",
+        "confidence": 0.5,
+        "validation": "ground_truth_mismatch",
+        "expected_team": 1610612761
+      }
+    }
+  ]
+}
