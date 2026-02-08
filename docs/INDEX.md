@@ -1,7 +1,7 @@
 # 📚 INDEX - Documentation NBA Analytics
 
-**Dernière mise à jour :** 2026-02-08 16:00  
-**Statut :** ✅ NBA-22 OPTIMISÉ v2.0 - Production Ready avec Calibration + Feature Selection
+**Dernière mise à jour :** 2026-02-08 15:25  
+**Statut :** ✅ NBA-23 V3.0 - Architecture hiérarchique (14 archétypes), 39+ features, 41 joueurs ground truth, BaseFeatureEngineer
 
 **Meilleur modèle** : XGBoost V3 76.76% > Neural Network 76.84% (testé) > RF 76.19%
 
@@ -225,6 +225,63 @@ python test_full_pipeline.py
 
 ### "Je veux voir un ticket"
 → [JIRA_BACKLOG.md](JIRA_BACKLOG.md) - Tous les tickets
+
+---
+
+## ✅ NBA-23 - Clustering Joueurs (TERMINÉ + V3.0 OPTIMISÉ 08/02/2026)
+
+### Résultats V3.0
+- **4 805 joueurs** clusterisés en **14 archétypes hiérarchiques**
+- **39+ features** créées (V2: 28 features)
+- **Architecture:** ELITE → STARTER → ROLE_PLAYER → BENCH
+- **Validation:** 41 joueurs ground truth
+- **Algorithme:** GMM (Gaussian Mixture Model) + Matcher hiérarchique
+- **Silhouette Score:** 0.118 (V2) → Objectif V3.0: > 0.20
+
+### Archétypes V3.0 (Hiérarchiques)
+| Niveau | Archétypes | Description |
+|--------|------------|-------------|
+| **ELITE** (4) | Scorer, Playmaker, Two-Way, Big | Stars dominantes (PER ≥ 25) |
+| **STARTER** (3) | Offensive, Defensive, Balanced | Titulaires confirmés (PER 17-25) |
+| **ROLE_PLAYER** (4) | 3-and-D, Energy Big, Shooter, Defensive | Rôles spécialisés (PER 11-17) |
+| **BENCH** (3) | Energy, Development, Veteran | Remplaçants (PER < 11) |
+
+**Amélioration majeure:** Distribution équilibrée vs 84.6% Role Players (V2)
+
+### Nouveautés V3.0
+- ✅ **BaseFeatureEngineer** - Classe de base réutilisable (zéro redondance)
+- ✅ **HierarchicalArchetypeMatcher** - 14 archétypes avec scoring
+- ✅ **ArchetypeValidator** - 41 joueurs ground truth
+- ✅ **39+ features** - AST%, VORP, WS/48, ratios avancés
+- ✅ **Code propre** - Architecture héritée et modularisée
+
+### Commandes
+```bash
+# Exécuter clustering
+python nba23_clustering.py
+
+# Validation avec ground truth
+python -c "from src.ml.archetype import quick_validation; import pandas as pd; df = pd.read_parquet('data/gold/player_archetypes/player_archetypes.parquet'); quick_validation(df)"
+
+# Lire résultats
+cat reports/nba23_report.json
+```
+
+### Fichiers
+**V3.0 (Nouveau):**
+- `src/ml/base/base_feature_engineer.py` - Classe de base (190 lignes)
+- `src/ml/archetype/feature_engineering_v3.py` - 39+ features
+- `src/ml/archetype/archetype_matcher.py` - Matcher hiérarchique
+- `src/ml/archetype/validation.py` - Validation ground truth
+
+**Existant:**
+- `nba23_clustering.py` - Script principal
+- `src/ml/archetype/` - Modules clustering
+- `data/gold/player_archetypes/` - Résultats
+
+### Documentation
+- [stories/NBA-23_player_clustering.md](stories/NBA-23_player_clustering.md) - Story complète (mise à jour V3)
+- [NBA23_OPTIMIZATION_REPORT.md](NBA23_OPTIMIZATION_REPORT.md) - Rapport optimisation V2
 
 ---
 

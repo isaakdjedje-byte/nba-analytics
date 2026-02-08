@@ -1,0 +1,306 @@
+{
+  "timestamp": "2026-02-08T15:23:48.799435",
+  "nba23_status": "OPTIMIZED_COMPLETED",
+  "data": {
+    "total_players": 5103,
+    "players_clustered": 4805,
+    "features_original": 39,
+    "features_selected": 20,
+    "selected_features": [
+      "pts_per_36",
+      "ast_per_36",
+      "efg_pct",
+      "pts_per_fga",
+      "usg_pct",
+      "reb_per_36",
+      "stl_per_36",
+      "blk_per_36",
+      "pf_per_36",
+      "defensive_activity",
+      "rim_protection_index",
+      "ft_rate",
+      "playmaking_score",
+      "efficiency_index",
+      "ast_pct",
+      "stl_pct",
+      "blk_pct",
+      "tov_pct",
+      "trb_pct",
+      "vorp"
+    ]
+  },
+  "clustering": {
+    "algorithm": "GMM_k6",
+    "n_clusters": 6,
+    "silhouette_score": 0.15205391062757487,
+    "calinski_harabasz": 673.2465637296654,
+    "davies_bouldin": 2.5022657502124326,
+    "cluster_sizes": {
+      "0": 1932,
+      "1": 195,
+      "2": 326,
+      "3": 651,
+      "4": 142,
+      "5": 1559
+    }
+  },
+  "archetypes": {
+    "n_archetypes": 6,
+    "total_players": 4805,
+    "archetypes": [
+      {
+        "id": "ROLE_PLAYER",
+        "name": "Role Player",
+        "name_fr": "Joueur de R\u00f4le",
+        "description": "Solid contributor without standout skills",
+        "description_fr": "Contributeur solide sans competence dominante",
+        "n_players": 1932,
+        "pct_total": 40.20811654526535,
+        "examples": [
+          "Dorian Finney-Smith",
+          "Royce O'Neale",
+          "Josh Hart"
+        ],
+        "key_features": [
+          "per",
+          "usg_pct",
+          "minutes_per_game",
+          "consistency_score"
+        ],
+        "signature": {
+          "per": [
+            "between",
+            [
+              11,
+              16
+            ]
+          ],
+          "usg_pct": [
+            "between",
+            [
+              15,
+              22
+            ]
+          ],
+          "minutes_per_game": [
+            "between",
+            [
+              15,
+              28
+            ]
+          ]
+        }
+      },
+      {
+        "id": "ROLE_PLAYER",
+        "name": "Role Player",
+        "name_fr": "Joueur de R\u00f4le",
+        "description": "Solid contributor without standout skills",
+        "description_fr": "Contributeur solide sans competence dominante",
+        "n_players": 195,
+        "pct_total": 4.0582726326742975,
+        "examples": [
+          "Dorian Finney-Smith",
+          "Royce O'Neale",
+          "Josh Hart"
+        ],
+        "key_features": [
+          "per",
+          "usg_pct",
+          "minutes_per_game",
+          "consistency_score"
+        ],
+        "signature": {
+          "per": [
+            "between",
+            [
+              11,
+              16
+            ]
+          ],
+          "usg_pct": [
+            "between",
+            [
+              15,
+              22
+            ]
+          ],
+          "minutes_per_game": [
+            "between",
+            [
+              15,
+              28
+            ]
+          ]
+        }
+      },
+      {
+        "id": "ROLE_PLAYER",
+        "name": "Role Player",
+        "name_fr": "Joueur de R\u00f4le",
+        "description": "Solid contributor without standout skills",
+        "description_fr": "Contributeur solide sans competence dominante",
+        "n_players": 326,
+        "pct_total": 6.784599375650364,
+        "examples": [
+          "Dorian Finney-Smith",
+          "Royce O'Neale",
+          "Josh Hart"
+        ],
+        "key_features": [
+          "per",
+          "usg_pct",
+          "minutes_per_game",
+          "consistency_score"
+        ],
+        "signature": {
+          "per": [
+            "between",
+            [
+              11,
+              16
+            ]
+          ],
+          "usg_pct": [
+            "between",
+            [
+              15,
+              22
+            ]
+          ],
+          "minutes_per_game": [
+            "between",
+            [
+              15,
+              28
+            ]
+          ]
+        }
+      },
+      {
+        "id": "ROLE_PLAYER",
+        "name": "Role Player",
+        "name_fr": "Joueur de R\u00f4le",
+        "description": "Solid contributor without standout skills",
+        "description_fr": "Contributeur solide sans competence dominante",
+        "n_players": 651,
+        "pct_total": 13.548387096774196,
+        "examples": [
+          "Dorian Finney-Smith",
+          "Royce O'Neale",
+          "Josh Hart"
+        ],
+        "key_features": [
+          "per",
+          "usg_pct",
+          "minutes_per_game",
+          "consistency_score"
+        ],
+        "signature": {
+          "per": [
+            "between",
+            [
+              11,
+              16
+            ]
+          ],
+          "usg_pct": [
+            "between",
+            [
+              15,
+              22
+            ]
+          ],
+          "minutes_per_game": [
+            "between",
+            [
+              15,
+              28
+            ]
+          ]
+        }
+      },
+      {
+        "id": "DEFENSIVE_SPECIALIST",
+        "name": "Defensive Specialist",
+        "name_fr": "Specialiste Defensif",
+        "description": "Elite defender with limited offensive role",
+        "description_fr": "Defenseur elite avec r\u00f4le offensif limite",
+        "n_players": 142,
+        "pct_total": 2.95525494276795,
+        "examples": [
+          "Alex Caruso",
+          "Jrue Holiday",
+          "Matisse Thybulle"
+        ],
+        "key_features": [
+          "stl_per_36",
+          "defensive_activity",
+          "pts_per_36",
+          "usg_pct"
+        ],
+        "signature": {
+          "stl_per_36": [
+            ">",
+            1.8
+          ],
+          "defensive_activity": [
+            ">",
+            3.0
+          ],
+          "pts_per_36": [
+            "<",
+            12
+          ],
+          "usg_pct": [
+            "<",
+            15
+          ]
+        }
+      },
+      {
+        "id": "ROLE_PLAYER",
+        "name": "Role Player",
+        "name_fr": "Joueur de R\u00f4le",
+        "description": "Solid contributor without standout skills",
+        "description_fr": "Contributeur solide sans competence dominante",
+        "n_players": 1559,
+        "pct_total": 32.44536940686785,
+        "examples": [
+          "Dorian Finney-Smith",
+          "Royce O'Neale",
+          "Josh Hart"
+        ],
+        "key_features": [
+          "per",
+          "usg_pct",
+          "minutes_per_game",
+          "consistency_score"
+        ],
+        "signature": {
+          "per": [
+            "between",
+            [
+              11,
+              16
+            ]
+          ],
+          "usg_pct": [
+            "between",
+            [
+              15,
+              22
+            ]
+          ],
+          "minutes_per_game": [
+            "between",
+            [
+              15,
+              28
+            ]
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,8 +1,8 @@
 # 🤖 AGENT DOCUMENTATION - NBA Analytics Platform
 
-**Version :** 6.0 (NBA-19 + NBA-21 + NBA-22 - Production Ready)  
-**Mise à jour :** 8 Février 2026 à 14:00  
-**Statut :** ✅ Production Ready - 76.76% accuracy (XGBoost)
+**Version :** 7.0 (NBA-22 Optimized v2.0 - Production Ready)  
+**Mise à jour :** 8 Février 2026 à 16:30  
+**Statut :** ✅ Production Ready - 76.65% accuracy avec Calibration & Monitoring
 
 **Meilleur modèle** : XGBoost V3 76.76% - Pipeline quotidien + Tracking ROI
 
@@ -65,6 +65,35 @@ python run_predictions.py --update
 python run_predictions.py --report
 ```
 
+### Production Optimisée v2.0 🆕
+
+**Optimisations:**
+- **Feature Selection**: 80 → 35 features (-56%)
+- **Calibration**: Probabilités fiables (Brier 0.1539)
+- **Monitoring**: Data drift & système de santé
+- **Performance**: 76.65% accuracy (stable)
+
+```bash
+# Lancer optimisation complète
+python launch_optimization.py
+
+# Prédictions optimisées
+python run_predictions_optimized.py
+
+# Monitoring
+python run_predictions_optimized.py --health
+python run_predictions_optimized.py --drift
+
+# Réentraîner
+python src/ml/pipeline/train_optimized.py
+```
+
+**Fichiers:**
+- `run_predictions_optimized.py` - Pipeline v2.0
+- `src/ml/pipeline/train_optimized.py` - Entraînement optimisé
+- `models/optimized/` - Modèles calibrés (35 features)
+- `NBA22_OPTIMIZATION_GUIDE.md` - Documentation
+
 ### Optimisation (Historique)
 
 ```bash
@@ -85,21 +114,32 @@ cat results/week1/xgb_best_params.json
 ```
 src/ml/
 ├── classification_model.py      # Modèles RF/GBT (PySpark)
-├── nba22_train.py              # Pipeline entraînement
+├── nba22_train.py              # Pipeline entraînement V1
 ├── nba22_orchestrator.py       # CLI
 └── pipeline/                   # 🆕 Production
     ├── nba_live_api.py         # API NBA Live
     ├── daily_pipeline.py       # Pipeline quotidien
     ├── feature_engineering_v3.py # Features V3
-    └── tracking_roi.py         # Tracking ROI
+    ├── tracking_roi.py         # Tracking ROI
+    ├── probability_calibration.py  # 🆕 Calibration
+    ├── feature_selection.py    # 🆕 Feature selection
+    ├── drift_monitoring.py     # 🆕 Monitoring
+    └── train_optimized.py      # 🆕 Entraînement v2.0
 
-models/week1/
-├── xgb_optimized.pkl           # Meilleur modèle
+models/week1/                   # Modèles V1
+├── xgb_optimized.pkl           # Meilleur modèle V1
 └── xgb_v3.pkl                  # Modèle V3 (85 features)
+
+models/optimized/               # 🆕 Modèles v2.0
+├── model_xgb.joblib            # Modèle optimisé (35 features)
+├── calibrator_xgb.joblib       # Calibrateur
+└── selected_features.json      # Features sélectionnées
 
 predictions/
 ├── predictions_*.csv           # Prédictions quotidiennes
+├── predictions_optimized_*.csv # 🆕 Prédictions v2.0
 ├── tracking_history.csv        # Historique ROI
+├── health_report.json          # 🆕 Rapport santé
 └── performance_report.txt      # Rapport performance
 ```
 
