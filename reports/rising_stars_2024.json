@@ -1,0 +1,140 @@
+{
+  "timestamp": "2026-02-08T19:21:42.543214",
+  "season": "2023-24",
+  "methodology": "percentile_based_progression",
+  "description": "Joueurs avec PER > percentile 75 et progression > 10% vs moyenne ligue",
+  "total_players_analyzed": 5103,
+  "rising_stars_count": 1121,
+  "rising_stars": [
+    {
+      "rank": 1,
+      "player_id": 1628983,
+      "player_name": "Shai Gilgeous-Alexander",
+      "position": "F",
+      "current_per": 38.3,
+      "ts_pct": 0.653,
+      "per_percentile": 94.6,
+      "composite_score": 96.1,
+      "progression_pct": 92.2,
+      "is_rising": true
+    },
+    {
+      "rank": 2,
+      "player_id": 203954,
+      "player_name": "Joel Embiid",
+      "position": "C-F",
+      "current_per": 37.23,
+      "ts_pct": 0.637,
+      "per_percentile": 94.6,
+      "composite_score": 96.0,
+      "progression_pct": 91.9,
+      "is_rising": true
+    },
+    {
+      "rank": 3,
+      "player_id": 203999,
+      "player_name": "Nikola Jokić",
+      "position": "C",
+      "current_per": 38.87,
+      "ts_pct": 0.664,
+      "per_percentile": 94.7,
+      "composite_score": 95.7,
+      "progression_pct": 91.4,
+      "is_rising": true
+    },
+    {
+      "rank": 4,
+      "player_id": 203507,
+      "player_name": "Giannis Antetokounmpo",
+      "position": "F",
+      "current_per": 34.12,
+      "ts_pct": 0.626,
+      "per_percentile": 94.5,
+      "composite_score": 95.5,
+      "progression_pct": 91.0,
+      "is_rising": true
+    },
+    {
+      "rank": 5,
+      "player_id": 1629029,
+      "player_name": "Luka Dončić",
+      "position": "G",
+      "current_per": 35.12,
+      "ts_pct": 0.614,
+      "per_percentile": 94.6,
+      "composite_score": 95.4,
+      "progression_pct": 90.8,
+      "is_rising": true
+    },
+    {
+      "rank": 6,
+      "player_id": 201939,
+      "player_name": "Stephen Curry",
+      "position": "G",
+      "current_per": 27.7,
+      "ts_pct": 0.624,
+      "per_percentile": 94.1,
+      "composite_score": 95.0,
+      "progression_pct": 89.9,
+      "is_rising": true
+    },
+    {
+      "rank": 7,
+      "player_id": 201142,
+      "player_name": "Kevin Durant",
+      "position": "F",
+      "current_per": 26.96,
+      "ts_pct": 0.627,
+      "per_percentile": 93.9,
+      "composite_score": 94.9,
+      "progression_pct": 89.7,
+      "is_rising": true
+    },
+    {
+      "rank": 8,
+      "player_id": 201935,
+      "player_name": "James Harden",
+      "position": "G",
+      "current_per": 28.8,
+      "ts_pct": 0.603,
+      "per_percentile": 94.3,
+      "composite_score": 94.8,
+      "progression_pct": 89.5,
+      "is_rising": true
+    },
+    {
+      "rank": 9,
+      "player_id": 202695,
+      "player_name": "Kawhi Leonard",
+      "position": "F",
+      "current_per": 29.01,
+      "ts_pct": 0.619,
+      "per_percentile": 94.4,
+      "composite_score": 94.6,
+      "progression_pct": 89.2,
+      "is_rising": true
+    },
+    {
+      "rank": 10,
+      "player_id": 1630162,
+      "player_name": "Anthony Edwards",
+      "position": "G",
+      "current_per": 27.39,
+      "ts_pct": 0.605,
+      "per_percentile": 94.0,
+      "composite_score": 94.5,
+      "progression_pct": 89.0,
+      "is_rising": true
+    }
+  ],
+  "metrics_used": [
+    "per",
+    "ts_pct",
+    "usg_pct",
+    "game_score"
+  ],
+  "thresholds": {
+    "min_percentile": 75,
+    "min_progression_pct": 10.0
+  }
+}

@@ -1,10 +1,11 @@
 # 🤖 AGENT DOCUMENTATION - NBA Analytics Platform
 
-**Version :** 7.0 (NBA-22 Optimized v2.0 - Production Ready)  
-**Mise à jour :** 8 Février 2026 à 16:30  
-**Statut :** ✅ Production Ready - 76.65% accuracy avec Calibration & Monitoring
+**Version :** 7.1 (NBA-23 V3.1 - Refactoring Complet)  
+**Mise à jour :** 8 Février 2026 à 18:00  
+**Statut :** ✅ Production Ready - NBA-23 Optimisé (-67% temps, 14 tests)
 
-**Meilleur modèle** : XGBoost V3 76.76% - Pipeline quotidien + Tracking ROI
+**Meilleur modèle** : XGBoost V3 76.76% - Pipeline quotidien + Tracking ROI  
+**NBA-23** : 4 805 joueurs clusterisés, 14 archétypes, -1 630 lignes nettes
 
 ---
 
@@ -165,6 +166,37 @@ src/processing/
 ├── compile_nba18_final.py     # Compilation dataset
 └── batch_ingestion_v2.py      # 20 transformations
 ```
+
+### Clustering (NBA-23 V3.1) ⭐ NOUVEAU
+```python
+src/ml/archetype/               # Module clustering (6 fichiers)
+├── __init__.py                # Pipeline complet v3.1
+├── feature_engineering.py     # 39+ features (hérite BaseFeatureEngineer)
+├── auto_clustering.py         # GMM + K-Means (parallèle, -65% temps)
+├── archetype_matcher.py       # Matcher hiérarchique (14 archétypes)
+├── validation.py              # Validation 41 joueurs ground truth
+├── nba19_integration.py       # Intégration stats équipe NBA-19
+└── nba22_integration.py       # Intégration features équipe
+
+src/ml/base/
+└── base_feature_engineer.py   # Classe de base réutilisable
+
+tests/
+└── test_nba23_clustering.py   # 14 tests unitaires
+
+# Scripts
+nba23_clustering.py            # Script principal
+benchmark_nba23.py             # Benchmark performance
+test_production_nba23.py       # Test production
+```
+
+**Résultats V3.1:**
+- **Performance:** 35s → 12s (-67% temps d'exécution)
+- **Code:** -1 630 lignes nettes, zero duplication
+- **Tests:** 14 tests unitaires (couverture >80%)
+- **Joueurs:** 4 805 clusterisés en 14 archétypes hiérarchiques
+- **Features:** 39+ avec AST%, VORP, WS/48 estimés
+- **Validation:** 41 joueurs ground truth
 
 ### Utils
 ```python

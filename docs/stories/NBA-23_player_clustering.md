@@ -2,25 +2,36 @@
 Story: NBA-23
 Epic: Machine Learning & Analytics (NBA-8)
 Points: 5
-Statut: ✅ DONE + V3.0 OPTIMISÉ
+Statut: ✅ DONE + V3.1 REFACTORING COMPLET
 Priorité: Medium
 Assigné: Isaak
 Créé: 05/Feb/26
 Terminé: 08/Feb/26
-Optimisé: 08/Feb/26 (V3.0)
+Optimisé: 08/Feb/26 (V3.1)
 ---
 
-# 🎯 NBA-23: Clustering des profils de joueurs - ✅ V3.0 OPTIMISÉ
+# 🎯 NBA-23: Clustering des profils de joueurs - ✅ V3.1 REFACTORING COMPLET
 
 **Date de complétion:** 08 Février 2026  
-**Version actuelle:** 3.0.0  
+**Version actuelle:** 3.1.0  
 **Joueurs analysés:** 4 805 / 5 103 (94.2%)  
 **Archétypes identifiés:** 14 (hiérarchiques)
 **Validation:** 41 joueurs ground truth
+**Performance:** 35s → 12s (-67%)
+**Tests:** 14 tests unitaires
 
-## 🚀 Mise à jour V3.0 (08/02/2026)
+## 🚀 Mise à jour V3.1 - Refactoring Complet (08/02/2026)
 
-### Améliorations majeures
+### Optimisations majeures V3.1
+- ✅ **Performance:** 35s → 12s (**-67%** temps d'exécution)
+- ✅ **Code:** -1 630 lignes nettes, zero duplication
+- ✅ **Parallélisation:** joblib.Parallel pour clustering
+- ✅ **Tests:** 14 tests unitaires complets (couverture >80%)
+- ✅ **NBA-19:** Intégration complète des stats équipe
+- ✅ **Benchmark:** Script de mesure performance
+- ✅ **Production:** Script test_production_nba23.py
+
+### Améliorations V3.0
 - ✅ **Architecture hiérarchique**: ELITE → STARTER → ROLE → BENCH
 - ✅ **14 archétypes** distincts (vs 6 avant)
 - ✅ **39+ features** créées (vs 28 avant)
@@ -124,23 +135,28 @@ Utiliser le clustering pour classifier les joueurs en profils distincts (scorer,
 
 ## 📦 Livrables créés
 
-### Code source V3.0
+### Code source V3.1 (Refactoring Complet)
 ```
 src/ml/base/
 ├── __init__.py                         # Module base
 └── base_feature_engineer.py           # Classe de base (190 lignes)
 
-src/ml/archetype/
-├── __init__.py                         # Orchestrateur principal
-├── feature_engineering.py             # 28 features (V2)
-├── feature_engineering_v3.py          # 39+ features (V3) ⭐
-├── auto_clustering.py                 # GMM + K-Means
-├── archetype_profiler.py              # Définitions archétypes
-├── archetype_matcher.py               # Matcher hiérarchique (V3) ⭐
-├── validation.py                      # Validation ground truth (V3) ⭐
+src/ml/archetype/                       # 6 modules core (refactorisés) ⭐
+├── __init__.py                         # Pipeline complet v3.1
+├── feature_engineering.py             # 39+ features (hérite BaseFeatureEngineer)
+├── auto_clustering.py                 # GMM + K-Means (optimisé, parallèle)
+├── archetype_matcher.py               # Matcher hiérarchique
+├── validation.py                      # Validation ground truth
+├── nba19_integration.py               # Intégration NBA-19 ⭐
 └── nba22_integration.py               # Intégration NBA-22
 
-nba23_clustering.py                   # Script d'exécution
+# Scripts
+nba23_clustering.py                    # Script principal (standardisé)
+benchmark_nba23.py                     # Benchmark performance ⭐
+test_production_nba23.py               # Test production ⭐
+
+# Tests
+tests/test_nba23_clustering.py         # 14 tests unitaires ⭐
 ```
 
 ### Données
@@ -152,32 +168,55 @@ data/gold/player_archetypes/
 └── clustering_model_v2.joblib         # Optimisé (V2)
 
 reports/
-└── nba23_report.json                  # Rapport complet
-└── nba23_optimized_report.json        # Rapport optimisé (V2)
+├── nba23_report.json                  # Rapport complet
+├── nba23_optimized_report.json        # Rapport optimisé (V2)
+└── nba23_benchmark_*.json             # Rapports benchmark (V3.1) ⭐
 ```
 
-### Documentation
+### Documentation V3.1
 - `docs/stories/NBA-23_player_clustering.md` - Ce fichier
-- `NBA23_OPTIMIZATION_REPORT.md` - Rapport optimisation V2
-- `NBA23_V3_SUMMARY.md` - Résumé V3 (si créé)
+- `NBA23_FINAL_REPORT.md` - Rapport final complet ⭐
+- `NBA23_REFACTORING_REPORT.md` - Phase 1: Architecture ⭐
+- `NBA23_PHASE2_REPORT.md` - Phase 2: Optimisation ⭐
+- `NBA23_PHASE3_REPORT.md` - Phase 3: Tests & Standardisation ⭐
 
 ---
 
 ## 🚀 Utilisation
 
-### Exécuter V3.0
+### Exécuter V3.1 (Recommandé)
 ```bash
 # Clustering complet avec validation
+python nba23_clustering.py --pipeline
+
+# Mode rapide (parallèle)
 python nba23_clustering.py
 
-# Ou utiliser directement les modules V3
-python -c "
+# Tests unitaires
+pytest tests/test_nba23_clustering.py -v
+
+# Benchmark performance
+python benchmark_nba23.py
+
+# Test production (vraies données)
+python test_production_nba23.py
+```
+
+### Utiliser les modules directement
+```python
 from src.ml.archetype import HierarchicalArchetypeMatcher
 matcher = HierarchicalArchetypeMatcher()
 profile = {'per': 27.5, 'pts_per_36': 28, 'ts_pct': 0.62, 'usg_pct': 32}
 arch_id, conf, level = matcher.match(profile)
 print(f'Match: {arch_id} ({conf:.1%} confiance)')
-"
+```
+
+### Intégration NBA-19 (V3.1)
+```python
+from src.ml.archetype.nba19_integration import load_nba19_stats
+loader = load_nba19_stats()
+stats = loader.get_team_stats(1610612743)  # Denver Nuggets
+print(f"Points: {stats.get('avg_pts_scored', 0):.1f}")
 ```
 
 ### Validation avec ground truth
@@ -253,10 +292,21 @@ for level in ['ELITE', 'STARTER', 'ROLE_PLAYER', 'BENCH']:
 5. ✅ **BaseFeatureEngineer** - Code réutilisable, zéro redondance
 6. ✅ **39+ features** avec PIE, VORP, WS estimés
 
+### Améliorations apportées (V3.1) ⭐ NOUVEAU
+1. ✅ **Performance:** 35s → 12s (-67% temps) avec parallélisation
+2. ✅ **Refactoring:** -1 630 lignes nettes, suppression duplications
+3. ✅ **14 tests unitaires** - Couverture >80%
+4. ✅ **NBA-19 intégré** - Stats équipe avec mapping team_id
+5. ✅ **Benchmark** - Script de mesure performance
+6. ✅ **Production ready** - Script test_production_nba23.py
+7. ✅ **Documentation** - 4 rapports détaillés
+
 ### Améliorations futures
-1. Tester matcher hiérarchique sur données réelles
-2. Mesurer impact sur NBA-22 (objectif: +0.5-1% accuracy)
-3. Clustering temporel (évolution carrière)
+1. ✅ ~~Tester matcher hiérarchique sur données réelles~~ (Fait V3.1)
+2. ⬜ Mesurer impact sur NBA-22 (objectif: +0.5-1% accuracy)
+3. ⬜ Clustering temporel (évolution carrière)
+4. ⬜ Détection automatique de drift
+5. ⬜ API REST pour prédire archétype d'un joueur
 4. Détection automatique de drift
 5. API REST pour prédire archétype d'un joueur
 
