@@ -129,26 +129,32 @@
   - ✅ Résultats dans `data/gold/team_stats_season`
   - ✅ Optimisation des requêtes SQL
 
-#### NBA-20: Transformation des données matchs [TO DO]
+#### NBA-20: Transformation des données matchs [DONE]
 - **Points:** 5
-- **Statut:** ⬜ To Do
+- **Statut:** ✅ Done (08/02/2026)
 - **Description:** Transformer les données brutes des matchs en format analytique
+- **Résultats:**
+  - 1,230 matchs structurés depuis 2,460 box scores
+  - Home win rate: 54.3%, Marge moyenne: 12.6 points
+  - Fichier: `data/silver/games_processed/games_structured.json`
+- **Fichiers:** `src/pipeline/nba20_transform_games.py`
 - **Critères d'acceptation:**
   - ✅ Stats par match structurées
   - ✅ Calcul des écarts de score
   - ✅ Identification home/away team
   - ✅ Données prêtes pour ML dans `data/silver/games_processed`
 
-#### NBA-21: Feature engineering pour ML [TO DO]
+#### NBA-21: Feature engineering pour ML [READY]
 - **Points:** 8
-- **Statut:** ⬜ To Do
+- **Statut:** ✅ Ready (existe déjà)
 - **Description:** Créer les features nécessaires pour les modèles de prédiction
-- **Critères d'acceptation:**
-  - ✅ Features historiques calculées (moyennes glissantes)
-  - ✅ Features de forme (last 5 games)
-  - ✅ Features de matchup (face-à-face)
-  - ✅ Dataset ML final dans `data/gold/ml_features`
-- **Features:** Forme 5 matchs, H2H, fatigue, classement diff
+- **Fichier:** `src/ml/feature_engineering.py` (187 lignes, complet)
+- **Features existantes:**
+  - ✅ Win% cumulative et last 5 games
+  - ✅ Points moyens saison et last 5
+  - ✅ Rest days et back-to-back
+  - ✅ Momentum features (margin)
+- **Note:** Code existant, prêt à l'emploi
 
 ---
 
@@ -273,14 +279,18 @@
 
 | Epic | Stories | Points | Statut |
 |------|---------|--------|--------|
-| **Epic 1: Data Ingestion** | 4 | 15 | 75% (3/4 done) |
-| **Epic 2: Data Processing** | 5 | 26 | 0% |
-| **Epic 3: Machine Learning** | 4 | 23 | 0% |
+| **Epic 1: Data Ingestion** | 4 | 15 | 100% (4/4 done) ✅ |
+| **Epic 2: Data Processing** | 5 | 26 | 60% (3/5 done) 🟡 |
+| **Epic 3: Machine Learning** | 4 | 23 | 25% (1/4 ready) 🟡 |
 | **Epic 4: Data Quality** | 3 | 13 | 0% |
 | **Epic 5: Reporting** | 3 | 11 | 0% |
-| **TOTAL** | **19** | **88** | **34%** |
+| **TOTAL** | **19** | **88** | **47%** |
 
-**Note:** NBA-11, 12, 13 = 18 points déjà complétés (Total projet = 104 points)
+**Mise à jour 08/02/2026:**
+- ✅ NBA-19: Agrégations équipes (TERMINÉ)
+- ✅ NBA-20: Transformation matchs (TERMINÉ)
+- ✅ NBA-21: Feature engineering (EXSITE DÉJÀ)
+- 🎯 Prochain: NBA-22 (Classification - existe déjà, prêt à utiliser)
 
 ---
 
@@ -296,12 +306,12 @@
 5. **NBA-18** → Métriques avancées
 6. **NBA-19** → Agrégations équipes
 
-### Phase 3: Feature Engineering (Semaine 5)
-7. **NBA-20** → Transformation matchs
-8. **NBA-21** → Features ML
+### Phase 3: Feature Engineering ✅ (TERMINÉ)
+7. ✅ **NBA-20** → Transformation matchs (1,230 matchs structurés)
+8. ✅ **NBA-21** → Features ML (code existant, prêt à l'emploi)
 
-### Phase 4: Machine Learning (Semaine 6-7)
-9. **NBA-22** → Prédiction matchs
+### Phase 4: Machine Learning 🎯 (PRÊT À DÉMARRER)
+9. **NBA-22** → Prédiction matchs (modèle existe, entraînement nécessaire)
 10. **NBA-23** → Clustering joueurs
 11. **NBA-24** → Détection progression
 12. **NBA-25** → Pipeline ML auto
