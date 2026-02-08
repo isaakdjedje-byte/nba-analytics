@@ -1,0 +1,28 @@
+2026-02-08 12:40:33,253 - INFO - ======================================================================
+2026-02-08 12:40:33,254 - INFO - LANCEMENT DES OPTIMISATIONS EN PARALLÈLE
+2026-02-08 12:40:33,254 - INFO - ======================================================================
+2026-02-08 12:40:33,254 - INFO - 
+\U0001f680 Démarrage XGBoost (4-6h)...
+2026-02-08 12:40:33,255 - INFO - Démarrage src/optimization/week1/optimize_xgb.py...
+2026-02-08 12:40:33,264 - INFO -   PID: 86272
+2026-02-08 12:40:35,256 - INFO - \U0001f680 Démarrage Random Forest (3-4h)...
+2026-02-08 12:40:35,257 - INFO - Démarrage src/optimization/week1/optimize_rf.py...
+2026-02-08 12:40:35,257 - INFO - 
+\u2705 Les deux optimisations sont lancées!
+2026-02-08 12:40:35,257 - INFO - \U0001f4c1 Logs dans: results/week1/
+2026-02-08 12:40:35,257 - INFO - \u23f3 Temps total estimé: 4-6 heures
+2026-02-08 12:40:35,257 - INFO - 
+Pour arrêter: Ctrl+C (2 fois)
+2026-02-08 12:40:35,257 - INFO - Les logs continueront d'être écrits même si tu fermes ce terminal.
+
+2026-02-08 12:40:35,267 - INFO -   PID: 86632
+2026-02-08 12:43:23,045 - INFO - Terminé: src/optimization/week1/optimize_xgb.py
+2026-02-08 12:43:45,586 - INFO - Terminé: src/optimization/week1/optimize_rf.py
+2026-02-08 12:43:45,587 - INFO - 
+======================================================================
+2026-02-08 12:43:45,587 - INFO - \u2705 OPTIMISATIONS TERMINÉES!
+2026-02-08 12:43:45,587 - INFO - ======================================================================
+2026-02-08 12:43:45,587 - INFO - 
+Résultats:
+2026-02-08 12:43:45,587 - INFO -   - results/week1/xgb_best_params.json
+2026-02-08 12:43:45,587 - INFO -   - results/week1/rf_best_params.json

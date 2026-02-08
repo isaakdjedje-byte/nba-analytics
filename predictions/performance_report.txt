@@ -1,0 +1,46 @@
+======================================================================
+RAPPORT DE PERFORMANCE NBA PREDICTIONS
+======================================================================
+Date: 2026-02-08 13:22
+Total predictions dans l'historique: 3
+Predictions avec resultats: 3
+
+
+Strategie: ALL
+  Predictions: 3
+  Accuracy:    66.67%
+  ROI Total:   +1 (sur 3 paris)
+  ROI Moyen:   +0.33 par pari
+
+Strategie: HIGH_CONFIDENCE
+  Predictions: 1
+  Accuracy:    100.00%
+  ROI Total:   +1 (sur 1 paris)
+  ROI Moyen:   +1.00 par pari
+
+Strategie: MEDIUM_CONFIDENCE
+  Predictions: 1
+  Accuracy:    0.00%
+  ROI Total:   -1 (sur 1 paris)
+  ROI Moyen:   -1.00 par pari
+
+======================================================================
+PERFORMANCE PAR NIVEAU DE CONFIANCE
+======================================================================
+
+HIGH_CONFIDENCE:
+  Nombre:   1
+  Accuracy: 100.00%
+  ROI:      +1
+
+MEDIUM_CONFIDENCE:
+  Nombre:   1
+  Accuracy: 0.00%
+  ROI:      -1
+
+LOW_CONFIDENCE:
+  Nombre:   1
+  Accuracy: 100.00%
+  ROI:      +1
+
+======================================================================

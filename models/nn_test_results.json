@@ -1,0 +1,14 @@
+{
+  "model": "NeuralNetwork",
+  "architecture": "24->64->32->1",
+  "metrics": {
+    "accuracy": 0.7684090041968714,
+    "precision": 0.7533825338253383,
+    "recall": 0.8560447239692522,
+    "f1": 0.8014393195943735,
+    "auc": 0.8508870214752567
+  },
+  "training_time_seconds": 5.030490159988403,
+  "is_better_than_rf": null,
+  "feature_count": 24
+}

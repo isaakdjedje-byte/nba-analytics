@@ -1,8 +1,10 @@
 # 🤖 AGENT DOCUMENTATION - NBA Analytics Platform
 
-**Version :** 4.1 (NBA-18 V2 - TERMINÉ)  
-**Mise à jour :** 7 Février 2026 à 19:30  
-**Statut :** ✅ NBA-18 COMPLET - 4,857/5,103 joueurs enrichis (95.2%)
+**Version :** 6.0 (NBA-22 - Production Ready)  
+**Mise à jour :** 8 Février 2026 à 13:30  
+**Statut :** ✅ NBA-22 TERMINÉ - Production (76.76% accuracy)
+
+**Meilleur modèle** : XGBoost V3 76.76% - Pipeline quotidien + Tracking ROI
 
 ---
 
@@ -10,7 +12,10 @@
 
 Pipeline Data Engineering complet : ingestion multi-saisons (2018-2024), 20+ transformations, architecture Medallion, agrégation intelligente 4 méthodes pour ML.
 
-**Stack :** PySpark 3.5, Delta Lake 3.0, nba-api 1.1.11, Python 3.11
+**Stack :** PySpark 3.5, Delta Lake 3.0, nba-api 1.1.11, Python 3.11, XGBoost, PyTorch
+
+**Performance actuelle** : 76.84% accuracy (Neural Network), 85.09% AUC
+**Objectif** : 80-82% avec stacking et features avancées
 
 ---
 
@@ -30,6 +35,73 @@ Gold   : Features ML, agrégations 4 méthodes
 | Max minutes | 25% | Plus de temps de jeu |
 | Moyenne 3 saisons | 20% | Lissage temporel |
 | Best PER | 20% | Meilleure performance |
+
+---
+
+## 🧠 Machine Learning (NBA-22 - TERMINÉ)
+
+### Résultats Finaux
+
+| Modèle | Accuracy | AUC | Temps | Statut |
+|--------|----------|-----|-------|--------|
+| **XGBoost V3** | **76.76%** | **84.93%** | 2s | 🏆 **Production** |
+| Neural Network | 76.84% | 85.09% | 5s | Testé |
+| XGBoost V1 | 76.76% | 84.99% | 3min | Baseline |
+| Random Forest | 76.19% | 84.33% | 3min | Backup |
+| Smart Ensemble | 76.76% | - | - | Pas de gain |
+
+**Découverte** : Stacking inutile (corrélation erreurs 0.885)
+
+### Production (Nouveau)
+
+```bash
+# Prédictions quotidiennes
+python run_predictions.py
+
+# Mettre à jour résultats après matchs
+python run_predictions.py --update
+
+# Voir rapport ROI
+python run_predictions.py --report
+```
+
+### Optimisation (Historique)
+
+```bash
+# Optimisation XGBoost (100 trials, ~3min)
+python src/optimization/week1/optimize_xgb.py
+
+# Optimisation Random Forest (50 trials, ~3min)
+python src/optimization/week1/optimize_rf.py
+
+# Feature Engineering V3 (+30 features)
+python src/ml/pipeline/feature_engineering_v3.py
+
+# Voir les résultats
+cat results/week1/xgb_best_params.json
+```
+
+### Architecture ML
+```
+src/ml/
+├── classification_model.py      # Modèles RF/GBT (PySpark)
+├── nba22_train.py              # Pipeline entraînement
+├── nba22_orchestrator.py       # CLI
+└── pipeline/                   # 🆕 Production
+    ├── nba_live_api.py         # API NBA Live
+    ├── daily_pipeline.py       # Pipeline quotidien
+    ├── feature_engineering_v3.py # Features V3
+    └── tracking_roi.py         # Tracking ROI
+
+models/week1/
+├── xgb_optimized.pkl           # Meilleur modèle
+└── xgb_v3.pkl                  # Modèle V3 (85 features)
+
+predictions/
+├── predictions_*.csv           # Prédictions quotidiennes
+├── tracking_history.csv        # Historique ROI
+└── performance_report.txt      # Rapport performance
+```
 
 ---
 

@@ -1,0 +1,55 @@
+{
+  "date": "2026-02-08T13:18:53.057933",
+  "predictions": [
+    {
+      "home_team": "Nets",
+      "away_team": "Wizards",
+      "error": "Donnees historiques insuffisantes"
+    },
+    {
+      "home_team": "Thunder",
+      "away_team": "Rockets",
+      "error": "Donnees historiques insuffisantes"
+    },
+    {
+      "home_team": "Spurs",
+      "away_team": "Mavericks",
+      "error": "Donnees historiques insuffisantes"
+    },
+    {
+      "home_team": "Magic",
+      "away_team": "Jazz",
+      "error": "Donnees historiques insuffisantes"
+    },
+    {
+      "home_team": "Hawks",
+      "away_team": "Hornets",
+      "error": "Donnees historiques insuffisantes"
+    },
+    {
+      "home_team": "Bulls",
+      "away_team": "Nuggets",
+      "error": "Donnees historiques insuffisantes"
+    },
+    {
+      "home_team": "Lakers",
+      "away_team": "Warriors",
+      "error": "Donnees historiques insuffisantes"
+    },
+    {
+      "home_team": "Suns",
+      "away_team": "76ers",
+      "error": "Donnees historiques insuffisantes"
+    },
+    {
+      "home_team": "Trail Blazers",
+      "away_team": "Grizzlies",
+      "error": "Donnees historiques insuffisantes"
+    },
+    {
+      "home_team": "Kings",
+      "away_team": "Cavaliers",
+      "error": "Donnees historiques insuffisantes"
+    }
+  ]
+}

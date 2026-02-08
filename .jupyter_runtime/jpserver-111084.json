@@ -1,0 +1,13 @@
+{
+  "base_url": "/",
+  "hostname": "127.0.0.1",
+  "password": false,
+  "pid": 111084,
+  "port": 8891,
+  "root_dir": "C:\\Users\\isaac\\nba-analytics",
+  "secure": false,
+  "sock": "",
+  "token": "ef277b25571b2e4a41d14b9ce257251e4f1e7b140ad8d5fd",
+  "url": "http://127.0.0.1:8891/",
+  "version": "2.17.0"
+}

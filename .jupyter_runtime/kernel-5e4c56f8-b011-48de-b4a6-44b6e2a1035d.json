@@ -1,0 +1,13 @@
+{
+  "shell_port": 53754,
+  "iopub_port": 53755,
+  "stdin_port": 53756,
+  "control_port": 53758,
+  "hb_port": 53757,
+  "ip": "127.0.0.1",
+  "key": "ffa8426f-039c1ccf7428e86f6caf2c9d",
+  "transport": "tcp",
+  "signature_scheme": "hmac-sha256",
+  "kernel_name": "nba-venv",
+  "jupyter_session": "C:\\Users\\isaac\\nba-analytics\\notebooks\\04_nba22_results.ipynb"
+}

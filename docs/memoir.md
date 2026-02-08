@@ -1,11 +1,158 @@
 # 📖 MEMOIR - NBA Analytics Platform
 
-**Dernière mise à jour :** 7 Février 2026 à 19:30  
-**Statut :** NBA-18 V2 ✅ TERMINÉ - 4,857/5,103 joueurs enrichis (95.2%)
+**Dernière mise à jour :** 8 Février 2026 à 13:45  
+**Statut :** NBA-19 ✅ TERMINÉ - 30 équipes agrégées, 5,103 joueurs enrichis
 
 ---
 
-## 2026-02-08 - NBA-19: Agrégations par équipe et saison [COMPLET]
+## 2026-02-08 - NBA-22: Machine Learning Optimization [EN COURS - SEMAINE 1]
+
+**Statut**: 🔄 SEMAINE 1 Phase 1 TERMINÉE
+
+**Réalisations**:
+- ✅ Feature Engineering V2: +10 nouvelles features (65 total)
+- ✅ Optimisation Random Forest: 50 trials → 76.19% (+0.09%)
+- ✅ Optimisation XGBoost: 100 trials → 76.76% (+0.66%) 🏆
+- ✅ Test Neural Network: Architecture 24→64→32→1 → 76.84% (+0.74%)
+- 🔄 Stacking en préparation (Phase 2)
+
+**Meilleurs modèles actuels**:
+1. **Neural Network**: 76.84% accuracy, 85.09% AUC (5s training)
+2. **XGBoost optimisé**: 76.76% accuracy, 84.99% AUC
+3. **Random Forest optimisé**: 76.19% accuracy, 84.33% AUC
+
+**Nouvelles features créées**:
+- momentum_diff, offensive_efficiency_diff, rebounding_diff
+- win_pct_momentum_interaction, home_h2h_advantage
+- win_pct_diff_squared, h2h_pressure, h2h_margin_weighted
+- fatigue_combo, rest_advantage_squared
+
+**Suite prévue**:
+- Phase 2: Stacking RF + XGB + NN → Objectif 78%
+- Phase 3: Live API + Injury Report
+- Phase 4: Production + Paper Trading
+
+---
+
+## 2026-02-08 - NBA-22: Machine Learning & Production [TERMINÉ ✅]
+
+**Statut**: ✅ TERMINÉ - Système de production fonctionnel
+
+**Découverte majeure**: Stacking inutile (corrélation erreurs RF/XGB = 0.885)
+**Solution**: Smart Ensemble + Feature Engineering V3 + API Live
+
+### Réalisations:
+- ✅ **Smart Ensemble testé** - Corrélation 0.885, pas de gain (76.76% = XGB seul)
+- ✅ **Feature Engineering V3** - +30 features (85 total) - Pas de gain significatif
+- ✅ **API NBA Live** - 10 matchs/jour, mapping 61 variantes de noms
+- ✅ **Pipeline quotidien** - `run_predictions.py` - Prédictions automatisées
+- ✅ **Tracking ROI** - Système complet avec rapports de performance
+- ✅ **Corrige Data Leakage** - Exclusion features match en cours
+
+### Performance finale:
+| Modèle | Accuracy | AUC | Statut |
+|--------|----------|-----|--------|
+| **XGBoost V3** | **76.76%** | **84.93%** | 🏆 **Production** |
+| XGBoost V1 | 76.76% | 84.99% | Baseline |
+| Random Forest | 76.19% | 84.33% | Backup |
+| Neural Network | 76.84% | 85.09% | Testé |
+| Smart Ensemble | 76.76% | - | Pas de gain |
+
+### Fichiers créés:
+- `src/ml/pipeline/nba_live_api.py` - API NBA Live
+- `src/ml/pipeline/daily_pipeline.py` - Pipeline complet
+- `src/ml/pipeline/feature_engineering_v3.py` - Features avancées
+- `src/ml/pipeline/tracking_roi.py` - Suivi ROI
+- `run_predictions.py` - Script principal
+- `data/team_mapping_extended.json` - 61 variantes
+
+### Commandes:
+```bash
+# Prédictions quotidiennes
+python run_predictions.py
+
+# Mettre à jour résultats
+python run_predictions.py --update
+
+# Voir rapport ROI
+python run_predictions.py --report
+```
+
+---
+
+## 2026-02-08 - NBA-19: Agrégations par équipe et saison [TERMINÉ ✅]
+
+**Statut**: ✅ TERMINÉ - Architecture Single Pipeline Pattern
+
+**Architecture**: Zero redondance, cache partagé, validation ML-ready intégrée
+
+### Réalisations:
+- ✅ **30 équipes** avec stats agrégées complètes
+- ✅ **5,103 joueurs** enrichis avec métriques NBA-18
+- ✅ **Stats collectives**: points, rebonds, passes, %tirs
+- ✅ **Win% moyen**: 50% (cohérent)
+- ✅ **Points moyens**: 114.2 (cohérent NBA)
+- ✅ **Jointures** joueurs-équipes avec contexte (conférence, division)
+
+### Données produites:
+| Dataset | Records | Description |
+|---------|---------|-------------|
+| team_season_stats | 30 | Agrégations par équipe-saison |
+| player_team_season | 5,103 | Joueurs enrichis avec contexte équipe |
+
+### Fichiers créés:
+- `src/processing/nba19_unified_aggregates.py` - Pipeline unifié (521 lignes)
+- `tests/test_nba19_integration.py` - Tests end-to-end
+- `data/gold/team_season_stats/` - Stats équipes (Parquet + JSON)
+- `data/gold/player_team_season/` - Joueurs enrichis
+- `data/gold/nba19_report.json` - Rapport d'exécution
+
+### Commande:
+```bash
+python src/processing/nba19_unified_aggregates.py
+```
+
+---
+
+## 2026-02-08 - NBA-21: Feature Engineering [TERMINÉ - ENHANCED]
+
+**Statut**: ✅ TERMINÉ + V2/V3
+
+**Versions**:
+- **V1**: 24 features - features basiques
+- **V2**: 65 features (+10) - interactions, momentum
+- **V3**: 85 features (+30) - ratios, consistance, non-linéaires
+
+**Réalisations**:
+- 8,871 matchs avec features complètes
+- Features: globales, contexte, momentum, matchup, H2H
+- **Résultat**: Plateau atteint à 76.76%, features V3 n'apportent pas de gain
+- Dataset: `data/gold/ml_features/features_all.parquet`
+
+**Fichiers**:
+- `src/ml/feature_engineering.py` (187 lignes)
+- `src/pipeline/nba21_feature_engineering.py` (432 lignes)
+- `notebooks/04_nba22_results.ipynb`
+
+---
+
+## 2026-02-08 - NBA-20: Transformation Matchs [TERMINÉ]
+
+**Statut**: ✅ TERMINÉ
+
+**Réalisations**:
+- 1,230 matchs structurés depuis 2,460 box scores
+- Home win rate: 54.3% (668 wins)
+- Marge moyenne: 12.6 points
+- 0 erreurs de transformation
+
+**Fichiers**:
+- `src/pipeline/nba20_transform_games.py` (270 lignes)
+- `src/pipeline/unified_ml_pipeline.py` (220 lignes)
+
+---
+
+## 2026-02-08 - NBA-19: Agrégations par équipe et saison [TERMINÉ]
 
 **Statut**: ✅ TERMINE
 

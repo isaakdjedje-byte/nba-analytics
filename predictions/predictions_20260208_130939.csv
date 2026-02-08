@@ -1,0 +1,4 @@
+home_team,away_team,prediction,proba_home_win,confidence,recommendation
+Boston Celtics,Los Angeles Lakers,Home Win,0.815858006477356,0.815858006477356,HIGH_CONFIDENCE
+Golden State Warriors,Phoenix Suns,Home Win,0.6666967272758484,0.6666967272758484,MEDIUM_CONFIDENCE
+Milwaukee Bucks,Miami Heat,Home Win,0.6051122546195984,0.6051122546195984,MEDIUM_CONFIDENCE

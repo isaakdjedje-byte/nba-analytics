@@ -1,0 +1,16 @@
+{
+  "new_features": [
+    "momentum_diff",
+    "offensive_efficiency_diff",
+    "rebounding_diff",
+    "fatigue_combo",
+    "rest_advantage_squared",
+    "win_pct_momentum_interaction",
+    "home_h2h_advantage",
+    "win_pct_diff_squared",
+    "h2h_pressure",
+    "h2h_margin_weighted"
+  ],
+  "total_features": 65,
+  "feature_count": 58
+}

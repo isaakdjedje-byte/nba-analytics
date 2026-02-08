@@ -1,0 +1,10 @@
+{
+  "correlation": 0.8845260695342888,
+  "rf_accuracy": 0.7619229301793209,
+  "xgb_accuracy": 0.7676459366653949,
+  "voting_accuracy": 0.7623044639450591,
+  "rf_only_errors": 62,
+  "xgb_only_errors": 47,
+  "both_errors": 562,
+  "recommendation": "SKIP"
+}
