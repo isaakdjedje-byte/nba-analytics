@@ -58,6 +58,61 @@ def run_phase(phase_num, phase_name, module_name, est_minutes):
         return False
 
 
+def check_phase2_done():
+    """Verifier que Phase 2 (discovery) est faite"""
+    results_dir = "logs/nba19_discovery/results"
+    if not os.path.exists(results_dir):
+        return False
+    
+    # Chercher fichier all_mappings_*.json recent
+    files = [f for f in os.listdir(results_dir) if f.startswith('all_mappings_')]
+    return len(files) > 0
+
+
+def check_phase3_done():
+    """Verifier que Phase 3 (validation) est faite"""
+    results_dir = "logs/nba19_discovery/results"
+    if not os.path.exists(results_dir):
+        return False
+    
+    # Chercher fichier validated_mappings_*.json recent
+    files = [f for f in os.listdir(results_dir) if f.startswith('validated_mappings_')]
+    return len(files) > 0
+
+
+def check_phase4_done():
+    """Verifier que Phase 4 (enrichment) est faite"""
+    results_dir = "logs/nba19_discovery/results"
+    if not os.path.exists(results_dir):
+        return False
+    
+    # Chercher fichier enriched_careers_*.json ou career_summaries_*.json
+    files = [f for f in os.listdir(results_dir) 
+             if f.startswith('enriched_careers_') or f.startswith('career_summaries_')]
+    return len(files) > 0
+
+
+def check_phase5_done():
+    """Verifier que Phase 5 (consolidation) est faite"""
+    output_dir = "data/gold/nba19"
+    if not os.path.exists(output_dir):
+        return False
+    
+    # Verifier que player_team_history_complete.json existe
+    return os.path.exists(os.path.join(output_dir, "player_team_history_complete.json"))
+
+
+def get_phase_status():
+    """Obtenir le statut de toutes les phases"""
+    return {
+        1: check_phase1_done(),
+        2: check_phase2_done(),
+        3: check_phase3_done(),
+        4: check_phase4_done(),
+        5: check_phase5_done()
+    }
+
+
 def check_phase1_done():
     """Verifier que Phase 1 est faite"""
     segments_dir = "logs/nba19_discovery/segments"
@@ -95,10 +150,12 @@ def print_summary():
 
 
 def main():
-    """Orchestrateur principal"""
+    """Orchestrateur principal avec detection auto des phases faites"""
     parser = argparse.ArgumentParser(description='NBA-19 Complete Orchestrator')
     parser.add_argument('--resume', action='store_true', 
                        help='Reprendre apres interruption')
+    parser.add_argument('--force', action='store_true',
+                       help='Forcer la reexecution de toutes les phases')
     args = parser.parse_args()
     
     print("="*70)
@@ -106,25 +163,35 @@ def main():
     print("="*70)
     print(f"\nDemarre: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("Mode: COMPLET (5 103 joueurs)")
-    print("Temps estime: ~3h45")
-    print("\nPhases:")
-    print("  1. Pre-validation: DEJA FAITE")
-    print("  2. Discovery: A → B → C (3h)")
-    print("  3. Validation (15 min)")
-    print("  4. Enrichissement (20 min)")
-    print("  5. Consolidation (10 min)")
+    
+    # Verifier statut des phases
+    phase_status = get_phase_status()
+    
     print("\n" + "="*70)
+    print(">>> STATUT DES PHASES")
+    print("="*70)
+    
+    for phase_num in range(1, 6):
+        status = "[OK] FAITE" if phase_status[phase_num] else "[TODO] A FAIRE"
+        phase_names = {
+            1: "Pre-validation",
+            2: "Discovery complet",
+            3: "Validation multi-source",
+            4: "Enrichissement",
+            5: "Consolidation finale"
+        }
+        print(f"  Phase {phase_num}: {phase_names[phase_num]:30} {status}")
+    
+    print("="*70)
     
     # Verifier Phase 1
-    if not check_phase1_done():
+    if not phase_status[1]:
         print("\n[ERROR] Phase 1 non detectee!")
         print("Executer d'abord:")
         print("  python src/ingestion/nba19/ultimate_discovery/phase1_pre_validation.py")
         return
     
-    print("\n[OK] Phase 1 verifiee (5 103 joueurs segmentes)")
-    
-    # Phases 2-5
+    # Phases 2-5 avec detection auto
     phases = [
         (2, "Discovery complet", "phase2_discovery_all", 180),
         (3, "Validation multi-source", "phase3_validation", 15),
@@ -133,18 +200,29 @@ def main():
     ]
     
     start_total = time.time()
+    phases_executed = 0
     
     for phase_num, phase_name, module, est_min in phases:
+        if phase_status[phase_num] and not args.force:
+            print(f"\n[SKIP] Phase {phase_num} deja completee (utiliser --force pour reexecuter)")
+            continue
+        
         if not run_phase(phase_num, phase_name, module, est_min):
             print(f"\n[STOP] Arret apres echec Phase {phase_num}")
             return
+        
+        phases_executed += 1
     
     total_time = time.time() - start_total
     
     print_summary()
     
-    print(f"\n[COMPLETE] Toutes les phases terminees!")
-    print(f"Temps total: {int(total_time//3600)}h {int((total_time%3600)//60)}m")
+    if phases_executed == 0:
+        print(f"\n[COMPLETE] Toutes les phases etaient deja terminees!")
+    else:
+        print(f"\n[COMPLETE] {phases_executed} phase(s) executee(s)!")
+        print(f"Temps total: {int(total_time//3600)}h {int((total_time%3600)//60)}m")
+    
     print(f"Termine: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
 
