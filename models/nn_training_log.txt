@@ -1,0 +1,37 @@
+2026-02-08 12:24:53,836 - INFO - Utilisation de: cpu
+2026-02-08 12:24:53,836 - INFO - ======================================================================
+2026-02-08 12:24:53,836 - INFO - TEST DEEP LEARNING - NBA-22
+2026-02-08 12:24:53,836 - INFO - ======================================================================
+2026-02-08 12:24:53,836 - INFO - Chargement des données...
+2026-02-08 12:24:53,910 - INFO - Train: 6250 samples, Test: 2621 samples
+2026-02-08 12:24:53,910 - INFO - Features: 24
+C:\Users\isaac\nba-analytics\src\ml\test_neural_network.py:113: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\torch\csrc\utils\tensor_numpy.cpp:219.)
+  torch.FloatTensor(y_train).unsqueeze(1)
+2026-02-08 12:24:55,152 - INFO - Début de l'entraînement (max 100 epochs)...
+2026-02-08 12:24:58,354 - INFO - Epoch 10/100 - Loss: 0.5029 - Val AUC: 0.8496
+2026-02-08 12:25:00,182 - INFO - Early stopping à l'epoch 16
+2026-02-08 12:25:00,182 - INFO - Entraînement terminé en 5.0 secondes
+2026-02-08 12:25:00,260 - INFO - 
+Résultats Neural Network:
+2026-02-08 12:25:00,260 - INFO -   Accuracy:  0.768
+2026-02-08 12:25:00,260 - INFO -   Precision: 0.753
+2026-02-08 12:25:00,260 - INFO -   Recall:    0.856
+2026-02-08 12:25:00,260 - INFO -   F1-Score:  0.801
+2026-02-08 12:25:00,260 - INFO -   AUC:       0.851
+2026-02-08 12:25:00,260 - INFO -   Temps d'entraînement: 5.0s
+2026-02-08 12:25:00,261 - INFO - 
+======================================================================
+2026-02-08 12:25:00,262 - INFO - COMPARAISON NEURAL NETWORK vs RANDOM FOREST
+2026-02-08 12:25:00,262 - INFO - ======================================================================
+2026-02-08 12:25:00,262 - INFO - Métrique          Neural Net   Random Forest   Différence
+2026-02-08 12:25:00,262 - INFO - ----------------------------------------------------------------------
+2026-02-08 12:25:00,262 - INFO - Accuracy               0.768           0.761       +0.008
+2026-02-08 12:25:00,262 - INFO - Precision              0.753           0.755       -0.002
+2026-02-08 12:25:00,262 - INFO - Recall                 0.856           0.831       +0.025
+2026-02-08 12:25:00,262 - INFO - F1                     0.801           0.791       +0.010
+2026-02-08 12:25:00,262 - INFO - Auc                    0.851           0.839       +0.012
+2026-02-08 12:25:00,262 - INFO - ======================================================================
+2026-02-08 12:25:00,262 - INFO - \u26a0\ufe0f VERDICT: Neural Network ÉQUIVALENT à Random Forest
+2026-02-08 12:25:00,262 - INFO -    Action: Optionnel - peut être utilisé pour la diversité
+2026-02-08 12:25:00,263 - INFO - 
+Résultats sauvegardés dans models/nn_test_results.json

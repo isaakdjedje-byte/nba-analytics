@@ -1,0 +1,17 @@
+{
+  "ticket": "NBA-19",
+  "status": "SUCCESS",
+  "timestamp": "2026-02-08T13:47:42.165815",
+  "stats": {
+    "players_loaded": 5103,
+    "games_loaded": 1230,
+    "teams_loaded": 30,
+    "team_season_records": 30,
+    "player_team_records": 5103,
+    "errors": 0
+  },
+  "outputs": {
+    "team_season": "data\\gold\\team_season_stats",
+    "player_team": "data\\gold\\player_team_season"
+  }
+}

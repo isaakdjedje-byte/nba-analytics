@@ -1,0 +1,29 @@
+{
+  "date": "2026-02-08T13:18:38.379838",
+  "predictions": [
+    {
+      "home_team": "Boston Celtics",
+      "away_team": "Los Angeles Lakers",
+      "prediction": "Home Win",
+      "proba_home_win": 0.8007847666740417,
+      "confidence": 0.8007847666740417,
+      "recommendation": "HIGH_CONFIDENCE"
+    },
+    {
+      "home_team": "Golden State Warriors",
+      "away_team": "Phoenix Suns",
+      "prediction": "Home Win",
+      "proba_home_win": 0.6630935668945312,
+      "confidence": 0.6630935668945312,
+      "recommendation": "MEDIUM_CONFIDENCE"
+    },
+    {
+      "home_team": "Milwaukee Bucks",
+      "away_team": "Miami Heat",
+      "prediction": "Home Win",
+      "proba_home_win": 0.5708451867103577,
+      "confidence": 0.5708451867103577,
+      "recommendation": "LOW_CONFIDENCE"
+    }
+  ]
+}

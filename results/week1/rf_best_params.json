@@ -1,0 +1,14 @@
+{
+  "accuracy": 0.7619229301793209,
+  "auc": 0.8432640980920669,
+  "best_params": {
+    "n_estimators": 828,
+    "max_depth": 13,
+    "min_samples_split": 4,
+    "min_samples_leaf": 10,
+    "max_features": "sqrt",
+    "bootstrap": true
+  },
+  "n_trials": 50,
+  "timestamp": "2026-02-08T12:43:45.280466"
+}

@@ -1,0 +1,17 @@
+{
+  "accuracy": 0.7676459366653949,
+  "auc": 0.8498658163475032,
+  "best_params": {
+    "n_estimators": 567,
+    "max_depth": 4,
+    "learning_rate": 0.010104262251365086,
+    "subsample": 0.7360914868236087,
+    "colsample_bytree": 0.9905748684682302,
+    "min_child_weight": 7,
+    "gamma": 0.23720305681327813,
+    "reg_alpha": 4.6406969586810803e-07,
+    "reg_lambda": 4.5683209685563174e-07
+  },
+  "n_trials": 100,
+  "timestamp": "2026-02-08T12:43:22.359240"
+}

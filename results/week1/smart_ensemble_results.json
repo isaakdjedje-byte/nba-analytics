@@ -1,0 +1,14 @@
+{
+  "smart_ensemble": 0.7676459366653949,
+  "rf": 0.7619229301793209,
+  "xgb": 0.7676459366653949,
+  "voting": 0.7623044639450591,
+  "strategies": {
+    "rf_confident": 0,
+    "xgb_confident": 14,
+    "weighted_agree": 2498,
+    "xgb_disagree": 109
+  },
+  "improvement_over_xgb": 0.0,
+  "improvement_over_voting": 0.005341472720335805
+}

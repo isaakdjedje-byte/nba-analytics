@@ -1,11 +1,11 @@
 """
-NBA-22-1: Modèle de Classification (Gagnant/Perdant)
+NBA-22: Modèle de Classification (Gagnant/Perdant)
 
 Prédit le gagnant d'un match NBA avec PySpark ML.
 """
 
 import logging
-from typing import Dict, Tuple
+from typing import Dict, List, Tuple, Optional
 from pyspark.sql import DataFrame
 from pyspark.ml.feature import VectorAssembler, StandardScaler
 from pyspark.ml.classification import RandomForestClassifier, GBTClassifier
@@ -25,15 +25,24 @@ class ClassificationModel:
     - Random Forest (baseline)
     - Gradient Boosting (optimisé)
     
-    Objectif: Accuracy > 65%
+    Objectif: Accuracy > 60%
     """
     
-    def __init__(self):
+    def __init__(self, algorithm: str = 'rf'):
+        """
+        Initialise le modèle.
+        
+        Args:
+            algorithm: 'rf' pour Random Forest, 'gbt' pour Gradient Boosting
+        """
+        self.algorithm = algorithm.lower()
         self.model = None
         self.pipeline = None
         self.metrics = {}
-    
-    def train(self, train_df: DataFrame, feature_cols: list) -> 'ClassificationModel':
+        self.feature_cols = []
+        self.feature_importance = {}
+        
+    def train(self, train_df: DataFrame, feature_cols: List[str]) -> 'ClassificationModel':
         """
         Entraîne le modèle de classification.
         
@@ -44,7 +53,9 @@ class ClassificationModel:
         Returns:
             self
         """
-        logger.info("Entraînement du modèle de classification...")
+        self.feature_cols = feature_cols
+        logger.info(f"Entraînement du modèle de classification ({self.algorithm.upper()})...")
+        logger.info(f"Features utilisées: {len(feature_cols)}")
         
         # Assembler les features
         assembler = VectorAssembler(
@@ -59,23 +70,57 @@ class ClassificationModel:
             outputCol="scaled_features"
         )
         
-        # Classifier
-        rf = RandomForestClassifier(
-            labelCol="target",
-            featuresCol="scaled_features",
-            numTrees=100,
-            maxDepth=10,
-            seed=42
-        )
+        # Classifier selon l'algorithme choisi
+        if self.algorithm == 'rf':
+            classifier = RandomForestClassifier(
+                labelCol="target",
+                featuresCol="scaled_features",
+                numTrees=100,
+                maxDepth=10,
+                seed=42
+            )
+        elif self.algorithm == 'gbt':
+            classifier = GBTClassifier(
+                labelCol="target",
+                featuresCol="scaled_features",
+                maxIter=50,
+                maxDepth=5,
+                seed=42
+            )
+        else:
+            raise ValueError(f"Algorithme inconnu: {self.algorithm}. Utiliser 'rf' ou 'gbt'")
         
         # Pipeline
-        self.pipeline = Pipeline(stages=[assembler, scaler, rf])
+        self.pipeline = Pipeline(stages=[assembler, scaler, classifier])
         
         # Entraînement
         self.model = self.pipeline.fit(train_df)
         
-        logger.info("Modèle entraîné avec succès")
+        # Extraire feature importance
+        self._extract_feature_importance()
+        
+        logger.info(f"Modèle {self.algorithm.upper()} entraîné avec succès")
         return self
+    
+    def _extract_feature_importance(self):
+        """Extrait l'importance des features du modèle entraîné."""
+        try:
+            # Récupérer le classifier depuis le pipeline
+            classifier = self.model.stages[-1]
+            
+            if hasattr(classifier, 'featureImportances'):
+                importances = classifier.featureImportances.toArray()
+                self.feature_importance = {
+                    feature: float(importance)
+                    for feature, importance in zip(self.feature_cols, importances)
+                }
+                # Trier par importance
+                self.feature_importance = dict(
+                    sorted(self.feature_importance.items(), key=lambda x: x[1], reverse=True)
+                )
+                logger.info(f"Top 5 features: {list(self.feature_importance.keys())[:5]}")
+        except Exception as e:
+            logger.warning(f"Impossible d'extraire feature importance: {e}")
     
     def evaluate(self, test_df: DataFrame) -> Dict[str, float]:
         """

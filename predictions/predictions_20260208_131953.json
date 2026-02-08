@@ -1,0 +1,85 @@
+{
+  "date": "2026-02-08T13:19:53.883060",
+  "predictions": [
+    {
+      "home_team": "Nets",
+      "away_team": "Wizards",
+      "prediction": "Away Win",
+      "proba_home_win": 0.4915703237056732,
+      "confidence": 0.5084296464920044,
+      "recommendation": "SKIP"
+    },
+    {
+      "home_team": "Thunder",
+      "away_team": "Rockets",
+      "prediction": "Home Win",
+      "proba_home_win": 0.7273233532905579,
+      "confidence": 0.7273233532905579,
+      "recommendation": "HIGH_CONFIDENCE"
+    },
+    {
+      "home_team": "Spurs",
+      "away_team": "Mavericks",
+      "prediction": "Home Win",
+      "proba_home_win": 0.5482075214385986,
+      "confidence": 0.5482075214385986,
+      "recommendation": "SKIP"
+    },
+    {
+      "home_team": "Magic",
+      "away_team": "Jazz",
+      "prediction": "Home Win",
+      "proba_home_win": 0.6957922577857971,
+      "confidence": 0.6957922577857971,
+      "recommendation": "MEDIUM_CONFIDENCE"
+    },
+    {
+      "home_team": "Hawks",
+      "away_team": "Hornets",
+      "prediction": "Home Win",
+      "proba_home_win": 0.8624579906463623,
+      "confidence": 0.8624579906463623,
+      "recommendation": "HIGH_CONFIDENCE"
+    },
+    {
+      "home_team": "Bulls",
+      "away_team": "Nuggets",
+      "prediction": "Home Win",
+      "proba_home_win": 0.8774955868721008,
+      "confidence": 0.8774955868721008,
+      "recommendation": "HIGH_CONFIDENCE"
+    },
+    {
+      "home_team": "Lakers",
+      "away_team": "Warriors",
+      "prediction": "Away Win",
+      "proba_home_win": 0.3761768639087677,
+      "confidence": 0.6238231658935547,
+      "recommendation": "MEDIUM_CONFIDENCE"
+    },
+    {
+      "home_team": "Suns",
+      "away_team": "76ers",
+      "prediction": "Home Win",
+      "proba_home_win": 0.5931216478347778,
+      "confidence": 0.5931216478347778,
+      "recommendation": "LOW_CONFIDENCE"
+    },
+    {
+      "home_team": "Trail Blazers",
+      "away_team": "Grizzlies",
+      "prediction": "Home Win",
+      "proba_home_win": 0.5804043412208557,
+      "confidence": 0.5804043412208557,
+      "recommendation": "LOW_CONFIDENCE"
+    },
+    {
+      "home_team": "Kings",
+      "away_team": "Cavaliers",
+      "prediction": "Home Win",
+      "proba_home_win": 0.6917083263397217,
+      "confidence": 0.6917083263397217,
+      "recommendation": "MEDIUM_CONFIDENCE"
+    }
+  ]
+}
