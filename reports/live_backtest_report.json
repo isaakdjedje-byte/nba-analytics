@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-02-09T15:22:04.019300",
+  "method": "Live Feature Engineer",
+  "total_games": 783,
+  "processed_games": 783,
+  "features_file": "data\\gold\\ml_features\\features_2025-26_live.parquet",
+  "comparison": {
+    "old_system": "Fallback 2024-25 averages",
+    "old_accuracy": "54.79%",
+    "new_system": "Live calculated features",
+    "expected_improvement": "+15-20%"
+  }
+}

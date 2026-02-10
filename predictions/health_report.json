@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-08T14:17:31.521381",
+  "timestamp": "2026-02-10T15:44:40.104242",
   "status": "OK",
   "checks": {
     "data": {
@@ -8,13 +8,11 @@
       "n_features": 85
     },
     "predictions": {
-      "status": "OK",
-      "n_predictions": 10,
-      "last_update": "2026-02-08T13:23:25.697416"
+      "status": "MISSING"
     },
     "tracking": {
       "status": "OK",
-      "total_predictions": 23,
+      "total_predictions": 75,
       "evaluated": 3,
       "accuracy": 0.6666666666666666
     }

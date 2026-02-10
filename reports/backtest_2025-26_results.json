@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-02-09T17:25:50.978160",
+  "season": "2025-26",
+  "total_matches": 767,
+  "evaluated_matches": 767,
+  "metrics": {
+    "accuracy": 0.6075619295958279,
+    "precision": 0.6186440677966102,
+    "recall": 0.7070217917675545,
+    "f1": 0.6598870056497175,
+    "auc": 0.6392935801151831
+  },
+  "confusion_matrix": {
+    "tn": 174,
+    "fp": 180,
+    "fn": 121,
+    "tp": 292
+  },
+  "comparison": {
+    "baseline": 0.5479,
+    "new_accuracy": 0.6075619295958279,
+    "improvement": 0.059661929595827834,
+    "improvement_pct": 5.966192959582783,
+    "target_reached": false,
+    "target_gap": 0.09243807040417207
+  }
+}

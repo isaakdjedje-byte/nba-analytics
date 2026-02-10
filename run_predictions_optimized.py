@@ -10,6 +10,8 @@ Usage:
     python run_predictions_optimized --train         # Réentraîner le modèle
     python run_predictions_optimized --health        # Check santé système
     python run_predictions_optimized --drift         # Vérifier data drift
+
+Configuration via fichier .env (voir .env.example)
 """
 
 import argparse
@@ -20,6 +22,7 @@ from datetime import datetime
 
 # Ajouter src au path
 sys.path.insert(0, str(Path(__file__).parent / 'src' / 'ml' / 'pipeline'))
+sys.path.insert(0, str(Path(__file__).parent))
 
 import pandas as pd
 import numpy as np
@@ -28,6 +31,9 @@ import logging
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+
+# Configuration centralisée
+from nba.config import settings
 
 from daily_pipeline import DailyPredictionPipeline
 from tracking_roi import ROITracker
@@ -53,44 +59,59 @@ class OptimizedPredictionPipeline:
         """Charge les ressources optimisées."""
         logger.info("Chargement des ressources...")
         
+        # Utilisation de la configuration centralisée
+        logger.info(f"📁 Model path: {settings.model_optimized_path}")
+        logger.info(f"📁 Predictions path: {settings.predictions_path}")
+        logger.info(f"📁 Features path: {settings.features_v3_path}")
+        
         # Charger la sélection de features
-        features_file = Path("models/optimized/selected_features.json")
-        if features_file.exists() and self.use_optimized:
-            with open(features_file) as f:
+        if settings.selected_features_path.exists() and self.use_optimized:
+            with open(settings.selected_features_path) as f:
                 features_data = json.load(f)
-                self.selected_features = features_data['features']
+                self.selected_features = features_data.get('features', features_data)
             logger.info(f"✅ {len(self.selected_features)} features sélectionnées chargées")
         else:
             self.selected_features = None
             logger.info("ℹ️ Utilisation de toutes les features")
         
         # Charger le modèle optimisé
-        model_path = Path("models/optimized/model_xgb.joblib")
-        if model_path.exists() and self.use_optimized:
-            self.model = joblib.load(model_path)
-            logger.info("✅ Modèle optimisé chargé")
+        if settings.model_xgb_path.exists() and self.use_optimized:
+            self.model = joblib.load(settings.model_xgb_path)
+            logger.info(f"✅ Modèle optimisé chargé: {settings.model_xgb_path}")
             
             # Charger le calibrateur
-            calib_path = Path("models/optimized/calibrator_xgb.joblib")
-            if calib_path.exists():
+            if settings.calibrator_xgb_path.exists():
                 self.calibrator = ProbabilityCalibrator()
-                self.calibrator.load(calib_path)
+                self.calibrator.load(settings.calibrator_xgb_path)
                 logger.info("✅ Calibrateur chargé")
         else:
             # Fallback sur modèle V3
-            logger.info("ℹ️ Modèle optimisé non trouvé, utilisation du modèle V3")
-            self.model = joblib.load("models/week1/xgb_v3.pkl")
+            legacy_model = Path("models/week1/xgb_v3.pkl")
+            logger.info(f"ℹ️ Modèle optimisé non trouvé, utilisation du modèle V3: {legacy_model}")
+            self.model = joblib.load(legacy_model)
             self.selected_features = None
         
         # Charger données historiques
-        self.historical_data = pd.read_parquet("data/gold/ml_features/features_v3.parquet")
-        logger.info("✅ Données historiques chargées")
+        self.historical_data = pd.read_parquet(settings.features_v3_path)
+        logger.info(f"✅ Données historiques chargées: {settings.features_v3_path}")
         
         # Mapping équipes
-        with open('data/team_name_to_id.json') as f:
-            self.team_name_to_id = json.load(f)
-        with open('data/team_mapping_extended.json') as f:
-            self.team_mapping_extended = json.load(f)
+        if settings.team_mapping_path.exists():
+            with open(settings.team_mapping_path) as f:
+                self.team_name_to_id = json.load(f)
+        else:
+            # Fallback
+            with open('data/team_name_to_id.json') as f:
+                self.team_name_to_id = json.load(f)
+        
+        # Mapping étendu
+        team_mapping_extended_path = settings.data_root / "team_mapping_extended.json"
+        if team_mapping_extended_path.exists():
+            with open(team_mapping_extended_path) as f:
+                self.team_mapping_extended = json.load(f)
+        else:
+            self.team_mapping_extended = {}
+            
         logger.info("✅ Mapping équipes chargé")
         
     def get_team_historical_features(self, team_name, is_home=True):
@@ -278,7 +299,7 @@ class OptimizedPredictionPipeline:
                 'predictions': predictions
             }, f, indent=2)
         
-        logger.info(f"\n✅ Prédictions sauvegardées dans predictions/")
+        logger.info(f"\n✅ Prédictions sauvegardées dans {settings.predictions_path}/")
     
     def _print_summary(self, predictions):
         """Affiche le résumé."""
@@ -319,9 +340,9 @@ def update_results():
     tracker = ROITracker()
     
     # Charger prédictions optimisées ou normales
-    latest_file = Path('predictions/latest_predictions_optimized.csv')
+    latest_file = settings.latest_predictions_path
     if not latest_file.exists():
-        latest_file = Path('predictions/latest_predictions.csv')
+        latest_file = settings.predictions_path / 'latest_predictions.csv'
     
     if not latest_file.exists():
         print("[ERREUR] Aucune prédiction trouvée")
@@ -378,7 +399,7 @@ def check_health():
     )
     
     # Sauvegarder le rapport
-    with open('predictions/health_report.json', 'w') as f:
+    with open(settings.predictions_path / 'health_report.json', 'w') as f:
         json.dump(health, f, indent=2)
     
     return health
@@ -405,7 +426,7 @@ def check_drift():
     drift_result = monitor.detect_feature_drift(current_data, important_features)
     
     # Sauvegarder le rapport
-    monitor.save_report('predictions/drift_report.json')
+    monitor.save_report(settings.predictions_path / 'drift_report.json')
     
     return drift_result
 

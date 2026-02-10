@@ -63,3 +63,9 @@ demo_exports/
 # Windows reserved accidental file
 /nul
 
+# Frontend build/deps local artifacts
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/nul
+

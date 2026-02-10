@@ -8,29 +8,22 @@ Ce module contient:
 - Enrichment (enrichissement de données)
 """
 
-# Modèles ML
-from .classification_model import ClassificationModel
-from .regression_model import RegressionModel
-from .clustering_model import ClusteringModel
-from .feature_engineering import FeatureEngineer
+# Modèles ML (imports optionnels pour éviter dépendances circulaires)
+try:
+    from .classification_model import ClassificationModel
+    from .feature_engineering import FeatureEngineer
+    __all__ = ['ClassificationModel', 'FeatureEngineer']
+except ImportError:
+    __all__ = []
 
-# Enrichissement
-from .enrichment import (
-    PositionPredictor,
-    CareerStatusInferencer,
-    SmartEnricher,
-    EnrichmentResult
-)
-
-__all__ = [
-    # Modèles ML
-    'ClassificationModel',
-    'RegressionModel',
-    'ClusteringModel',
-    'FeatureEngineer',
-    # Enrichissement
-    'PositionPredictor',
-    'CareerStatusInferencer',
-    'SmartEnricher',
-    'EnrichmentResult'
-]
+# Enrichissement (imports optionnels)
+try:
+    from .enrichment import (
+        PositionPredictor,
+        CareerStatusInferencer,
+        SmartEnricher,
+        EnrichmentResult
+    )
+    __all__.extend(['PositionPredictor', 'CareerStatusInferencer', 'SmartEnricher', 'EnrichmentResult'])
+except ImportError:
+    pass

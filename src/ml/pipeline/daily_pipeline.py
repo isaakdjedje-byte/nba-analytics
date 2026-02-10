@@ -10,7 +10,10 @@ import joblib
 import json
 from datetime import datetime
 from pathlib import Path
-from nba_live_api import get_today_games
+try:
+    from .nba_live_api import get_today_games
+except ImportError:
+    from nba_live_api import get_today_games
 import logging
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')

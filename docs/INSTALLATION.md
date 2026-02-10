@@ -16,9 +16,15 @@ Guide complet d'installation et de configuration de la plateforme d'analytics NB
 
 ### Vérification prérequis
 
+**⚠️ IMPORTANT: Python 3.11 ou 3.12 requis (pas 3.14+)**
+
 ```bash
 # Vérifier Python
 python --version  # Doit afficher 3.11.x ou 3.12.x
+
+# Si vous avez Python 3.14, utilisez pyenv ou installer Python 3.11
+# Windows: python3.11 --version
+# Mac/Linux: python3.11 --version
 
 # Vérifier pip
 pip --version
@@ -126,7 +132,27 @@ scripts\run_tests.bat   # Windows
 
 ### 5. Configuration environnement
 
-**Variables d'environnement (optionnel mais recommandé) :**
+**Fichier .env (NOUVEAU - Recommandé) :**
+
+```bash
+# Copier le template
+cp .env.example .env
+
+# Modifier avec vos valeurs
+nano .env  # ou code .env
+```
+
+**Contenu minimum .env :**
+```bash
+ENVIRONMENT=development
+API_PORT=8000
+DATABASE_URL=postgresql://nba:nba@localhost:5432/nba
+DATA_ROOT=data
+MODEL_PATH=models
+PREDICTIONS_PATH=predictions
+```
+
+**Variables d'environnement (méthode alternative) :**
 
 **Windows (PowerShell):**
 ```powershell
@@ -369,6 +395,22 @@ docker system prune -f
 docker-compose up -d
 ```
 
+### Erreur : "No module named 'joblib'"
+
+**Cause** : Dépendances ML non installées ou mauvaise version Python
+
+**Solution :**
+```bash
+# Vérifier que vous utilisez Python 3.11
+python3.11 --version
+
+# Installer dans Python 3.11 spécifiquement
+python3.11 -m pip install joblib scikit-learn xgboost pandas numpy
+
+# Vérifier l'installation
+python3.11 -c "import joblib; print('OK')"
+```
+
 ### Erreur : "Python 3.14 not supported"
 
 **Cause** : Version Python incompatible avec PySpark
@@ -482,6 +524,6 @@ docker-compose up -d --build
 
 ---
 
-**Dernière mise à jour** : 2026-02-06  
-**Version** : 1.0  
-**Ticket associé** : NBA-16
+**Dernière mise à jour** : 2026-02-09  
+**Version** : 2.0  
+**Ticket associé** : NBA-16, NBA-29 (Configuration centralisée)
