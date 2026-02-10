@@ -9,6 +9,7 @@ import json
 from datetime import datetime, timedelta
 from pathlib import Path
 import logging
+from typing import List, Dict
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -232,6 +233,109 @@ class ROITracker:
             
         logger.info(f"[SAVED] Rapport exporte: {output_file}")
         print("\n" + report)
+    
+    def test_confidence_thresholds(self, thresholds: List[float] = None) -> Dict:
+        """
+        Teste les 3 seuils de confiance et compare les performances.
+        
+        Args:
+            thresholds: Liste des seuils à tester [default: 0.65, 0.70, 0.75]
+            
+        Returns:
+            Dict avec comparaison des métriques par seuil
+        """
+        if thresholds is None:
+            thresholds = [0.65, 0.70, 0.75]
+        
+        logger.info(f"\n{'='*70}")
+        logger.info("TEST DES SEUILS DE CONFIANCE")
+        logger.info(f"{'='*70}")
+        logger.info(f"Seuils testés: {thresholds}")
+        
+        df = self.history.copy()
+        df = df[df['actual_result'].notna()]  # Uniquement avec résultats connus
+        
+        if len(df) == 0:
+            logger.warning("Aucune prédiction avec résultat connu")
+            return {'error': 'No data available'}
+        
+        results = {}
+        
+        for threshold in thresholds:
+            # Filtrer par seuil de confiance
+            filtered = df[df['confidence'] >= threshold]
+            
+            if len(filtered) > 0:
+                accuracy = filtered['correct'].mean()
+                n_predictions = len(filtered)
+                total_roi = filtered['roi'].sum()
+                roi_per_bet = total_roi / n_predictions
+                
+                # Distribution des prédictions
+                home_predictions = (filtered['prediction'] == 'Home Win').sum()
+                away_predictions = (filtered['prediction'] == 'Away Win').sum()
+                
+                results[f"threshold_{threshold}"] = {
+                    'threshold': threshold,
+                    'n_predictions': int(n_predictions),
+                    'percentage_of_total': f"{n_predictions / len(df) * 100:.1f}%",
+                    'accuracy': float(accuracy),
+                    'total_roi': float(total_roi),
+                    'roi_per_bet': float(roi_per_bet),
+                    'home_predictions': int(home_predictions),
+                    'away_predictions': int(away_predictions),
+                    'recommendation': self._get_threshold_recommendation(accuracy, n_predictions)
+                }
+                
+                logger.info(f"\nSeuil {threshold:.0%}:")
+                logger.info(f"  Prédictions: {n_predictions} ({n_predictions / len(df) * 100:.1f}% du total)")
+                logger.info(f"  Accuracy: {accuracy:.2%}")
+                logger.info(f"  ROI total: {total_roi:+.0f}")
+                logger.info(f"  ROI/pari: {roi_per_bet:+.3f}")
+            else:
+                results[f"threshold_{threshold}"] = {
+                    'threshold': threshold,
+                    'error': 'Aucune prédiction au-dessus du seuil'
+                }
+                logger.warning(f"\nSeuil {threshold:.0%}: Aucune prédiction")
+        
+        # Recommandation finale
+        logger.info(f"\n{'='*70}")
+        logger.info("RECOMMANDATION")
+        logger.info(f"{'='*70}")
+        
+        best_threshold = self._find_best_threshold(results)
+        logger.info(f"Meilleur seuil: {best_threshold}")
+        
+        return results
+    
+    def _get_threshold_recommendation(self, accuracy: float, n_predictions: int) -> str:
+        """Génère une recommandation pour un seuil"""
+        if accuracy >= 0.70 and n_predictions >= 20:
+            return "EXCELLENT - Utiliser pour paris"
+        elif accuracy >= 0.65 and n_predictions >= 30:
+            return "BON - Utiliser avec précaution"
+        elif accuracy >= 0.60:
+            return "MOYEN - À valider"
+        else:
+            return "FAIBLE - Éviter"
+    
+    def _find_best_threshold(self, results: Dict) -> str:
+        """Trouve le meilleur seuil basé sur accuracy et volume"""
+        best_score = 0
+        best_threshold = None
+        
+        for key, data in results.items():
+            if 'accuracy' in data and 'n_predictions' in data:
+                # Score = accuracy * log(n_predictions) pour équilibrer qualité/volume
+                import math
+                score = data['accuracy'] * math.log(max(data['n_predictions'], 2))
+                
+                if score > best_score:
+                    best_score = score
+                    best_threshold = data['threshold']
+        
+        return f"{best_threshold:.0%}" if best_threshold else "N/A"
 
 
 def demo_tracking():

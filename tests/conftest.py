@@ -163,3 +163,39 @@ def sample_data_v2(spark_session):
         (3, "BOS", 108, 38, 25, 0.58),
         (4, "MIA", 112, 41, 22, 0.62)
     ], ["game_id", "team", "points", "rebounds", "assists", "ts_pct"])
+
+
+# Fixtures pour NBA-29
+import tempfile
+import pandas as pd
+
+
+@pytest.fixture
+def reset_settings_cache():
+    """Reset le cache des settings avant chaque test"""
+    from nba.config import clear_settings_cache
+    clear_settings_cache()
+    yield
+
+
+@pytest.fixture
+def temp_gold_dir(tmp_path):
+    """Crée un répertoire gold temporaire pour les tests"""
+    gold_dir = tmp_path / "gold"
+    gold_dir.mkdir(parents=True, exist_ok=True)
+    return gold_dir
+
+
+@pytest.fixture
+def sample_parquet_dataset(temp_gold_dir):
+    """Crée un dataset parquet de test"""
+    df = pd.DataFrame({
+        "id": [1, 2, 3],
+        "name": ["LeBron", "Curry", "Durant"],
+        "season": ["2023-24", "2023-24", "2023-24"]
+    })
+    
+    dataset_path = temp_gold_dir / "test_players.parquet"
+    df.to_parquet(dataset_path)
+    
+    return "test_players", temp_gold_dir

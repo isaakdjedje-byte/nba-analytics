@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBA Analytics - Backtest Complet</title>
+    <link rel="stylesheet" href="assets/dark-theme.css">
+    <style>
+        .metric-card { background: #252525; padding: 20px; border-radius: 10px; margin: 10px; text-align: center; }
+        .metric-value { font-size: 2.5em; color: #17408B; font-weight: bold; }
+        .metric-label { color: #b0b0b0; margin-top: 10px; }
+        .api-badge { background: #4CAF50; color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8em; }
+        .warning { background: #FFC107; color: black; }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <h2>🏀 NBA Analytics</h2>
+        <ul>
+            <li><a href="#summary">Resume</a></li>
+            <li><a href="#2024-25">2024-25 (Complet)</a></li>
+            <li><a href="#2025-26">2025-26 (API)</a></li>
+            <li><a href="#comparison">Comparaison</a></li>
+            <li><a href="#downloads">Telechargements</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <section id="summary" class="hero-section">
+            <h1>Backtest Complet NBA</h1>
+            <p>Generation: 09/02/2026 14:31</p>
+            
+            <div style="display: flex; justify-content: center; gap: 40px; margin-top: 40px; flex-wrap: wrap;">
+                <div class="metric-card">
+                    <div class="metric-value">77.8%</div>
+                    <div class="metric-label">Accuracy 2024-25</div>
+                    <div style="margin-top: 10px; color: #4CAF50;">1309 matchs</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-value">54.8%</div>
+                    <div class="metric-label">Accuracy 2025-26</div>
+                    <div style="margin-top: 10px;">
+                        <span class="api-badge">LeagueGameFinder</span>
+                    </div>
+                    <div style="margin-top: 5px; color: #b0b0b0;">783 matchs</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="2024-25">
+            <h2>Saison 2024-25 - Analyse Complete</h2>
+            <div style="background: #252525; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                <h3>Metriques</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div class="metric-card">
+                        <div class="metric-value">77.8%</div>
+                        <div class="metric-label">Accuracy</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">78.7%</div>
+                        <div class="metric-label">Precision</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">81.3%</div>
+                        <div class="metric-label">Recall</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">80.0%</div>
+                        <div class="metric-label">F1-Score</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <h3>Evolution de l'accuracy</h3>
+                <img src="figures/01_accuracy_2024-25_trend.svg" alt="Accuracy trend">
+            </div>
+            
+            <div class="chart-container">
+                <h3>Performance mensuelle</h3>
+                <img src="figures/04_monthly_performance.svg" alt="Monthly">
+            </div>
+            
+            <div class="chart-container">
+                <h3>Distribution des confiances</h3>
+                <img src="figures/03_confidence_distribution.svg" alt="Confidence">
+            </div>
+        </section>
+        
+        <section id="2025-26">
+            <h2>Saison 2025-26 - Via API NBA</h2>
+            <div style="background: #252525; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                <p><strong>Methode:</strong> LeagueGameFinder</p>
+                <p><strong>Matchs analyses:</strong> 783</p>
+                <div class="alert alert-warning" style="margin-top: 15px;">
+                    <strong>Note:</strong> Les features utilisees sont des approximations basees sur la saison 2024-25.
+                    Les resultats sont donc moins fiables que pour 2024-25.
+                </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin: 20px 0;">
+                <div class="metric-card">
+                    <div class="metric-value">54.8%</div>
+                    <div class="metric-label">Accuracy</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">54.8%</div>
+                    <div class="metric-label">Precision</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="comparison">
+            <h2>Comparaison des Saisons</h2>
+            <div class="chart-container">
+                <img src="figures/02_metrics_comparison.svg" alt="Comparison">
+            </div>
+            <div class="chart-container">
+                <img src="figures/05_season_comparison.svg" alt="Seasons">
+            </div>
+        </section>
+        
+        <section id="downloads">
+            <h2>Telechargements</h2>
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <a href="../predictions/backtest_2024-25_detailed.csv" class="btn">CSV 2024-25 (Detaille)</a>
+                <a href="../predictions/backtest_2025-26_detailed.csv" class="btn">CSV 2025-26 (Detaille)</a>
+                <a href="2024-25/backtest_data.json" class="btn">JSON 2024-25</a>
+                <a href="2025-26/backtest_partial.json" class="btn">JSON 2025-26</a>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>NBA Analytics - Systeme de Backtest | Genere le 09/02/2026</p>
+    </footer>
+</body>
+</html>

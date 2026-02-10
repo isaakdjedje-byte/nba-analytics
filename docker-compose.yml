@@ -1,55 +1,245 @@
 version: '3.8'
 
 services:
-  spark-nba:
-    build: .
-    container_name: nba-analytics-spark
+  # Application principale - API FastAPI
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nba-api
     ports:
-      - "8888:8888"  # Jupyter Lab
-      - "4040:4040"  # Spark UI
+      - "8000:8000"
     volumes:
-      # Données brutes (lecture seule)
-      - ./data/raw:/app/data/raw:ro
-      # Données traitées (lecture/écriture)
-      - ./data/processed:/app/data/processed
-      # Exports
-      - ./data/exports:/app/data/exports
-      # Code source (pour développement)
-      - ./src:/app/src
-      # Config
-      - ./src/config:/app/src/config
-      # Tests
-      - ./tests:/app/tests
+      - ./:/app
+      - data:/app/data
     environment:
-      - SPARK_EXTRA_CLASSPATH=/usr/local/spark/jars/delta-spark_2.12-3.0.0.jar:/usr/local/spark/jars/delta-storage-3.0.0.jar
-      - PYSPARK_SUBMIT_ARGS=--packages io.delta:delta-spark_2.12:3.0.0 pyspark-shell
-      - JUPYTER_ENABLE_LAB=yes
-      - PYTHONPATH=/app/src
-    command: >
-      bash -c "
-        echo 'Waiting for Spark to initialize...' &&
-        sleep 5 &&
-        jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root
-      "
-
-  # Service dédié aux tests
-  test:
-    build: .
-    container_name: nba-analytics-test
-    volumes:
-      # Tests
-      - ./tests:/app/tests
-      # Code source
-      - ./src:/app/src
-      # Données
-      - ./data:/app/data
-      # Documentation
-      - ./docs:/app/docs
-    environment:
-      - SPARK_EXTRA_CLASSPATH=/usr/local/spark/jars/delta-spark_2.12-3.0.0.jar:/usr/local/spark/jars/delta-storage-3.0.0.jar
-      - PYSPARK_SUBMIT_ARGS=--packages io.delta:delta-spark_2.12:3.0.0 pyspark-shell
-      - PYTHONPATH=/app/src
-    working_dir: /app
-    command: pytest tests/ -v
+      - ENVIRONMENT=development
+      - DATABASE_URL=postgresql://nba:nba@postgres:5432/nba
+      - REDIS_URL=redis://redis:6379
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_ACCESS_KEY=nbaadmin
+      - MINIO_SECRET_KEY=nbapassword123
+      - PYTHONPATH=/app
     depends_on:
-      - spark-nba
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      minio:
+        condition: service_started
+      mlflow:
+        condition: service_started
+    command: uvicorn nba.api.main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - nba-network
+
+  # Dashboard Streamlit
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nba-dashboard
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./:/app
+      - data:/app/data
+    environment:
+      - DATABASE_URL=postgresql://nba:nba@postgres:5432/nba
+      - REDIS_URL=redis://redis:6379
+      - PYTHONPATH=/app
+    depends_on:
+      - postgres
+      - api
+    command: streamlit run nba/dashboard/main.py --server.port=8501 --server.address=0.0.0.0
+    networks:
+      - nba-network
+
+  # Base de données PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: nba-postgres
+    environment:
+      POSTGRES_USER: nba
+      POSTGRES_PASSWORD: nba
+      POSTGRES_DB: nba
+      POSTGRES_MULTIPLE_DATABASES: nba,mlflow
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./config/postgres:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nba"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - nba-network
+
+  # Cache Redis
+  redis:
+    image: redis:7-alpine
+    container_name: nba-redis
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    networks:
+      - nba-network
+
+  # Stockage S3-compatible MinIO
+  minio:
+    image: minio/minio:latest
+    container_name: nba-minio
+    environment:
+      MINIO_ROOT_USER: nbaadmin
+      MINIO_ROOT_PASSWORD: nbapassword123
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    networks:
+      - nba-network
+
+  # MLflow Tracking Server
+  mlflow:
+    image: python:3.11-slim
+    container_name: nba-mlflow
+    environment:
+      - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
+      - AWS_ACCESS_KEY_ID=nbaadmin
+      - AWS_SECRET_ACCESS_KEY=nbapassword123
+    command: >
+      bash -c "pip install mlflow==2.10.0 psycopg2-binary boto3 &&
+               mlflow server
+               --backend-store-uri postgresql://nba:nba@postgres:5432/mlflow
+               --default-artifact-root s3://mlflow/
+               --host 0.0.0.0
+               --port 5000"
+    ports:
+      - "5000:5000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    networks:
+      - nba-network
+
+  # Celery Worker pour tâches async
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nba-worker
+    volumes:
+      - ./:/app
+      - data:/app/data
+    environment:
+      - ENVIRONMENT=development
+      - DATABASE_URL=postgresql://nba:nba@postgres:5432/nba
+      - REDIS_URL=redis://redis:6379
+      - PYTHONPATH=/app
+    depends_on:
+      - redis
+      - postgres
+    command: celery -A nba.tasks worker --loglevel=info --concurrency=2
+    networks:
+      - nba-network
+
+  # Celery Beat pour scheduling
+  beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nba-beat
+    volumes:
+      - ./:/app
+    environment:
+      - DATABASE_URL=postgresql://nba:nba@postgres:5432/nba
+      - REDIS_URL=redis://redis:6379
+      - PYTHONPATH=/app
+    depends_on:
+      - redis
+      - postgres
+    command: celery -A nba.tasks beat --loglevel=info
+    networks:
+      - nba-network
+
+  # Monitoring - Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: nba-prometheus
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    networks:
+      - nba-network
+
+  # Monitoring - Grafana
+  grafana:
+    image: grafana/grafana:latest
+    container_name: nba-grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=nbaadmin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./config/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./config/grafana/datasources:/etc/grafana/provisioning/datasources
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - nba-network
+
+  # Initialisation MinIO (création buckets)
+  minio-init:
+    image: minio/mc:latest
+    container_name: nba-minio-init
+    environment:
+      MINIO_ROOT_USER: nbaadmin
+      MINIO_ROOT_PASSWORD: nbapassword123
+    entrypoint: >
+      /bin/sh -c "
+      sleep 10;
+      /usr/bin/mc alias set local http://minio:9000 nbaadmin nbapassword123;
+      /usr/bin/mc mb local/mlflow || true;
+      /usr/bin/mc mb local/nba-data || true;
+      /usr/bin/mc policy set public local/mlflow || true;
+      /usr/bin/mc policy set public local/nba-data || true;
+      exit 0;
+      "
+    depends_on:
+      - minio
+    networks:
+      - nba-network
+
+volumes:
+  postgres_data:
+  redis_data:
+  minio_data:
+  prometheus_data:
+  grafana_data:
+  data:
+
+networks:
+  nba-network:
+    driver: bridge

@@ -21,15 +21,31 @@ logger = logging.getLogger(__name__)
 class FeatureEngineeringV3:
     """Cree de nouvelles features avancees."""
     
-    def __init__(self, input_path: str = "data/gold/ml_features/features_all.parquet"):
-        self.input_path = Path(input_path)
+    def __init__(self, input_path: str = None, input_df: pd.DataFrame = None):
+        """
+        Initialise avec un fichier ou un DataFrame.
+        Zero redondance - meme code pour historique et live.
+        
+        Args:
+            input_path: Chemin vers fichier parquet (optionnel)
+            input_df: DataFrame direct (optionnel, prioritaire sur input_path)
+        """
+        self.input_path = Path(input_path) if input_path else None
+        self.input_df = input_df
         self.df = None
         
     def load_data(self):
-        """Charge les features existantes."""
-        logger.info("Chargement des features V1...")
-        self.df = pd.read_parquet(self.input_path)
-        logger.info(f"[OK] {len(self.df)} matchs charges")
+        """Charge les features depuis fichier ou DataFrame."""
+        if self.input_df is not None:
+            logger.info("Utilisation du DataFrame fourni...")
+            self.df = self.input_df.copy()
+            logger.info(f"[OK] {len(self.df)} matchs du DataFrame")
+        elif self.input_path and self.input_path.exists():
+            logger.info("Chargement des features depuis fichier...")
+            self.df = pd.read_parquet(self.input_path)
+            logger.info(f"[OK] {len(self.df)} matchs charges depuis {self.input_path}")
+        else:
+            raise ValueError("Veuillez fournir input_path ou input_df")
         
     def create_efficiency_ratios(self):
         """Ratios d'efficacite."""
@@ -142,6 +158,52 @@ class FeatureEngineeringV3:
         self.df['h2h_games_log'] = np.log1p(self.df['h2h_games'])
         
         logger.info("[OK] 5 features non-lineaires crees")
+    
+    def create_archetype_features(self):
+        """
+        Intègre les features d'archetypes NBA-23.
+        Ajoute 12 features par équipe basées sur les profils de joueurs.
+        """
+        logger.info("Integration des features d'archetypes NBA-23...")
+        
+        try:
+            from ..archetype.nba22_integration import ArchetypeTeamFeatures
+            
+            # Initialiser l'intégrateur
+            archetype_integrator = ArchetypeTeamFeatures()
+            
+            # Créer features d'équipe
+            team_features = archetype_integrator.create_team_features()
+            
+            if team_features is None or len(team_features) == 0:
+                logger.warning("⚠️  Pas de features d'archetypes disponibles")
+                return
+            
+            # Merge pour équipe à domicile
+            self.df = self.df.merge(
+                team_features,
+                left_on='home_team_id',
+                right_on='team_id',
+                how='left',
+                suffixes=('', '_home_arch')
+            )
+            
+            # Merge pour équipe à l'extérieur
+            self.df = self.df.merge(
+                team_features,
+                left_on='away_team_id',
+                right_on='team_id',
+                how='left',
+                suffixes=('', '_away_arch')
+            )
+            
+            # Renommer les colonnes pour clarté
+            arch_cols = [c for c in self.df.columns if '_home_arch' in c or '_away_arch' in c]
+            logger.info(f"[OK] {len(arch_cols)} features d'archetypes integrees")
+            
+        except Exception as e:
+            logger.warning(f"⚠️  Impossible d'integrer NBA-23: {e}")
+            logger.info("    Continuation sans features d'archetypes")
         
     def process(self):
         """Execute tout le feature engineering."""
@@ -158,6 +220,7 @@ class FeatureEngineeringV3:
         self.create_contextual_interactions()
         self.create_extended_windows()
         self.create_non_linear_features()
+        self.create_archetype_features()  # NEW: NBA-23 integration
         
         nb_features_after = len(self.df.columns)
         nb_new = nb_features_after - nb_features_before

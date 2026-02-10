@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-02-09T12:25:45.142363",
+  "model": "optimized_xgb",
+  "game_date_us": "2026-02-09",
+  "predictions": [
+    {
+      "home_team": "Celtics",
+      "away_team": "Knicks",
+      "game_date": "2026-02-09",
+      "game_time_us": "19:00",
+      "game_time_fr": "01:00",
+      "prediction": "Home Win",
+      "proba_home_win": 0.8305796980857849,
+      "confidence": 0.797468364238739,
+      "recommendation": "HIGH_CONFIDENCE",
+      "proba_home_win_calibrated": 0.797468364238739,
+      "confidence_calibrated": 0.797468364238739,
+      "recommendation_calibrated": "HIGH_CONFIDENCE"
+    },
+    {
+      "home_team": "Wizards",
+      "away_team": "Heat",
+      "game_date": "2026-02-09",
+      "game_time_us": "19:30",
+      "game_time_fr": "01:30",
+      "prediction": "Away Win",
+      "proba_home_win": 0.20082426071166992,
+      "confidence": 0.8125,
+      "recommendation": "HIGH_CONFIDENCE",
+      "proba_home_win_calibrated": 0.1875,
+      "confidence_calibrated": 0.8125,
+      "recommendation_calibrated": "HIGH_CONFIDENCE"
+    },
+    {
+      "home_team": "Raptors",
+      "away_team": "Pacers",
+      "game_date": "2026-02-09",
+      "game_time_us": "20:00",
+      "game_time_fr": "02:00",
+      "prediction": "Home Win",
+      "proba_home_win": 0.8174178004264832,
+      "confidence": 0.7632964849472046,
+      "recommendation": "HIGH_CONFIDENCE",
+      "proba_home_win_calibrated": 0.7632964849472046,
+      "confidence_calibrated": 0.7632964849472046,
+      "recommendation_calibrated": "HIGH_CONFIDENCE"
+    },
+    {
+      "home_team": "Timberwolves",
+      "away_team": "Clippers",
+      "game_date": "2026-02-09",
+      "game_time_us": "22:00",
+      "game_time_fr": "04:00",
+      "prediction": "Home Win",
+      "proba_home_win": 0.6164101362228394,
+      "confidence": 0.5714285969734192,
+      "recommendation": "LOW_CONFIDENCE",
+      "proba_home_win_calibrated": 0.5714285969734192,
+      "confidence_calibrated": 0.5714285969734192,
+      "recommendation_calibrated": "LOW_CONFIDENCE"
+    }
+  ]
+}

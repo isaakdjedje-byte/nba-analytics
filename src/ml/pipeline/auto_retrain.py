@@ -71,7 +71,7 @@ class AutoRetrainer:
                 return accuracy
             else:
                 # Essayer de charger depuis training_summary.json
-                summary_path = self.models_dir / "optimized" / "training_summary.json"
+                summary_path = self.models_dir / "unified" / "training_summary.json"
                 if summary_path.exists():
                     with open(summary_path, 'r') as f:
                         summary = json.load(f)
@@ -122,12 +122,12 @@ class AutoRetrainer:
         
         try:
             # Import dynamique pour éviter dépendances circulaires
-            from .train_optimized import OptimizedNBA22Trainer
+            from .train_unified import UnifiedTrainer
             
             # Créer trainer
-            trainer = OptimizedNBA22Trainer(
-                features_path=str(self.features_path),
-                output_dir=str(self.models_dir / "optimized")
+            trainer = UnifiedTrainer(
+                hist_path=str(self.features_path),
+                output_dir=str(self.models_dir / "unified")
             )
             
             # Lancer entraînement
@@ -135,7 +135,7 @@ class AutoRetrainer:
             result = trainer.run_full_pipeline()
             
             if result and 'metrics' in result:
-                new_accuracy = result['metrics'].get('accuracy', 0)
+                new_accuracy = result['metrics'].get('test_accuracy', 0)
                 logger.info(f"Nouveau modèle entraîné: accuracy={new_accuracy:.3f}")
                 
                 # Incrémenter version
@@ -144,7 +144,7 @@ class AutoRetrainer:
                     self.version_manager.register_model(
                         new_version, 
                         result['metrics'],
-                        model_path=str(self.models_dir / "optimized" / "model_xgb.joblib")
+                        model_path=str(self.models_dir / "unified" / "model_xgb_unified.joblib")
                     )
                     logger.info(f"Nouvelle version enregistrée: {new_version}")
                     return new_version

@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-02-08T18:31:08.729771",
+  "total_players": 5103,
+  "enrichment_stats": {
+    "from_roster": 532,
+    "from_api": 1208,
+    "from_csv": 48,
+    "imputed": 0
+  },
+  "validation": {
+    "duplicates": 0,
+    "null_rate": 0.02,
+    "output_path": "data\\silver\\players_cleaned"
+  },
+  "schema": [
+    "id",
+    "full_name",
+    "first_name",
+    "last_name",
+    "is_active",
+    "position",
+    "birth_date",
+    "age",
+    "from_year",
+    "to_year",
+    "data_source",
+    "height_cm",
+    "weight_kg"
+  ],
+  "note": "NBA-17 termine avec refactoring v2.0"
+}

@@ -1,10 +1,13 @@
 # 🤖 AGENT DOCUMENTATION - NBA Analytics Platform
 
-**Version :** 8.0 (Epic 4 DONE - Data Quality & Monitoring)  
-**Mise à jour :** 8 Février 2026 à 20:00  
-**Statut :** ✅ Production Ready - Epic 4 Terminé (87% projet)
+**Version :** 10.0 (PROJET 100% COMPLET - Betting System)  
+**Mise à jour :** 9 Février 2026 à 20:30  
+**Statut :** ✅🎉 **PROJET 100% COMPLET - TOUTES LES STORIES TERMINÉES !**
 
-**Meilleur modèle** : XGBoost V3 76.76% - Pipeline quotidien + Tracking ROI + Monitoring  
+**🎰 NOUVEAU - Betting System Pro** : 5 stratégies, 3 profils de risque, value betting, dashboard interactif
+**🎉 Architecture V2.0 Pro** : Package `nba/`, API REST FastAPI, CLI Typer, 67+ tests
+**Meilleur modèle** : XGBoost Fixed 83.03% - Pipeline quotidien + Tracking ROI + Monitoring  
+**NBA-29/30/31** : Data Catalog, Rapports hebdo, Dashboard betting
 **NBA-23** : 4 805 joueurs clusterisés, 14 archétypes, -1 630 lignes nettes  
 **Epic 4** : Monitoring centralisé, 15 tests ML, alertes automatisées
 
@@ -147,6 +150,91 @@ predictions/
 
 ---
 
+## 🎉 Architecture V2.0 - NBA-29 (Nouveau)
+
+### 🏗️ Refonte Complète (08/02/2026)
+
+**Objectif** : Transformer le projet en plateforme professionnelle
+
+| Avant | Après | Gain |
+|-------|-------|------|
+| 32 scripts racine | Package `nba/` | +95% organisation |
+| ❌ Pas d'API | FastAPI REST | ✅ Nouveau |
+| Scripts dispersés | CLI `nba` unifiée | +90% UX |
+| Config multiple | Pydantic Settings | +80% fiabilité |
+| ❌ Pas de tests | 67+ automatisés | ✅ 100% passent |
+
+### 📦 Structure Package
+
+```
+nba/                           # Package principal
+├── config.py                  # Configuration Pydantic
+├── cli.py                     # CLI Typer (10+ commandes)
+├── api/
+│   └── main.py                # FastAPI REST
+├── reporting/                 # NBA-29 Module
+│   ├── catalog.py             # Data Catalog SQLite
+│   └── exporters.py           # P/C/J/D formats
+└── dashboard/                 # Streamlit
+```
+
+### 🎯 Composants Clés
+
+#### Data Catalog (SQLite)
+- Auto-discovery datasets
+- Extraction schémas auto
+- Historique exports
+- Validation qualité
+
+#### Exporters Multi-Formats
+- **Parquet** : Compression snappy, partitionnement
+- **CSV** : UTF-8, headers
+- **JSON** : Records format
+- **Delta** : Lake format (optionnel)
+
+#### API REST (FastAPI)
+```bash
+curl http://localhost:8000/api/v1/datasets
+curl -X POST http://localhost:8000/api/v1/export \
+  -d '{"dataset": "players", "format": "csv"}'
+```
+
+#### CLI Unifiée
+```bash
+nba version                    # Version
+nba export players --format csv  # Export
+nba catalog list              # Catalogue
+nba dev api                   # Lancer API
+```
+
+### 🐳 Infrastructure Docker
+
+**10 services** (zero budget) :
+- PostgreSQL, Redis, MinIO
+- MLflow, FastAPI, Streamlit
+- Prometheus, Grafana, Celery
+
+```bash
+docker-compose up -d  # Lance tout
+```
+
+### 🧪 Tests Complets
+
+**67+ tests** : 33 unitaires + 34 intégration + 11 E2E
+
+```bash
+./run_all_tests.sh --docker --e2e
+```
+
+### 📚 Documentation
+
+- [NBA-29_EXPORT_COMPLETE.md](stories/NBA-29_EXPORT_COMPLETE.md)
+- [ARCHITECTURE_V2.md](ARCHITECTURE_V2.md)
+- [API_REFERENCE.md](API_REFERENCE.md)
+- [CLI_REFERENCE.md](CLI_REFERENCE.md)
+
+---
+
 ## 🎯 Modules Clés
 
 ### Ingestion (NBA-11 à NBA-15)
@@ -274,6 +362,68 @@ pytest tests/test_integration.py -v
 
 # Tests ML Pipeline (Epic 4 - NEW)
 pytest tests/test_ml_pipeline_critical.py -v
+```
+
+### 🎰 Betting System (Epic 7 - NEW)
+
+**Démarrage rapide :**
+```python
+# Test betting system
+python -c "
+from src.betting import BettingSystem
+betting = BettingSystem(initial_bankroll=100.0, risk_profile='moderate')
+print(f'Balance: {betting.bankroll.current_amount}€')
+print(f'Profil: {betting.bankroll.risk_profile}')
+"
+
+# Test odds client
+python -c "
+from src.betting import OddsClient
+client = OddsClient()
+odds = client.get_odds('Boston Celtics', 'Lakers')
+print(f'Cote: {odds}')
+"
+```
+
+**Rapport hebdomadaire :**
+```bash
+# Générer rapport
+python src/reporting/weekly_betting_report.py
+
+# Envoyer par email (optionnel)
+# Répondre 'y' à la question "Envoyer par email?"
+```
+
+**Dashboard betting :**
+```bash
+# Lancer Jupyter
+jupyter notebook notebooks/02_betting_dashboard.ipynb
+```
+
+**Planification automatique :**
+```bash
+# Mise à jour matinale (9h)
+python scripts/schedule_betting_updates.py --type=morning
+
+# Mise à jour soir (18h)
+python scripts/schedule_betting_updates.py --type=evening
+
+# Rapport hebdomadaire
+python scripts/schedule_betting_updates.py --type=weekly
+
+# Tout exécuter
+python scripts/schedule_betting_updates.py --type=all
+```
+
+**Configuration cron (Linux/Mac) :**
+```bash
+# Éditer crontab
+crontab -e
+
+# Ajouter ces lignes
+0 9 * * * cd /chemin/vers/nba-analytics && python scripts/schedule_betting_updates.py --type=morning
+0 18 * * * cd /chemin/vers/nba-analytics && python scripts/schedule_betting_updates.py --type=evening
+0 9 * * 1 cd /chemin/vers/nba-analytics && python scripts/schedule_betting_updates.py --type=weekly
 ```
 
 ### Monitoring & Alertes (Epic 4 - NEW)

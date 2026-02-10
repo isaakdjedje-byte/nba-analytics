@@ -2,28 +2,85 @@
 
 Pipeline Data Engineering complet pour l'analyse de données NBA, combinant Apache Spark, Delta Lake, et architecture moderne.
 
+## Etat du programme multi-sessions
+
+- Cloture execution J1 -> J13: DONE
+- Resume final et source of truth: `docs/execution/FINAL_CLOSURE_SUMMARY.md`
+
 ## 🚀 Démarrage rapide
 
 ### Prérequis
 
-- Docker et Docker Compose
-- Python 3.11+ (pour utilitaires hors Docker)
+- **Python 3.11 ou 3.12** (⚠️ Python 3.14 n'est PAS supporté)
+- Docker et Docker Compose (optionnel)
 - Git
+
+### Installation
+
+```bash
+# Cloner le repository
+git clone https://github.com/isaakdjedje-byte/nba-analytics.git
+cd nba-analytics
+
+# Installer les dépendances
+pip install -r requirements.txt
+
+# Configurer l'environnement
+cp .env.example .env
+# Modifier .env avec vos valeurs
+```
 
 ### Lancer l'environnement
 
 ```bash
-# Démarrer tous les services
+# Démarrer tous les services Docker
 docker-compose up -d
 
 # Vérifier que tout fonctionne
 docker-compose ps
 ```
 
+### Utilisation CLI
+
+```bash
+# Voir la version
+nba version
+
+# Lancer les prédictions
+python run_predictions_optimized.py
+
+# Lancer l'API
+nba dev api
+
+# Exporter des données
+nba export team_season_stats --format csv
+```
+
 ### Accès aux services
 
+- **🏀 Dashboard React** : http://localhost:5173 (**NOUVEAU**)
+- **API Backend** : http://localhost:8000
 - **Jupyter Lab** : http://localhost:8888
 - **Spark UI** : http://localhost:4040
+
+### 🎮 Dashboard Web (React + TypeScript)
+
+Interface utilisateur moderne avec 4 pages :
+
+1. **Dashboard** : Statistiques générales et aperçu
+2. **Predictions Week** : Vue calendrier des matchs avec horaires FR
+3. **Paper Trading** : Système de paris virtuels avec bankroll
+4. **ML Pipeline** : Visualisation du processus ML (4 étapes)
+
+**Démarrage rapide :**
+```bash
+# Lancer le script de démarrage
+start-dashboard.bat
+
+# Ou manuellement
+python -m nba.api.main                    # Backend
+npm run dev -- --host                     # Frontend
+```
 
 ## 🧪 Tests
 
@@ -64,29 +121,61 @@ docker-compose exec spark-nba pytest tests/ -v
 
 > 📚 **Documentation complète des tests** : [docs/TESTING.md](docs/TESTING.md)
 
+## ⚙️ Configuration
+
+Le projet utilise un **système de configuration centralisée** via Pydantic Settings et fichier `.env`.
+
+```bash
+# Copier le template
+cp .env.example .env
+
+# Modifier avec vos valeurs
+```
+
+**Variables importantes:**
+- `ENVIRONMENT`: development/staging/production
+- `API_PORT`: Port de l'API (8000)
+- `DATABASE_URL`: Connexion PostgreSQL
+- `DATA_ROOT`, `MODEL_PATH`, `PREDICTIONS_PATH`: Chemins des données
+
+**Utilisation dans le code:**
+```python
+from nba.config import settings
+
+# Chemins automatiques
+settings.model_xgb_path          # models/optimized/model_xgb.joblib
+settings.features_v3_path        # data/gold/ml_features/features_v3.parquet
+settings.latest_predictions_path # predictions/latest_predictions_optimized.csv
+```
+
+[Voir le guide complet](docs/CONFIGURATION.md)
+
 ## 📁 Structure du projet
 
 ```
 nba-analytics/
-├── src/                    # Code source
+├── nba/                     # Package principal (NOUVEAU - Architecture V2)
+│   ├── config.py           # Configuration centralisée (Pydantic)
+│   ├── cli.py              # CLI unifiée
+│   ├── api/                # API REST FastAPI
+│   └── reporting/          # Data Catalog & Exporters
+├── src/                    # Code source (legacy)
 │   ├── ingestion/         # Scripts d'ingestion
 │   ├── utils/             # Utilitaires
 │   └── config/            # Configuration
-├── tests/                 # Tests pytest
+├── tests/                 # Tests pytest (82 tests)
 ├── docs/                  # Documentation
-│   ├── API_INGESTION.md   # Documentation API (NBA-16)
-│   ├── INSTALLATION.md    # Guide installation (NBA-16)
-│   ├── EXAMPLES.md        # Exemples pratiques (NBA-16)
-│   ├── TESTING.md         # Guide tests
-│   ├── agent.md           # Architecture
-│   ├── memoir.md          # Journal projet
-│   └── stories/           # Stories JIRA detaillees
-├── data/                  # Donnees
-│   ├── raw/              # Donnees brutes
-│   └── processed/        # Donnees traitees
-├── scripts/              # Scripts utilitaires
+│   ├── CONFIGURATION.md   # Guide configuration
+│   ├── API_REFERENCE.md   # Référence API
+│   ├── CLI_REFERENCE.md   # Référence CLI
+│   ├── INSTALLATION.md    # Guide installation
+│   └── stories/           # Stories JIRA détaillées
+├── data/                  # Données
+│   ├── gold/             # Données traitées
+│   └── exports/          # Exports BI
+├── .env.example          # Template configuration
 ├── docker-compose.yml    # Configuration Docker
-└── Dockerfile            # Image Docker
+└── run_predictions_optimized.py  # Pipeline ML
 ```
 nba-analytics/
 ├── src/                    # Code source

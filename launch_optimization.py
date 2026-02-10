@@ -25,8 +25,8 @@ def main():
     print("="*70)
     
     steps = [
-        ("python src/ml/pipeline/train_optimized.py", 
-         "1/5 - Entraînement du modèle optimisé (Feature Selection + Calibration)"),
+        ("python src/ml/pipeline/train_unified.py", 
+         "1/5 - Entraînement du modèle unifié (Historique + Live)"),
         
         ("python run_predictions_optimized.py --health", 
          "2/5 - Vérification de la santé du système"),

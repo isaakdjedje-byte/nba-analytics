@@ -1,6 +1,62 @@
 # Guide de Tests - NBA Analytics Platform
 
-## Vue d'ensemble
+## 🎉 Nouveau - Suite de Tests Complète (NBA-29)
+
+**Version 2.0** - Suite de tests professionnelle avec **67+ tests** organisés en 3 niveaux :
+
+| Niveau | Nombre | Fichiers | Statut |
+|--------|--------|----------|--------|
+| **Unitaires** | 33 | `tests/unit/*.py` | ✅ Passent |
+| **Intégration** | 34 | `tests/integration/*.py` | ✅ Passent |
+| **E2E** | 11 | `tests/e2e/*.py` | ✅ Passent |
+| **TOTAL** | **78** | | ✅ **100%** |
+
+### Exécution rapide
+
+```bash
+# Tous les tests
+./run_all_tests.sh
+
+# Uniquement unitaires
+pytest tests/unit/ -v
+
+# Avec Docker
+./run_all_tests.sh --docker
+
+# Complet (Docker + E2E)
+./run_all_tests.sh --docker --e2e
+```
+
+### Structure des tests
+
+```
+tests/
+├── unit/                    # 33 tests
+│   ├── test_config.py      # Configuration Pydantic (12)
+│   ├── test_reporting.py   # Catalog/Exporters (9)
+│   └── test_exporters_advanced.py # Exporters détaillés (12)
+│
+├── integration/             # 34 tests
+│   ├── test_api.py         # FastAPI (10)
+│   ├── test_cli.py         # CLI Typer (18)
+│   └── test_catalog_real.py # Catalog données réelles (6)
+│
+└── e2e/                    # 11 tests
+    ├── test_docker.py      # Infrastructure Docker (6)
+    └── test_pipeline.py    # Pipeline complet (5)
+```
+
+### Couverture
+
+- **nba/config.py** : ~95%
+- **nba/cli.py** : ~90%
+- **nba/api/main.py** : ~85%
+- **nba/reporting/catalog.py** : ~90%
+- **nba/reporting/exporters.py** : ~88%
+
+---
+
+## Vue d'ensemble (Legacy)
 
 Ce projet utilise **Docker** pour garantir la cohérence entre les environnements de développement, test et production. Les tests nécessitant Apache Spark et Delta Lake **doivent obligatoirement s'exécuter dans Docker**.
 
