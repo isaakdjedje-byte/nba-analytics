@@ -29,3 +29,37 @@ Thumbs.db
 # Delta Lake
 _delta_log/
 
+# Runtime logs and temp outputs
+*.log
+logs/
+
+# Local databases and caches
+*.db
+*.sqlite
+*.sqlite3
+
+# Local scheduler/dev files
+cron_job_nba.txt
+
+# Generated prediction artifacts (runtime)
+predictions/predictions_optimized_*.csv
+predictions/predictions_optimized_*.json
+predictions/predictions_optimized_*.json.backup
+predictions/backtest_*.csv
+predictions/backtest_*.json
+predictions/season_*_full.json
+
+# Generated report artifacts
+reports/2024-25/
+reports/2025-26/
+reports/assets/
+reports/figures/
+reports/test_results_*.json
+reports/temporal_analysis_*.json
+
+# Local exports/demo artifacts
+demo_exports/
+
+# Windows reserved accidental file
+/nul
+
